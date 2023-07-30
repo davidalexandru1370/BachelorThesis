@@ -1,8 +1,10 @@
 package project.backend.repositories
 
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 
 @Repository
-abstract class UserRepository : IUserRepository {
+@Component
+interface UserRepository : IUserRepository {
 
 }

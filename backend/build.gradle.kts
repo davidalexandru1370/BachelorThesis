@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("de.nycode:bcrypt:2.3.0")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
