@@ -15,9 +15,4 @@ class BackendApplicationTests {
 		assert(true)
 	}
 
-	@Test
-	fun test2(){
-		assert(false)
-	}
-
 }
