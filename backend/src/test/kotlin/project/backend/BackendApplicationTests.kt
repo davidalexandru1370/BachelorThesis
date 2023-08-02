@@ -8,6 +8,16 @@ class BackendApplicationTests {
 
 	@Test
 	fun contextLoads() {
+
+	}
+	@Test
+	fun test(){
+		assert(true)
+	}
+
+	@Test
+	fun test2(){
+		assert(false)
 	}
 
 }
