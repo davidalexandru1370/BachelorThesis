@@ -21,7 +21,7 @@ class User() {
     private var email: String = ""
 
     @Column
-    @Length(min = 5)
+    @Length(min = 5, max = 512)
     @NotNull
     private var password: String = ""
 
