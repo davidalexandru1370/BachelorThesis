@@ -29,4 +29,4 @@ jobs:
             
       - name: Run the tests
         working-directory: ./backend
-        run: ./gradlew test 
+        run: ./gradlew clean test 
