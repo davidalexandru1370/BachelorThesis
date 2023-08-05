@@ -13,17 +13,17 @@ class User() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private lateinit var id : UUID
+    lateinit var id : UUID
 
     @Column(unique = true)
     @NotNull
     @Email
-    private var email: String = ""
+    var email: String = ""
 
     @Column
     @Length(min = 5, max = 512)
     @NotNull
-    private var password: String = ""
+    var password: String = ""
 
     constructor(email: String, password: String) : this() {
         this.email = email

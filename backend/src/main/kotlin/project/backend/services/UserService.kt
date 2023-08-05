@@ -9,12 +9,15 @@ import project.backend.repositories.UserRepository
 import project.backend.services.interfaces.IUserService
 import de.nycode.bcrypt.hash
 import org.springframework.dao.EmptyResultDataAccessException
-import project.backend.exceptions.RepositoryException
+import project.backend.utilities.JwtUtilities
+import java.util.*
 
 @Service
 class UserService : IUserService {
     @set: Autowired
     lateinit var userRepository: UserRepository
+    @Autowired
+    var jwtUtilities = JwtUtilities();
 
     override fun login(userCredentials: UserCredentials): AuthResult {
         TODO("Not yet implemented")
@@ -31,14 +34,14 @@ class UserService : IUserService {
         if (foundUser) {
             return AuthResult(token = "", result = false, error = "Email address already taken!")
         }
+        userCredentials.password = hash(userCredentials.password).decodeToString()
 
-        userCredentials.password = hash(userCredentials.password).contentToString()
+        var user: User = User(userCredentials.email, userCredentials.password)
 
-        val user: User = User(userCredentials.email, userCredentials.password)
+        user = userRepository.save(user)
 
-        userRepository.save(user)
-
-        return AuthResult(token = "", result = true, error = "")
+        var token = jwtUtilities.createJwt(user)
+        return AuthResult(token = token, result = true, error = "")
     }
 
 

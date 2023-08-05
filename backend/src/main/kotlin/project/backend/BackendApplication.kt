@@ -1,13 +1,14 @@
 package project.backend
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class BackendApplication{
+@ConfigurationPropertiesScan
+class BackendApplication
 
-}
 
 fun main(args: Array<String>) {
-	runApplication<BackendApplication>(*args)
+    runApplication<BackendApplication>(*args)
 }
