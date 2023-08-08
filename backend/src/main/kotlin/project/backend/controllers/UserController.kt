@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import project.backend.domain.AuthResult
 import project.backend.domain.UserCredentials
-import project.backend.services.UserService
 import project.backend.services.interfaces.IUserService
 
 @RestController
 @RequestMapping(path = ["/api/user"])
 class UserController(
-
     @Autowired private val userService: IUserService
 ) {
 
@@ -29,7 +27,6 @@ class UserController(
             ResponseEntity(loginResult, HttpStatus.BAD_REQUEST)
         }
     }
-
 
     @PostMapping(path = ["/register"])
     fun register(@Valid @RequestBody userCredentials: UserCredentials): ResponseEntity<AuthResult> {

@@ -17,6 +17,7 @@ class User() {
 
     @Column(unique = true)
     @NotNull
+    @Length(max = 512)
     @Email
     var email: String = ""
 
