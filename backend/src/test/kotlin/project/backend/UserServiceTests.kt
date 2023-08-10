@@ -18,7 +18,7 @@ import project.backend.services.interfaces.IUserService
 @TestPropertySource(
     properties = [
         "spring.jpa.hibernate.ddl-auto=none",
-        "spring.datasource.driver-class-name=",
+        "spring.datasource.url="
     ]
 )
 @SpringBootTest

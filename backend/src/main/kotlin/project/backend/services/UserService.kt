@@ -57,7 +57,7 @@ class UserService : IUserService {
 
         user = userRepository.save(user)
 
-        var token = jwtUtilities.createJwt(user)
+        val token = jwtUtilities.createJwt(user)
         return AuthResult(token = token, result = true, error = "")
     }
 }
