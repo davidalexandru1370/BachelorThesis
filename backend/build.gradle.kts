@@ -1,22 +1,18 @@
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
-val postgres_version: String by project
-val h2_version: String by project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.0"
-    id("io.ktor.plugin") version "2.3.2"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    id("org.springframework.boot") version "3.1.2"
+    id("io.spring.dependency-management") version "1.1.2"
+    kotlin("jvm") version "1.8.22"
+    kotlin("plugin.spring") version "1.8.22"
+    kotlin("plugin.jpa") version "1.8.22"
 }
 
-group = "backend"
-version = "0.0.1"
-application {
-    mainClass.set("backend.ApplicationKt")
+group = "project"
+version = "0.0.1-SNAPSHOT"
 
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -24,22 +20,29 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-apache-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-cors-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-swagger-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
-    implementation("org.postgresql:postgresql:$postgres_version")
-    implementation("com.h2database:h2:$h2_version")
-    implementation("io.ktor:ktor-server-websockets-jvm:$ktor_version")
-    implementation("io.ktor:ktor-serialization-gson-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-    testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    implementation("org.springframework.security:spring-security-crypto:6.1.2")
+    implementation("com.h2database:h2:2.1.214")
+    runtimeOnly("org.postgresql:postgresql")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
