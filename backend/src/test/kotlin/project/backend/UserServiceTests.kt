@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.test.context.TestPropertySource
 import project.backend.domain.AuthResult
 import project.backend.domain.UserCredentials
+import project.backend.internalization.ErrorCodes
 import project.backend.repositories.IUserRepository
 import project.backend.services.UserService
 import project.backend.services.interfaces.IUserService
@@ -40,6 +41,6 @@ class UserServiceTests {
 
         Assertions.assertEquals("", result.token);
         Assertions.assertEquals(false, result.result)
-        Assertions.assertEquals("", result.error)
+        Assertions.assertEquals(ErrorCodes.EmailDoesNotExists.toString(), result.error)
     }
 }
