@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Assertions
 import org.mockito.InjectMocks
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.test.context.TestPropertySource
+import org.springframework.test.web.servlet.MockMvc
 import project.backend.domain.AuthResult
 import project.backend.domain.UserCredentials
 import project.backend.internalization.ErrorCodes
@@ -18,10 +20,14 @@ import project.backend.services.interfaces.IUserService
 
 @TestPropertySource(
     properties = [
-        "spring.jpa.hibernate.ddl-auto=none",
-        "spring.datasource.url="
+        "spring.datasource.url=jdbc:h2:mem:testdb",
+        "spring.datasource.driverClassName=org.h2.Driver",
+        "spring.datasource.username=sa",
+        "spring.datasource.password=password",
+        "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect"
     ]
 )
+@AutoConfigureMockMvc
 @SpringBootTest
 class UserServiceTests {
 
@@ -29,7 +35,11 @@ class UserServiceTests {
     private lateinit var userRepository: IUserRepository
 
     @Autowired
+    private lateinit var mockMvc: MockMvc
+
+    @Autowired
     private lateinit var userService: IUserService
+
     @Test
     fun login_userDoesNotExist_ShouldReturnAuthResultWithError() {
         val email: String = "david@gmail.com"
