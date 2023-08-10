@@ -21,15 +21,11 @@ class UserService : IUserService {
     var jwtUtilities = JwtUtilities();
 
     override fun login(userCredentials: UserCredentials): AuthResult {
-        val foundUser: User? = try {
+        val foundUser: User = try {
             userRepository.findByEmail(userCredentials.email)
         } catch (_: EmptyResultDataAccessException) {
             null
-        }
-
-        if (foundUser == null) {
-            return AuthResult(token = "", result = false, error = ErrorCodes.EmailDoesNotExists.toString())
-        }
+        } ?: return AuthResult(token = "", result = false, error = ErrorCodes.EmailDoesNotExists.toString())
 
         val bCryptPasswordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
 
@@ -52,7 +48,7 @@ class UserService : IUserService {
         }
 
         if (foundUser) {
-            return AuthResult(token = "", result = false, error = "Email address already taken!")
+            return AuthResult(token = "", result = false, error = ErrorCodes.EmailOrPasswordAreWrong.toString())
         }
 
         userCredentials.password = bCryptPasswordEncoder.encode(userCredentials.password)
