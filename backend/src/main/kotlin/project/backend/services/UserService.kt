@@ -9,6 +9,7 @@ import project.backend.repositories.UserRepository
 import project.backend.services.interfaces.IUserService
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import project.backend.internalization.ErrorCodes
 import project.backend.utilities.JwtUtilities
 
 @Service
@@ -27,13 +28,13 @@ class UserService : IUserService {
         }
 
         if (foundUser == null) {
-            return AuthResult(token = "", result = false, error = "Account does not exists!")
+            return AuthResult(token = "", result = false, error = ErrorCodes.EmailDoesNotExists.toString())
         }
 
         val bCryptPasswordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
 
         if (!bCryptPasswordEncoder.matches(userCredentials.password, foundUser.password)) {
-            return AuthResult("Invalid email or password!")
+            return AuthResult(ErrorCodes.EmailOrPasswordAreWrong.toString())
         }
 
         val token: String = jwtUtilities.createJwt(foundUser)
