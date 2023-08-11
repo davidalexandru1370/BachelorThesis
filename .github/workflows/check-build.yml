@@ -27,6 +27,6 @@ jobs:
           distribution: "corretto"
           cache: gradle
 
-      - name: Run the tests
+      - name: Build
         working-directory: /backend
         run: ./gradlew build
