@@ -1,5 +1,8 @@
 package project.backend.utilities
 
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.JwtException
+import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -7,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import project.backend.configurations.JwtConfiguration
 import project.backend.domain.dao.User
+import project.backend.exceptions.NotAuthorizedException
+import project.backend.internalization.ErrorCodes
 import java.security.Key
 import java.util.*
 
@@ -31,8 +36,27 @@ class JwtUtilities {
             .compact()
     }
 
+    public fun isTokenValid(token: String): Boolean {
+        val claims = getClaims(token)
+        val expiration = claims.expiration
+        val now = Date(System.currentTimeMillis())
+        return now.before(expiration)
+    }
+
     private fun createSignInKey(signKey: String): Key {
         var bytes: ByteArray = Decoders.BASE64.decode(signKey)
         return Keys.hmacShaKeyFor(bytes)
+    }
+
+    private fun getClaims(token: String): Claims {
+        val parser: JwtParser = Jwts
+            .parserBuilder()
+            .setSigningKey(jwtConfiguration.secret)
+            .build()
+        try {
+            return parser.parseClaimsJws(token).body
+        } catch (jwtException: JwtException) {
+            throw NotAuthorizedException(ErrorCodes.NotAuthorized.toString())
+        }
     }
 }
