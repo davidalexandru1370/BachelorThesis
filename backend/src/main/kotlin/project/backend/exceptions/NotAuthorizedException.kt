@@ -1,5 +1,5 @@
 package project.backend.exceptions
 
-class NotAuthorizedException(message: String) : Exception(message) {
+class NotAuthorizedException(message: String) : Throwable(message) {
 
 }

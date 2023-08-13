@@ -60,4 +60,5 @@ class UserService : IUserService {
         val token = jwtUtilities.createJwt(user)
         return AuthResult(token = token, result = true, error = "")
     }
+
 }

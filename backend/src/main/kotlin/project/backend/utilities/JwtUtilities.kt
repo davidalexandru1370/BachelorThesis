@@ -14,6 +14,7 @@ import project.backend.exceptions.NotAuthorizedException
 import project.backend.internalization.ErrorCodes
 import java.security.Key
 import java.util.*
+import kotlin.jvm.Throws
 
 @Configuration
 class JwtUtilities {
@@ -36,19 +37,16 @@ class JwtUtilities {
             .compact()
     }
 
-    public fun isTokenValid(token: String): Boolean {
+    @Throws(NotAuthorizedException::class)
+    fun isTokenValid(token: String): Boolean {
         val claims = getClaims(token)
         val expiration = claims.expiration
         val now = Date(System.currentTimeMillis())
         return now.before(expiration)
     }
 
-    private fun createSignInKey(signKey: String): Key {
-        var bytes: ByteArray = Decoders.BASE64.decode(signKey)
-        return Keys.hmacShaKeyFor(bytes)
-    }
-
-    private fun getClaims(token: String): Claims {
+    @Throws(NotAuthorizedException::class)
+    fun getClaims(token: String): Claims {
         val parser: JwtParser = Jwts
             .parserBuilder()
             .setSigningKey(jwtConfiguration.secret)
@@ -58,5 +56,10 @@ class JwtUtilities {
         } catch (jwtException: JwtException) {
             throw NotAuthorizedException(ErrorCodes.NotAuthorized.toString())
         }
+    }
+
+    private fun createSignInKey(signKey: String): Key {
+        var bytes: ByteArray = Decoders.BASE64.decode(signKey)
+        return Keys.hmacShaKeyFor(bytes)
     }
 }

@@ -4,7 +4,6 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import org.hibernate.validator.constraints.Length
 import org.jetbrains.annotations.NotNull
-import org.springframework.data.redis.connection.RedisConfiguration.WithPassword
 import java.util.*
 
 @Entity
