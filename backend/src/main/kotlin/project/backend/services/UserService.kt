@@ -1,5 +1,6 @@
 package project.backend.services
 
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import project.backend.domain.AuthResult
@@ -29,6 +30,8 @@ class UserService : IUserService {
 
         val bCryptPasswordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
 
+        throw EntityNotFoundException("test not found")
+
         if (!bCryptPasswordEncoder.matches(userCredentials.password, foundUser.password)) {
             return AuthResult(ErrorCodes.EmailOrPasswordAreWrong.toString())
         }
@@ -47,9 +50,12 @@ class UserService : IUserService {
             false
         }
 
+
+
         if (foundUser) {
             return AuthResult(token = "", result = false, error = ErrorCodes.EmailOrPasswordAreWrong.toString())
         }
+
 
         userCredentials.password = bCryptPasswordEncoder.encode(userCredentials.password)
 
