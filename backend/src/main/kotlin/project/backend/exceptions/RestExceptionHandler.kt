@@ -30,7 +30,7 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(EntityNotFoundException::class)
     protected fun handleEntityNotFound(entityNotFoundException: EntityNotFoundException): ResponseEntity<in ApiError> {
-        var apiError: ApiError = ApiError(HttpStatus.NOT_FOUND, entityNotFoundException.message ?: "")
+        val apiError: ApiError = ApiError(HttpStatus.NOT_FOUND, entityNotFoundException.message ?: "")
         return buildResponseEntity(apiError)
     }
 

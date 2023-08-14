@@ -30,8 +30,6 @@ class UserService : IUserService {
 
         val bCryptPasswordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
 
-        throw EntityNotFoundException("test not found")
-
         if (!bCryptPasswordEncoder.matches(userCredentials.password, foundUser.password)) {
             return AuthResult(ErrorCodes.EmailOrPasswordAreWrong.toString())
         }
@@ -42,7 +40,6 @@ class UserService : IUserService {
 
     override fun register(userCredentials: UserCredentials): AuthResult {
         val bCryptPasswordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
-
         val foundUser: Boolean = try {
             userRepository.findByEmail(userCredentials.email)
             true
@@ -50,12 +47,9 @@ class UserService : IUserService {
             false
         }
 
-
-
         if (foundUser) {
             return AuthResult(token = "", result = false, error = ErrorCodes.EmailOrPasswordAreWrong.toString())
         }
-
 
         userCredentials.password = bCryptPasswordEncoder.encode(userCredentials.password)
 
