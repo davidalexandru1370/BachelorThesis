@@ -1,17 +1,17 @@
 package project.backend.services
 
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import project.backend.domain.AuthResult
 import project.backend.domain.UserCredentials
 import project.backend.domain.dao.User
+import project.backend.internalization.ErrorCodes
 import project.backend.repositories.UserRepository
 import project.backend.services.interfaces.IUserService
-import org.springframework.dao.EmptyResultDataAccessException
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import project.backend.internalization.ErrorCodes
 import project.backend.utilities.JwtUtilities
+import java.util.UUID
 
 @Service
 class UserService : IUserService {
@@ -60,5 +60,10 @@ class UserService : IUserService {
         val token = jwtUtilities.createJwt(user)
         return AuthResult(token = token, result = true, error = "")
     }
+
+    override fun changePassword(formId: UUID, newPassword: String) {
+        TODO("Not yet implemented")
+    }
+
 
 }
