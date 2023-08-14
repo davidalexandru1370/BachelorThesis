@@ -29,7 +29,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    implementation("org.springframework.security:spring-security-crypto:6.1.2")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.h2database:h2:2.1.214")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

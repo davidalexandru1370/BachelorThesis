@@ -2,7 +2,6 @@ package project.backend
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions
-import org.mockito.InjectMocks
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -15,7 +14,6 @@ import project.backend.domain.AuthResult
 import project.backend.domain.UserCredentials
 import project.backend.internalization.ErrorCodes
 import project.backend.repositories.IUserRepository
-import project.backend.services.UserService
 import project.backend.services.interfaces.IUserService
 
 @TestPropertySource(
