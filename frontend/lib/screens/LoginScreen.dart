@@ -14,17 +14,41 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
         body: Stack(children: [
-      Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Color.fromARGB(255, 233, 233, 233),
-        child: Row(children: [
-          ElevatedButton.icon(
+      Padding(padding: EdgeInsets.all(20)),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          OutlinedButton.icon(
               onPressed: () {},
-              icon: Icon(Icons.facebook),
-              label: Text("Facebook"))
-        ]),
-      )
+              icon: const Icon(
+                Icons.facebook,
+                size: 36.0,
+                color: Colors.blue,
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    Color.fromARGB(255, 251, 249, 249)),
+                side: MaterialStateProperty.all(
+                    const BorderSide(color: Colors.white, width: 0)),
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15)),
+              ),
+              label: const Text("Facebook",
+                  style: TextStyle(fontFamily: "Arial", fontSize: 20))),
+          OutlinedButton.icon(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.facebook,
+                size: 24.0,
+              ),
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15)),
+              ),
+              label: const Text("Facebook",
+                  style: TextStyle(fontFamily: "Arial", fontSize: 20))),
+        ],
+      ),
     ]));
   }
 }
