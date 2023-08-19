@@ -17,44 +17,51 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordController = TextEditingController();
 
     return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 10,
+        ),
         body: Stack(children: [
-      const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [LoginWithGoogleButton(), LoginWithFacebookButton()],
-      ),
-      Form(
-          key: formKey,
-          child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FractionallySizedBox(
-                        widthFactor: 0.9,
-                        child: TextFormField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            labelText: "Email",
-                            labelStyle: TextStyle(
-                                color: Color.fromARGB(255, 43, 43, 43)),
-                          ),
-                        )),
-                    const Padding(padding: EdgeInsets.all(5)),
-                    FractionallySizedBox(
-                        widthFactor: 0.9,
-                        child: TextFormField(
-                          controller: passwordController,
-                          decoration: const InputDecoration(
-                            border: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 212, 212, 212))),
-                            labelText: "Password",
-                            labelStyle: TextStyle(
-                              color: Color.fromARGB(255, 43, 43, 43),
-                            ),
-                          ),
-                        )),
-                  ])))
-    ]));
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [LoginWithGoogleButton(), LoginWithFacebookButton()],
+          ),
+          Form(
+              key: formKey,
+              child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FractionallySizedBox(
+                            widthFactor: 0.9,
+                            child: TextFormField(
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                suffixIcon: Icon(Icons.email),
+                                labelText: "Email",
+                                labelStyle: TextStyle(
+                                    color: Color.fromARGB(255, 43, 43, 43)),
+                              ),
+                            )),
+                        const Padding(padding: EdgeInsets.all(5)),
+                        FractionallySizedBox(
+                            widthFactor: 0.9,
+                            child: TextFormField(
+                              obscureText: true,
+                              controller: passwordController,
+                              decoration: const InputDecoration(
+                                suffixIcon: Icon(Icons.lock),
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color.fromARGB(
+                                            255, 212, 212, 212))),
+                                labelText: "Password",
+                                labelStyle: TextStyle(
+                                  color: Color.fromARGB(255, 43, 43, 43),
+                                ),
+                              ),
+                            )),
+                      ])))
+        ]));
   }
 }

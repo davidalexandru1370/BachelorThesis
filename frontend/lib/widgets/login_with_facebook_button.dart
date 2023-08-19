@@ -12,7 +12,7 @@ class LoginWithFacebookButton extends StatelessWidget {
       onPressed: () {},
       icon: CustomIcons.facebook,
       iconSize: 30,
-      iconColor: const Color.fromARGB(255, 65, 19, 231),
+      iconColor: const Color.fromARGB(255, 19, 68, 231),
       textColor: const Color.fromARGB(255, 65, 19, 231),
       backgroundColor: const Color.fromARGB(255, 243, 243, 243),
       fontSize: 22);
