@@ -57,7 +57,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           )),
-                      const Padding(padding: EdgeInsets.all(20)),
+                      const Padding(padding: EdgeInsets.all(10)),
+                      ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(0),
+                            shape: const CircleBorder(eccentricity: 1),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_circle_right_rounded,
+                            size: 64,
+                          )),
+                      const Padding(padding: EdgeInsets.all(10)),
                       const Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
