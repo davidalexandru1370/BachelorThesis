@@ -8,12 +8,12 @@ class LoginWithFacebookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Button(
-      text: "Google",
+      text: "Facebook",
       onPressed: () {},
       icon: CustomIcons.facebook,
-      iconSize: 36,
+      iconSize: 30,
       iconColor: const Color.fromARGB(255, 65, 19, 231),
       textColor: const Color.fromARGB(255, 65, 19, 231),
-      backgroundColor: const Color.fromARGB(255, 251, 249, 249),
-      fontSize: 24);
+      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+      fontSize: 22);
 }
