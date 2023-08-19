@@ -7,12 +7,12 @@ class LoginWithGoogleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Button(
-      text: "Google",
+      text: "Continue with Google",
       onPressed: () {},
       icon: CustomIcons.google,
-      iconSize: 36,
+      iconSize: 24,
       iconColor: const Color.fromARGB(255, 19, 68, 231),
-      textColor: const Color.fromARGB(255, 65, 19, 231),
-      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-      fontSize: 22);
+      textColor: const Color.fromARGB(255, 39, 39, 39),
+      backgroundColor: const Color.fromARGB(255, 224, 224, 224),
+      fontSize: 18);
 }
