@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/utilities/custom_icons.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,27 +15,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
         body: Stack(children: [
-      Padding(padding: EdgeInsets.all(20)),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           OutlinedButton.icon(
               onPressed: () {},
               icon: const Icon(
-                Icons.facebook,
+                CustomIcons.facebook,
                 size: 36.0,
-                color: Colors.blue,
+                color: Color.fromARGB(255, 65, 19, 231),
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(255, 251, 249, 249)),
+                    const Color.fromARGB(255, 251, 249, 249)),
                 side: MaterialStateProperty.all(
                     const BorderSide(color: Colors.white, width: 0)),
                 padding: MaterialStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 15)),
               ),
               label: const Text("Facebook",
-                  style: TextStyle(fontFamily: "Arial", fontSize: 20))),
+                  style: TextStyle(
+                      fontFamily: "BricolageGrotesque",
+                      fontSize: 25,
+                      color: Color.fromARGB(255, 65, 19, 231)))),
           OutlinedButton.icon(
               onPressed: () {},
               icon: const Icon(
@@ -46,7 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 15)),
               ),
               label: const Text("Facebook",
-                  style: TextStyle(fontFamily: "Arial", fontSize: 20))),
+                  style: TextStyle(
+                      fontFamily: "BricolageGrotesque", fontSize: 20))),
         ],
       ),
     ]));
