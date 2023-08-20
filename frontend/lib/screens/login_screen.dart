@@ -57,13 +57,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           )),
-                      const Padding(padding: EdgeInsets.all(10)),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 20, top: 10),
+                            child: Text(
+                              "Forgot password",
+                              textAlign: TextAlign.right,
+                            ),
+                          )
+                        ],
+                      ),
+                      const Padding(padding: EdgeInsets.all(5)),
                       Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: const LinearGradient(colors: [
-                                Color.fromARGB(255, 74, 25, 221),
-                                Colors.purpleAccent
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(colors: [
+                                Color.fromARGB(255, 25, 77, 221),
+                                Color.fromARGB(255, 45, 3, 171),
                               ])),
                           child: ElevatedButton(
                               onPressed: () {},
