@@ -17,53 +17,51 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordController = TextEditingController();
 
     return Scaffold(
-        body: Stack(alignment: Alignment.bottomLeft, children: [
+        body:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      const Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  "Don't have an ",
+                  style: TextStyle(
+                      fontFamily: "PTSansNarrow",
+                      fontSize: 30,
+                      color: Color.fromARGB(255, 43, 43, 43)),
+                ),
+                Text(
+                  "account?",
+                  style: TextStyle(
+                    fontFamily: "PTSansNarrow",
+                    fontSize: 30,
+                    color: Color.fromARGB(255, 39, 33, 234),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text("Create account",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontFamily: "BricolageGrotesque",
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 43, 43, 43))),
+              ],
+            )
+          ],
+        ),
+      ),
       Form(
           key: formKey,
           child: Container(
             alignment: Alignment.center,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Already",
-                          style: TextStyle(
-                              fontFamily: "BricolageGrotesque",
-                              fontSize: 36,
-                              color: Color.fromARGB(255, 43, 43, 43)),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "Member?",
-                          style: TextStyle(
-                            fontFamily: "BricolageGrotesque",
-                            fontSize: 36,
-                            color: Color.fromARGB(255, 39, 33, 234),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Transform.rotate(
-                    angle: 1.5708,
-                    child: Switch(
-                      value: false,
-                      onChanged: (value) {},
-                      inactiveThumbImage: Icons.double_arrow_rounded,
-                      activeTrackColor: const Color.fromARGB(255, 39, 33, 234),
-                      activeColor: const Color.fromARGB(255, 39, 33, 234),
-                    ),
-                  )
-                ],
-              ),
               const Padding(padding: EdgeInsets.all(5)),
               FractionallySizedBox(
                   widthFactor: 0.9,

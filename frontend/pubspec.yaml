@@ -91,5 +91,9 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: "assets/fonts/CustomIcons.ttf"
+    - family: "PTSansNarrow"
+      fonts:
+        - asset: "assets/fonts/PTSansNarrow-Regular.ttf"
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
