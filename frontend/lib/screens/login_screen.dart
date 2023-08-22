@@ -10,11 +10,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isEmailValid(String email) =>
+      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Form(
-                key: formKey,
+                key: _formKey,
                 child: Container(
                   alignment: Alignment.center,
                   child: Column(
@@ -74,9 +77,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value == null || value.isEmpty) {
                                   return "Please enter your email";
                                 }
-                                return "";
+                                if (!_isEmailValid(value)) {
+                                  return "Email is not valid";
+                                }
+                                return null;
                               },
-                              controller: emailController,
+                              controller: _emailController,
                               decoration: const InputDecoration(
                                 suffixIcon: Icon(Icons.email),
                                 labelText: "Email",
@@ -88,8 +94,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         FractionallySizedBox(
                             widthFactor: 0.9,
                             child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter your password";
+                                }
+                                if (value.length < 5) {
+                                  return "Password must be at least 5 characters long";
+                                }
+                                return null;
+                              },
                               obscureText: true,
-                              controller: passwordController,
+                              controller: _passwordController,
                               decoration: const InputDecoration(
                                 suffixIcon: Icon(Icons.lock),
                                 border: UnderlineInputBorder(
@@ -123,7 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Color.fromARGB(255, 45, 3, 171),
                                 ])),
                             child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {}
+                                },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(0, 52),
                                   elevation: 0,
