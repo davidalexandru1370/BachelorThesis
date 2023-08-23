@@ -12,13 +12,33 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _isEmailValid(String email) =>
       RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isFormValid = false;
 
-  @override
+  bool _areAllFieldsValid() {
+    if (_emailController.text.isEmpty ||
+        !_isEmailValid(_emailController.text)) {
+      setState(() {
+        _isFormValid = false;
+      });
+      return false;
+    }
+    if (_passwordController.text.isEmpty ||
+        _passwordController.text.length < 5) {
+      setState(() {
+        _isFormValid = false;
+      });
+      return false;
+    }
+    setState(() {
+      _isFormValid = true;
+    });
+    return true;
+  }
+
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    final _emailController = TextEditingController();
-    final _passwordController = TextEditingController();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -83,6 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return null;
                               },
                               controller: _emailController,
+                              onChanged: (value) {
+                                _areAllFieldsValid();
+                              },
                               decoration: const InputDecoration(
                                 suffixIcon: Icon(Icons.email),
                                 labelText: "Email",
@@ -105,6 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               obscureText: true,
                               controller: _passwordController,
+                              onChanged: (value) {
+                                _areAllFieldsValid();
+                              },
                               decoration: const InputDecoration(
                                 suffixIcon: Icon(Icons.lock),
                                 border: UnderlineInputBorder(
@@ -131,16 +157,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const Padding(padding: EdgeInsets.all(5)),
                         Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                gradient: LinearGradient(colors: [
-                                  Color.fromARGB(255, 25, 77, 221),
-                                  Color.fromARGB(255, 45, 3, 171),
-                                ])),
+                                gradient: _isFormValid == true
+                                    ? const LinearGradient(colors: [
+                                        Color.fromARGB(255, 25, 77, 221),
+                                        Color.fromARGB(255, 45, 3, 171),
+                                      ])
+                                    : const LinearGradient(colors: [
+                                        Color.fromARGB(255, 128, 127, 127),
+                                        Color.fromARGB(255, 128, 127, 127),
+                                      ])),
                             child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {}
-                                },
+                                onPressed: _areAllFieldsValid() == true
+                                    ? () {
+                                        if (_formKey.currentState == null ||
+                                            !_formKey.currentState!
+                                                .validate()) {}
+                                      }
+                                    : null,
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(0, 52),
                                   elevation: 0,
@@ -148,11 +183,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   shadowColor: Colors.transparent,
                                   backgroundColor: Colors.transparent,
                                 ),
-                                child: const Icon(
-                                  color: Colors.white,
-                                  Icons.arrow_right_alt_rounded,
-                                  size: 40,
-                                ))),
+                                child: _isFormValid == true
+                                    ? const Icon(
+                                        color: Colors.white,
+                                        Icons.arrow_right_alt_rounded,
+                                        size: 40,
+                                      )
+                                    : const Icon(
+                                        color: Color.fromARGB(255, 73, 73, 73),
+                                        Icons.arrow_right_alt_rounded,
+                                        size: 40,
+                                      ))),
                         const Padding(padding: EdgeInsets.all(10)),
                         const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
