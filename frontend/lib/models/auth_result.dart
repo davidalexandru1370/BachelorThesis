@@ -13,9 +13,9 @@ class AuthResult {
 
   static AuthResult fromJson(Map<String, dynamic> json) {
     return AuthResult(
-      json['result'],
       json['token'],
       json['error'],
+      json['result'],
     );
   }
 }

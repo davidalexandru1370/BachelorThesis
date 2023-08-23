@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/user_credentials.dart';
+import 'package:frontend/services/user_service.dart';
 import 'package:frontend/widgets/login_with_facebook_button.dart';
 import 'package:frontend/widgets/login_with_google_button.dart';
 
@@ -172,9 +174,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                                 onPressed: _areAllFieldsValid() == true
                                     ? () {
-                                        if (_formKey.currentState == null ||
-                                            !_formKey.currentState!
-                                                .validate()) {}
+                                        UserService.login(UserCredentials(
+                                                email: _emailController.text,
+                                                password:
+                                                    _passwordController.text))
+                                            .then((value) => {
+                                                  if (value.result == true)
+                                                    {}
+                                                  else
+                                                    {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              content: Text(
+                                                                  value.error)))
+                                                    }
+                                                })
+                                            .catchError((error) => {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              "Failed to login")))
+                                                });
                                       }
                                     : null,
                                 style: ElevatedButton.styleFrom(
