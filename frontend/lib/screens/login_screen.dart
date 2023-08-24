@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/user_credentials.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:frontend/widgets/login_with_facebook_button.dart';
@@ -17,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _storage = const FlutterSecureStorage();
+
   bool _isFormValid = false;
 
   bool _areAllFieldsValid() {
@@ -180,7 +183,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     _passwordController.text))
                                             .then((value) => {
                                                   if (value.result == true)
-                                                    {}
+                                                    {
+                                                      _storage.write(
+                                                          key: "token",
+                                                          value: value.token)
+                                                    }
                                                   else
                                                     {
                                                       ScaffoldMessenger.of(
