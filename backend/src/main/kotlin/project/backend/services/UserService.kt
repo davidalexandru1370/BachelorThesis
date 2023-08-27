@@ -11,7 +11,7 @@ import project.backend.internalization.ErrorCodes
 import project.backend.repositories.UserRepository
 import project.backend.services.interfaces.IUserService
 import project.backend.utilities.JwtUtilities
-import java.util.UUID
+import java.util.*
 
 @Service
 class UserService : IUserService {
@@ -19,7 +19,7 @@ class UserService : IUserService {
     lateinit var userRepository: UserRepository
 
     @Autowired
-    var jwtUtilities = JwtUtilities();
+    var jwtUtilities = JwtUtilities()
 
     override fun login(userCredentials: UserCredentials): AuthResult {
         val foundUser: User = try {
@@ -64,6 +64,4 @@ class UserService : IUserService {
     override fun changePassword(formId: UUID, newPassword: String) {
         TODO("Not yet implemented")
     }
-
-
 }

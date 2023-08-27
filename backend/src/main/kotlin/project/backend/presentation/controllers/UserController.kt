@@ -1,4 +1,4 @@
-package project.backend.controllers
+package project.backend.presentation.controllers
 
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,11 +15,13 @@ import project.backend.services.interfaces.IUserService
 @RestController
 @RequestMapping(path = ["/api/user"])
 class UserController(
-    @Autowired private val userService: IUserService
+    @Autowired private val userService: IUserService,
 ) {
 
     @PostMapping(path = ["/login"])
-    fun login(@Valid @RequestBody userCredentials: UserCredentials): ResponseEntity<AuthResult> {
+    fun login(
+        @Valid @RequestBody userCredentials: UserCredentials,
+    ): ResponseEntity<AuthResult> {
         val loginResult: AuthResult = userService.login(userCredentials)
         return if (loginResult.result) {
             ResponseEntity.ok(loginResult)
@@ -29,7 +31,9 @@ class UserController(
     }
 
     @PostMapping(path = ["/register"])
-    fun register(@Valid @RequestBody userCredentials: UserCredentials): ResponseEntity<AuthResult> {
+    fun register(
+        @Valid @RequestBody userCredentials: UserCredentials,
+    ): ResponseEntity<AuthResult> {
         val isRegistered = userService.register(userCredentials)
         return if (isRegistered.result) {
             ResponseEntity.ok(isRegistered)
@@ -37,5 +41,4 @@ class UserController(
             ResponseEntity(isRegistered, HttpStatus.BAD_REQUEST)
         }
     }
-
 }

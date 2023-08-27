@@ -9,6 +9,5 @@ class ApiError(var status: HttpStatus, var message: String) {
     var timeStamp: LocalDateTime = LocalDateTime.now()
 
     constructor(status: HttpStatus) : this(status, "") {
-
     }
 }

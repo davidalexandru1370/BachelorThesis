@@ -26,8 +26,8 @@ class JwtUtilities {
             .setClaims(
                 mapOf(
                     "id" to user.id,
-                    "email" to user.email
-                )
+                    "email" to user.email,
+                ),
             )
             .signWith(createSignInKey(jwtConfiguration.secret))
             .setAudience(jwtConfiguration.audience)
