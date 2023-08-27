@@ -12,7 +12,7 @@ class User() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    lateinit var id : UUID
+    lateinit var id: UUID
 
     @Column(unique = true)
     @NotNull

@@ -13,7 +13,10 @@ import project.backend.utilities.JwtUtilities
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(@Autowired var jwtUtilities: JwtUtilities, @Autowired var userRepository: IUserRepository) {
+class SecurityConfig(
+    @Autowired var jwtUtilities: JwtUtilities,
+    @Autowired var userRepository: IUserRepository,
+) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() }.authorizeHttpRequests {

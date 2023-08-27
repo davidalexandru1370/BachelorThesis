@@ -22,7 +22,7 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
         ex: HttpMessageNotReadableException,
         headers: HttpHeaders,
         status: HttpStatusCode,
-        request: WebRequest
+        request: WebRequest,
     ): ResponseEntity<Any>? {
         val error: String = "Malformed JSON request"
         return buildResponseEntity(ApiError(HttpStatus.BAD_REQUEST, error))

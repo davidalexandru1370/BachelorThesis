@@ -3,8 +3,6 @@ package project.backend.security
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpHeaders
@@ -19,18 +17,17 @@ import project.backend.utilities.JwtUtilities
 @Order(Ordered.LOWEST_PRECEDENCE)
 class AuthorizationFilter(
     private val jwtUtilities: JwtUtilities,
-    private val userRepository: IUserRepository
+    private val userRepository: IUserRepository,
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
-
         val header: String? = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response)
-            return;
+            return
         }
         val jwt = extractToken(header)
 

@@ -10,5 +10,5 @@ data class UserCredentials(
     var email: String,
     @field:NotBlank(message = "Password can not be empty")
     @field:Length(min = 5, message = "Password must be at least 5 characters")
-    var password: String
+    var password: String,
 )
