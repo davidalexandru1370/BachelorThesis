@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/models/user_credentials.dart';
+import 'package:frontend/screens/register_screen.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:frontend/widgets/login_with_facebook_button.dart';
 import 'package:frontend/widgets/login_with_google_button.dart';
+
+import '../models/auth_result.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -51,12 +54,12 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Text(
                         "Don't have an ",
@@ -77,12 +80,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Row(
                     children: [
-                      Text("Create account",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontFamily: "BricolageGrotesque",
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 43, 43, 43))),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
+                        },
+                        child: const Text("Create account",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontFamily: "BricolageGrotesque",
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 43, 43, 43))),
+                      ),
                     ],
                   )
                 ],
@@ -186,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     {
                                                       _storage.write(
                                                           key: "token",
-                                                          value: value.token)
+                                                          value: value.token),
                                                     }
                                                   else
                                                     {
@@ -197,12 +208,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   value.error)))
                                                     }
                                                 })
-                                            .catchError((error) => {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "Failed to login")))
-                                                });
+                                            .onError(
+                                                (AuthResult error, stackTrace) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      error.error.toString())));
+                                          return new Future.value();
+                                        },
+                                                test: (error) =>
+                                                    error is AuthResult);
                                       }
                                     : null,
                                 style: ElevatedButton.styleFrom(

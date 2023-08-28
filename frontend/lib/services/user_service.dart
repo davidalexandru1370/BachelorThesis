@@ -7,7 +7,7 @@ import '../models/auth_result.dart';
 class UserService {
   static Future<AuthResult> login(UserCredentials userCredentials) async {
     final response = await http.post(
-      Uri.parse('http://192.168.1.7:8080/api/user/login'),
+      Uri.parse('http://localhost:8080/api/user/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
