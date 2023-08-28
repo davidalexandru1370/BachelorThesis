@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:frontend/screens/login_screen.dart';
 
 import '../widgets/login_with_facebook_button.dart';
 import '../widgets/login_with_google_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'register_screen';
+
+  const RegisterScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _RegisterForm();
@@ -82,7 +85,7 @@ class _RegisterForm extends State<RegisterScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
+                                  builder: (context) => const LoginScreen()));
                         },
                         child: const Text("Connect now",
                             textAlign: TextAlign.left,
