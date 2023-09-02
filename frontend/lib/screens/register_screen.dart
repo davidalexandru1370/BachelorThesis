@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:frontend/models/user_credentials.dart';
-import 'package:frontend/screens/register_screen.dart';
-import 'package:frontend/services/user_service.dart';
-import 'package:frontend/widgets/login_with_facebook_button.dart';
-import 'package:frontend/widgets/login_with_google_button.dart';
+import 'package:frontend/screens/login_screen.dart';
 
 import '../models/auth_result.dart';
+import '../models/user_credentials.dart';
+import '../services/user_service.dart';
+import '../widgets/login_with_facebook_button.dart';
+import '../widgets/login_with_google_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  static const String id = 'register_screen';
+
+  const RegisterScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LoginScreenState();
+  State<StatefulWidget> createState() => _RegisterForm();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterForm extends State<RegisterScreen> {
   bool _isEmailValid(String email) =>
       RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
   final _formKey = GlobalKey<FormState>();
@@ -62,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Row(
                     children: [
                       Text(
-                        "Don't have an ",
+                        "Already having an ",
                         style: TextStyle(
                             fontFamily: "PTSansNarrow",
                             fontSize: 30,
@@ -85,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen()));
+                                  builder: (context) => const LoginScreen()));
                         },
-                        child: const Text("Create account",
+                        child: const Text("Connect now",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontFamily: "BricolageGrotesque",
@@ -160,18 +163,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             )),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 20, top: 10),
-                              child: Text(
-                                "Forgot password",
-                                textAlign: TextAlign.right,
-                              ),
-                            )
-                          ],
-                        ),
                         const Padding(padding: EdgeInsets.all(5)),
                         Container(
                             decoration: BoxDecoration(
@@ -188,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                                 onPressed: _areAllFieldsValid() == true
                                     ? () {
-                                        UserService.login(UserCredentials(
+                                        UserService.register(UserCredentials(
                                                 email: _emailController.text,
                                                 password:
                                                     _passwordController.text))
