@@ -15,9 +15,8 @@ class ChangePasswordForm {
     private lateinit var user: User
 
     @Column
-    lateinit var createdAt : Date
+    lateinit var createdAt: Date
 
     @Column
     lateinit var expireAt: Date
-
 }

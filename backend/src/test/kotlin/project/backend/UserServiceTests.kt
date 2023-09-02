@@ -10,11 +10,11 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
+import project.backend.businessLogic.interfaces.IUserService
+import project.backend.core.interfaces.IUserRepository
+import project.backend.core.internalization.ErrorCodes
 import project.backend.core.utils.AuthResult
 import project.backend.core.utils.UserCredentials
-import project.backend.core.internalization.ErrorCodes
-import project.backend.core.interfaces.IUserRepository
-import project.backend.businessLogic.interfaces.IUserService
 
 @TestPropertySource(
     properties = [

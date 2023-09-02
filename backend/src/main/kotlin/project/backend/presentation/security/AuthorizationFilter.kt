@@ -10,8 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import project.backend.core.interfaces.IUserRepository
 import project.backend.businessLogic.utilities.JwtUtilities
+import project.backend.core.interfaces.IUserRepository
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)

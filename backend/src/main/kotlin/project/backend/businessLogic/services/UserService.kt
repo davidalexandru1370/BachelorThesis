@@ -8,9 +8,9 @@ import project.backend.businessLogic.interfaces.IUserService
 import project.backend.businessLogic.utilities.JwtUtilities
 import project.backend.core.domain.dao.User
 import project.backend.core.exceptions.ValidationException
+import project.backend.core.internalization.ErrorCodes
 import project.backend.core.utils.AuthResult
 import project.backend.core.utils.UserCredentials
-import project.backend.core.internalization.ErrorCodes
 import project.backend.infrastructure.repositories.UserRepository
 import java.util.*
 
@@ -66,12 +66,10 @@ class UserService : IUserService {
         if (!checkPasswordConstraints(newPassword)) {
             throw ValidationException(ErrorCodes.InvalidPassword.toString())
         }
-
-
     }
 
     private fun checkPasswordConstraints(password: String): Boolean {
-        var passwordMinLength: Int = 5;
-        return password.length >= passwordMinLength;
+        var passwordMinLength: Int = 5
+        return password.length >= passwordMinLength
     }
 }

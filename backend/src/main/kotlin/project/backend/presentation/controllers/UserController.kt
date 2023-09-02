@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import project.backend.businessLogic.interfaces.IUserService
 import project.backend.core.utils.AuthResult
 import project.backend.core.utils.UserCredentials
-import project.backend.businessLogic.interfaces.IUserService
 
 @RestController
 @RequestMapping(path = ["/api/user"])
