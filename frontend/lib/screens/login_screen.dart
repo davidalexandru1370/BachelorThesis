@@ -214,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .showSnackBar(SnackBar(
                                                   content: Text(
                                                       error.error.toString())));
-                                          return new Future.value();
+                                              return Future(() => {});
                                         },
                                                 test: (error) =>
                                                     error is AuthResult);
