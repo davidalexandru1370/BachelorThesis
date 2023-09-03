@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/login_screen.dart';
 
+import '../domain/models/auth_result.dart';
+import '../domain/models/user_credentials.dart';
+import '../services/user_service.dart';
 import '../widgets/login_with_facebook_button.dart';
 import '../widgets/login_with_google_button.dart';
 
@@ -193,7 +196,40 @@ class _RegisterForm extends State<RegisterScreen> {
                                   Color.fromARGB(255, 128, 127, 127),
                                 ])),
                             child: ElevatedButton(
-                                onPressed: null,
+                             onPressed: _areAllFieldsValid() == true
+                                ? () {
+                              UserService.register(UserCredentials(
+                                  email: _emailController.text,
+                                  password:
+                                  _passwordController.text))
+                                  .then((value) => {
+                                if (value.result == true)
+                                  {
+                                    _storage.write(
+                                        key: "token",
+                                        value: value.token),
+                                  }
+                                else
+                                  {
+                                    ScaffoldMessenger.of(
+                                        context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text(
+                                            value.error)))
+                                  }
+                              })
+                                  .onError(
+                                      (AuthResult error, stackTrace) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text(
+                                            error.error.toString())));
+                                    return Future(() => {});
+                                  },
+                                  test: (error) =>
+                                  error is AuthResult);
+                            }
+                                : null,
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(0, 52),
                                   elevation: 0,
