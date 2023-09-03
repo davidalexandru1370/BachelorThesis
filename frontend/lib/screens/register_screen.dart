@@ -95,6 +95,25 @@ class _RegisterForm extends State<RegisterScreen> {
                                 color: Color.fromARGB(255, 43, 43, 43))),
                       ),
                     ],
+                  ),
+                  const Padding(padding: EdgeInsets.all(5)),
+                  const Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Create ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: "BricolageGrotesque",
+                              fontSize: 22,
+                              color: Color.fromARGB(255, 43, 43, 43))),
+                      Text(" account",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: "BricolageGrotesque",
+                              fontSize: 22,
+                              color: Color.fromARGB(255, 39, 33, 234))),
+                    ],
                   )
                 ],
               ),
