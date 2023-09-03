@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:frontend/models/user_credentials.dart';
+import 'package:frontend/domain/models/user_credentials.dart';
 import 'package:http/http.dart' as http;
-import '../models/auth_result.dart';
+import '../domain/models/auth_result.dart';
 
 class UserService {
   static Future<AuthResult> login(UserCredentials userCredentials) async {

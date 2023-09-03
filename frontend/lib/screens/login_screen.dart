@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:frontend/models/user_credentials.dart';
+import 'package:frontend/domain/models/user_credentials.dart';
 import 'package:frontend/screens/register_screen.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:frontend/widgets/login_with_facebook_button.dart';
 import 'package:frontend/widgets/login_with_google_button.dart';
 
-import '../models/auth_result.dart';
+import '../domain/models/auth_result.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
