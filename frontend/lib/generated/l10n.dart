@@ -49,16 +49,6 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
-
-  /// `Hello Flutter Engage!`
-  String get helloWorld {
-    return Intl.message(
-      'Hello Flutter Engage!',
-      name: 'helloWorld',
-      desc: 'The greeting shown to the Flutter Engage attendees',
-      args: [],
-    );
-  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -67,7 +57,6 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
-      Locale.fromSubtags(languageCode: 'ro'),
     ];
   }
 
