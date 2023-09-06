@@ -1,7 +1,7 @@
 package project.backend.services.interfaces
 
-import project.backend.domain.common.AuthResult
-import project.backend.domain.common.UserCredentials
+import project.backend.core.common.AuthResult
+import project.backend.core.common.UserCredentials
 import java.util.UUID
 
 interface IUserService {

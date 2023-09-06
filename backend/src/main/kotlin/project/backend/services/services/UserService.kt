@@ -1,16 +1,16 @@
-package project.backend.services
+package project.backend.services.services
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import project.backend.domain.common.AuthResult
-import project.backend.domain.common.UserCredentials
-import project.backend.domain.dao.User
-import project.backend.domain.internalization.ErrorCodes
-import project.backend.repositories.UserRepository
 import project.backend.services.interfaces.IUserService
 import project.backend.services.utilities.JwtUtilities
+import project.backend.core.domain.dao.User
+import project.backend.core.exceptions.ValidationException
+import project.backend.core.common.AuthResult
+import project.backend.core.common.UserCredentials
+import project.backend.infrastructure.repositories.UserRepository
 import java.util.*
 
 @Service
@@ -62,6 +62,13 @@ class UserService : IUserService {
     }
 
     override fun changePassword(formId: UUID, newPassword: String) {
-        TODO("Not yet implemented")
+        if (!checkPasswordConstraints(newPassword)) {
+            throw ValidationException(ErrorCodes.InvalidPassword.toString())
+        }
+    }
+
+    private fun checkPasswordConstraints(password: String): Boolean {
+        var passwordMinLength: Int = 5
+        return password.length >= passwordMinLength
     }
 }

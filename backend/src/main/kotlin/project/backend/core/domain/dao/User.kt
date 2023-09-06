@@ -1,4 +1,4 @@
-package project.backend.domain.dao
+package project.backend.core.domain.dao
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email

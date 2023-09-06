@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:backend/src/main/kotlin/project/backend/services/utilities/JwtUtilities.kt
 package project.backend.services.utilities
+========
+package project.backend.businessLogic.utilities
+>>>>>>>> da94f09cefb24785e68474a3021cf8c4c73ab5f6:backend/src/main/kotlin/project/backend/businessLogic/utilities/JwtUtilities.kt
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException
@@ -8,10 +12,11 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
-import project.backend.domain.dao.User
-import project.backend.domain.exceptions.NotAuthorizedException
-import project.backend.domain.internalization.ErrorCodes
-import project.backend.services.configurations.JwtConfiguration
+<<<<<<<< HEAD:backend/src/main/kotlin/project/backend/services/utilities/JwtUtilities.kt
+========
+import project.backend.core.domain.dao.User
+
+>>>>>>>> da94f09cefb24785e68474a3021cf8c4c73ab5f6:backend/src/main/kotlin/project/backend/businessLogic/utilities/JwtUtilities.kt
 import java.security.Key
 import java.util.*
 import kotlin.jvm.Throws

@@ -1,4 +1,4 @@
-package project.backend.services
+package project.backend.services.services
 
 import project.backend.services.interfaces.IEmailService
 

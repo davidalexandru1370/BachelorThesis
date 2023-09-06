@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:backend/src/main/kotlin/project/backend/domain/exceptions/RestExceptionHandler.kt
 package project.backend.domain.exceptions
+========
+package project.backend.infrastructure
+>>>>>>>> da94f09cefb24785e68474a3021cf8c4c73ab5f6:backend/src/main/kotlin/project/backend/infrastructure/RestExceptionHandler.kt
 
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.core.Ordered
@@ -12,7 +16,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import project.backend.domain.common.ApiError
+<<<<<<<< HEAD:backend/src/main/kotlin/project/backend/domain/exceptions/RestExceptionHandler.kt
+========
+import project.backend.core.exceptions.ValidationException
+
+>>>>>>>> da94f09cefb24785e68474a3021cf8c4c73ab5f6:backend/src/main/kotlin/project/backend/infrastructure/RestExceptionHandler.kt
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -31,6 +39,12 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(EntityNotFoundException::class)
     protected fun handleEntityNotFound(entityNotFoundException: EntityNotFoundException): ResponseEntity<in ApiError> {
         val apiError: ApiError = ApiError(HttpStatus.NOT_FOUND, entityNotFoundException.message ?: "")
+        return buildResponseEntity(apiError)
+    }
+
+    @ExceptionHandler(ValidationException::class)
+    protected fun handleValidation(validationException: ValidationException): ResponseEntity<in ApiError> {
+        val apiError: ApiError = ApiError(HttpStatus.BAD_REQUEST, validationException.message ?: "")
         return buildResponseEntity(apiError)
     }
 

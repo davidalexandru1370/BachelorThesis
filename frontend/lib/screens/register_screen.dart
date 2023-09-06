@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/login_screen.dart';
 
-import '../domain/models/auth_result.dart';
-import '../domain/models/user_credentials.dart';
+import '../models/auth_result.dart';
+import '../models/user_credentials.dart';
 import '../services/user_service.dart';
 import '../widgets/login_with_facebook_button.dart';
 import '../widgets/login_with_google_button.dart';
@@ -98,25 +98,6 @@ class _RegisterForm extends State<RegisterScreen> {
                                 color: Color.fromARGB(255, 43, 43, 43))),
                       ),
                     ],
-                  ),
-                  const Padding(padding: EdgeInsets.all(5)),
-                  const Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Create ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: "BricolageGrotesque",
-                              fontSize: 22,
-                              color: Color.fromARGB(255, 43, 43, 43))),
-                      Text(" account",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: "BricolageGrotesque",
-                              fontSize: 22,
-                              color: Color.fromARGB(255, 39, 33, 234))),
-                    ],
                   )
                 ],
               ),
@@ -188,48 +169,48 @@ class _RegisterForm extends State<RegisterScreen> {
                                 shape: BoxShape.circle,
                                 gradient: _isFormValid == true
                                     ? const LinearGradient(colors: [
-                                  Color.fromARGB(255, 25, 77, 221),
-                                  Color.fromARGB(255, 45, 3, 171),
-                                ])
+                                        Color.fromARGB(255, 25, 77, 221),
+                                        Color.fromARGB(255, 45, 3, 171),
+                                      ])
                                     : const LinearGradient(colors: [
-                                  Color.fromARGB(255, 128, 127, 127),
-                                  Color.fromARGB(255, 128, 127, 127),
-                                ])),
+                                        Color.fromARGB(255, 128, 127, 127),
+                                        Color.fromARGB(255, 128, 127, 127),
+                                      ])),
                             child: ElevatedButton(
-                             onPressed: _areAllFieldsValid() == true
-                                ? () {
-                              UserService.register(UserCredentials(
-                                  email: _emailController.text,
-                                  password:
-                                  _passwordController.text))
-                                  .then((value) => {
-                                if (value.result == true)
-                                  {
-                                    _storage.write(
-                                        key: "token",
-                                        value: value.token),
-                                  }
-                                else
-                                  {
-                                    ScaffoldMessenger.of(
-                                        context)
-                                        .showSnackBar(SnackBar(
-                                        content: Text(
-                                            value.error)))
-                                  }
-                              })
-                                  .onError(
-                                      (AuthResult error, stackTrace) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                        content: Text(
-                                            error.error.toString())));
-                                    return Future(() => {});
-                                  },
-                                  test: (error) =>
-                                  error is AuthResult);
-                            }
-                                : null,
+                                onPressed: _areAllFieldsValid() == true
+                                    ? () {
+                                        UserService.register(UserCredentials(
+                                                email: _emailController.text,
+                                                password:
+                                                    _passwordController.text))
+                                            .then((value) => {
+                                                  if (value.result == true)
+                                                    {
+                                                      _storage.write(
+                                                          key: "token",
+                                                          value: value.token),
+                                                    }
+                                                  else
+                                                    {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              content: Text(
+                                                                  value.error)))
+                                                    }
+                                                })
+                                            .onError(
+                                                (AuthResult error, stackTrace) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      error.error.toString())));
+                                          return new Future.value();
+                                        },
+                                                test: (error) =>
+                                                    error is AuthResult);
+                                      }
+                                    : null,
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(0, 52),
                                   elevation: 0,
@@ -239,15 +220,15 @@ class _RegisterForm extends State<RegisterScreen> {
                                 ),
                                 child: _isFormValid == true
                                     ? const Icon(
-                                  color: Colors.white,
-                                  Icons.arrow_right_alt_rounded,
-                                  size: 40,
-                                )
+                                        color: Colors.white,
+                                        Icons.arrow_right_alt_rounded,
+                                        size: 40,
+                                      )
                                     : const Icon(
-                                  color: Color.fromARGB(255, 73, 73, 73),
-                                  Icons.arrow_right_alt_rounded,
-                                  size: 40,
-                                ))),
+                                        color: Color.fromARGB(255, 73, 73, 73),
+                                        Icons.arrow_right_alt_rounded,
+                                        size: 40,
+                                      ))),
                         const Padding(padding: EdgeInsets.all(10)),
                         const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
