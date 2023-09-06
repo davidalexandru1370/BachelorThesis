@@ -1,4 +1,4 @@
-package project.backend.internalization
+package project.backend.domain.internalization
 
 class ErrorCodes {
     companion object Factory {

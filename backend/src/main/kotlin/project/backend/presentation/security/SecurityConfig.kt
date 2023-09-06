@@ -1,4 +1,4 @@
-package project.backend.security
+package project.backend.presentation.security
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -9,7 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import project.backend.repositories.IUserRepository
-import project.backend.utilities.JwtUtilities
+import project.backend.services.utilities.JwtUtilities
 
 @Configuration
 @EnableWebSecurity

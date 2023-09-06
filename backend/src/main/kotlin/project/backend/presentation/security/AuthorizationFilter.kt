@@ -1,4 +1,4 @@
-package project.backend.security
+package project.backend.presentation.security
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import project.backend.repositories.IUserRepository
-import project.backend.utilities.JwtUtilities
+import project.backend.services.utilities.JwtUtilities
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)

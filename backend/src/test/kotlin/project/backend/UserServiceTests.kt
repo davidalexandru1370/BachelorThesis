@@ -10,9 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
-import project.backend.domain.AuthResult
-import project.backend.domain.UserCredentials
-import project.backend.internalization.ErrorCodes
+import project.backend.domain.common.AuthResult
+import project.backend.domain.common.UserCredentials
+import project.backend.domain.internalization.ErrorCodes
 import project.backend.repositories.IUserRepository
 import project.backend.services.interfaces.IUserService
 

@@ -1,4 +1,4 @@
-package project.backend.utilities
+package project.backend.services.utilities
 
 import java.util.*
 
