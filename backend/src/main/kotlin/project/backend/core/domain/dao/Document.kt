@@ -20,6 +20,8 @@ class Document : ISoftDelete() {
     @Column
     lateinit var createdAt: Date
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
     lateinit var userId: User
+
+
 }
