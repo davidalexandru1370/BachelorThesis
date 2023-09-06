@@ -8,10 +8,10 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
-import project.backend.services.configurations.JwtConfiguration
 import project.backend.domain.dao.User
 import project.backend.domain.exceptions.NotAuthorizedException
 import project.backend.domain.internalization.ErrorCodes
+import project.backend.services.configurations.JwtConfiguration
 import java.security.Key
 import java.util.*
 import kotlin.jvm.Throws
