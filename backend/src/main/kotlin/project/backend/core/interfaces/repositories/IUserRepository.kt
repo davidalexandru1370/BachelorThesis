@@ -1,4 +1,4 @@
-package project.backend.core.interfaces
+package project.backend.core.interfaces.repositories
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.NoRepositoryBean
