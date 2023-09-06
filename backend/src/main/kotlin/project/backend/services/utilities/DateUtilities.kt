@@ -1,4 +1,4 @@
-package project.backend.businessLogic.utilities
+package project.backend.services.utilities
 
 import java.util.*
 

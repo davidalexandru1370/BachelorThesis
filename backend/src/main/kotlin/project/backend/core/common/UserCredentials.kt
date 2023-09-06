@@ -1,4 +1,4 @@
-package project.backend.core.utils
+package project.backend.core.common
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank

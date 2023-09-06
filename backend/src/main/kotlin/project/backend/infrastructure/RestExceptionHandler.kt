@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import project.backend.core.common.ApiError
 import project.backend.core.exceptions.ValidationException
-import project.backend.core.utils.ApiError
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice

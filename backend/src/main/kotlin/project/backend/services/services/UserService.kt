@@ -1,17 +1,17 @@
-package project.backend.businessLogic.services
+package project.backend.services.services
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import project.backend.businessLogic.interfaces.IUserService
-import project.backend.businessLogic.utilities.JwtUtilities
+import project.backend.core.common.AuthResult
+import project.backend.core.common.UserCredentials
 import project.backend.core.domain.dao.User
 import project.backend.core.exceptions.ValidationException
 import project.backend.core.internalization.ErrorCodes
-import project.backend.core.utils.AuthResult
-import project.backend.core.utils.UserCredentials
 import project.backend.infrastructure.repositories.UserRepository
+import project.backend.services.interfaces.IUserService
+import project.backend.services.utilities.JwtUtilities
 import java.util.*
 
 @Service

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:frontend/models/user_credentials.dart';
+import 'package:frontend/common/common.dart';
+import 'package:frontend/domain/models/user_credentials.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/screens/register_screen.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:frontend/widgets/login_with_facebook_button.dart';
 import 'package:frontend/widgets/login_with_google_button.dart';
+import 'package:provider/provider.dart';
 
-import '../models/auth_result.dart';
+import '../domain/models/auth_result.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,6 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _storage = const FlutterSecureStorage();
+  Locale _locale = Locale('en');
+
+  void setLocale(Locale value) {
+    setState(() {
+      _locale = value;
+    });
+  }
 
   bool _isFormValid = false;
 
@@ -85,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen()));
+                                  builder: (context) =>
+                                      const RegisterScreen()));
                         },
                         child: const Text("Create account",
                             textAlign: TextAlign.left,
@@ -160,16 +171,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             )),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(right: 20, top: 10),
-                              child: Text(
-                                "Forgot password",
-                                textAlign: TextAlign.right,
-                              ),
-                            )
+                                padding: EdgeInsets.only(right: 20, top: 10),
+                                child: Consumer<LocaleModel>(
+                                    builder: (context, localeModel, child) =>
+                                        GestureDetector(
+                                          onTap: () {
+                                            localeModel.setLocale(Locale(
+                                                localeModel.locale ==
+                                                        Locale('en')
+                                                    ? 'ro'
+                                                    : 'en'));
+                                          },
+                                          child: Text(
+                                            getAppLocalizations(context)!
+                                                .forgotPassword,
+                                            textAlign: TextAlign.right,
+                                          ),
+                                        )))
                           ],
                         ),
                         const Padding(padding: EdgeInsets.all(5)),
@@ -214,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .showSnackBar(SnackBar(
                                                   content: Text(
                                                       error.error.toString())));
-                                          return new Future.value();
+                                          return Future(() => {});
                                         },
                                                 test: (error) =>
                                                     error is AuthResult);

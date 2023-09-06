@@ -1,7 +1,7 @@
-package project.backend.businessLogic.interfaces
+package project.backend.services.interfaces
 
-import project.backend.core.utils.AuthResult
-import project.backend.core.utils.UserCredentials
+import project.backend.core.common.AuthResult
+import project.backend.core.common.UserCredentials
 import java.util.UUID
 
 interface IUserService {

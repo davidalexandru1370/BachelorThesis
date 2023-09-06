@@ -1,4 +1,4 @@
-package project.backend.core.utils
+package project.backend.core.common
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import org.springframework.http.HttpStatus
