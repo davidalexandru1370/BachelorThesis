@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import project.backend.services.interfaces.IUserService
-import project.backend.services.utilities.JwtUtilities
-import project.backend.core.domain.dao.User
-import project.backend.core.exceptions.ValidationException
 import project.backend.core.common.AuthResult
 import project.backend.core.common.UserCredentials
+import project.backend.core.domain.dao.User
+import project.backend.core.exceptions.ValidationException
+import project.backend.core.internalization.ErrorCodes
 import project.backend.infrastructure.repositories.UserRepository
+import project.backend.services.interfaces.IUserService
+import project.backend.services.utilities.JwtUtilities
 import java.util.*
 
 @Service

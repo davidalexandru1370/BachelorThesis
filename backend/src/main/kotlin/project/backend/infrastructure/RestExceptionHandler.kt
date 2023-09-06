@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:backend/src/main/kotlin/project/backend/domain/exceptions/RestExceptionHandler.kt
-package project.backend.domain.exceptions
-========
 package project.backend.infrastructure
->>>>>>>> da94f09cefb24785e68474a3021cf8c4c73ab5f6:backend/src/main/kotlin/project/backend/infrastructure/RestExceptionHandler.kt
 
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.core.Ordered
@@ -16,11 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-<<<<<<<< HEAD:backend/src/main/kotlin/project/backend/domain/exceptions/RestExceptionHandler.kt
-========
+import project.backend.core.common.ApiError
 import project.backend.core.exceptions.ValidationException
-
->>>>>>>> da94f09cefb24785e68474a3021cf8c4c73ab5f6:backend/src/main/kotlin/project/backend/infrastructure/RestExceptionHandler.kt
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
