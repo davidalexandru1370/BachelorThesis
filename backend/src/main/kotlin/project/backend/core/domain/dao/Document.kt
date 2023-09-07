@@ -7,7 +7,7 @@ import java.sql.Date
 import java.util.*
 
 @Entity
-class Document : ISoftDelete() {
+class Document() : ISoftDelete() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,5 +23,8 @@ class Document : ISoftDelete() {
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
     lateinit var userId: User
 
-
+    constructor(createdAt: Date, userId: User) : this() {
+        this.createdAt = createdAt
+        this.userId = userId
+    }
 }

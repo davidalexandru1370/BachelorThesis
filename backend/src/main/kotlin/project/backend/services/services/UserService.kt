@@ -1,5 +1,6 @@
 package project.backend.services.services
 
+import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -14,6 +15,7 @@ import project.backend.services.interfaces.IUserService
 import project.backend.services.utilities.JwtUtilities
 import java.util.*
 
+
 @Service
 class UserService : IUserService {
     @set: Autowired
@@ -23,6 +25,7 @@ class UserService : IUserService {
     var jwtUtilities = JwtUtilities()
 
     override fun login(userCredentials: UserCredentials): AuthResult {
+
         val foundUser: User = try {
             userRepository.findByEmail(userCredentials.email)
         } catch (_: EmptyResultDataAccessException) {
