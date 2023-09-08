@@ -18,11 +18,10 @@ class DocumentService : IDocumentService {
     @Autowired
     private lateinit var documentRepository: IDocumentRepository
 
-
-    override  fun addDocument(documentDto: DocumentDto): DocumentDto {
+    override fun addDocument(documentDto: DocumentDto): DocumentDto {
         val document = modelMapper.map(documentDto, Document::class.java)
-        document.type = computeTypeOfDocument(document.url);
-        val savedDocument = documentRepository.save(document);
+        document.type = computeTypeOfDocument(document.storageUrl)
+        val savedDocument = documentRepository.save(document)
 
         return modelMapper.map(savedDocument, DocumentDto::class.java)
     }
@@ -37,6 +36,4 @@ class DocumentService : IDocumentService {
 
     override fun computeTypeOfDocument(documentUrl: String): DocumentType =
         DocumentType.ANAFDocument
-
-
 }
