@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration
 class ModelMapperConfiguration {
     @Bean
     fun modelMapper(): ModelMapper {
-        val modelMapper: ModelMapper = ModelMapper();
+        val modelMapper: ModelMapper = ModelMapper()
         modelMapperConfiguration(modelMapper)
-        return modelMapper;
+        return modelMapper
     }
 
     private fun modelMapperConfiguration(modelMapper: ModelMapper) {

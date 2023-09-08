@@ -20,11 +20,15 @@ class Document() : ISoftDelete() {
     @Column
     lateinit var createdAt: Date
 
+    @Column
+    lateinit var storageUrl: String
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
     lateinit var userId: User
 
-    constructor(createdAt: Date, userId: User) : this() {
+    constructor(createdAt: Date, userId: User, storageUrl: String) : this() {
         this.createdAt = createdAt
         this.userId = userId
+        this.storageUrl = storageUrl
     }
 }
