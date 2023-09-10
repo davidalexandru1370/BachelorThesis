@@ -21,7 +21,7 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() }.authorizeHttpRequests {
             it.requestMatchers("/api/user/**").permitAll()
-        }.addFilterBefore(AuthorizationFilter(jwtUtilities, userRepository), UsernamePasswordAuthenticationFilter().javaClass)
+        }.addFilterBefore(AuthorizationFilter(), UsernamePasswordAuthenticationFilter().javaClass)
             .cors {
                 it.disable()
             }

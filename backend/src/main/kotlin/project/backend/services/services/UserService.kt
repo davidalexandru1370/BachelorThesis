@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import project.backend.core.common.AuthResult
 import project.backend.core.common.UserCredentials
-import project.backend.core.domain.dao.User
+import project.backend.core.domain.User
 import project.backend.core.exceptions.ValidationException
 import project.backend.core.interfaces.repositories.IUserRepository
 import project.backend.core.internalization.ErrorCodes

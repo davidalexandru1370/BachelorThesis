@@ -3,6 +3,7 @@ package project.backend.presentation.security
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpHeaders
@@ -15,10 +16,10 @@ import project.backend.services.utilities.JwtUtilities
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)
-class AuthorizationFilter(
-    private val jwtUtilities: JwtUtilities,
-    private val userRepository: IUserRepository,
-) : OncePerRequestFilter() {
+class AuthorizationFilter : OncePerRequestFilter() {
+    @Autowired private lateinit var jwtUtilities: JwtUtilities
+
+    @Autowired private lateinit var userRepository: IUserRepository
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
