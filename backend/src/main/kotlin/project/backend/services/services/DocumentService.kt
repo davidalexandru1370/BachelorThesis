@@ -1,11 +1,16 @@
 package project.backend.services.services
 
+import nu.studer.sample.Tables.DOCUMENT
+import org.hibernate.annotations.Tables
+import org.jooq.DSLContext
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import project.backend.core.domain.Document
 import project.backend.core.enums.DocumentType
+import project.backend.core.exceptions.NotFoundException
 import project.backend.core.interfaces.repositories.IDocumentRepository
+import project.backend.core.internalization.ErrorCodes
 import project.backend.services.entities.dtos.DocumentDto
 import project.backend.services.interfaces.IDocumentService
 import java.util.*
@@ -14,6 +19,9 @@ import java.util.*
 class DocumentService : IDocumentService {
     @Autowired
     private lateinit var modelMapper: ModelMapper
+
+    @Autowired
+    private lateinit var jooq: DSLContext
 
     @Autowired
     private lateinit var documentRepository: IDocumentRepository
@@ -27,7 +35,10 @@ class DocumentService : IDocumentService {
     }
 
     override fun getDocument(id: UUID): DocumentDto {
-        TODO("Not yet implemented")
+        val document = documentRepository.findById(id)
+            .orElseThrow { NotFoundException(ErrorCodes.DocumentDoesNotExists.toString()) }
+        
+        return modelMapper.map(document, DocumentDto::class.java)
     }
 
     override fun deleteDocument(id: UUID): DocumentDto {

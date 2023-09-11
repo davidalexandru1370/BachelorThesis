@@ -1,9 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jooq.meta.jaxb.ForcedType
 
 plugins {
     id("org.springframework.boot") version "3.1.2"
     id("io.spring.dependency-management") version "1.1.2"
-    id("org.liquibase.gradle") version "2.2.0"
+    id("nu.studer.jooq") version "8.2.1"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
     kotlin("plugin.jpa") version "1.8.22"
@@ -20,17 +21,6 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    liquibase {
-        activities.register("main")
-        runList = "main"
-    }
-
-    liquibaseRuntime {
-        extendsFrom(project.configurations.compileClasspath.get())
-    }
-}
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
@@ -43,22 +33,64 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.1.1")
     implementation("com.h2database:h2:2.1.214")
     implementation("org.jooq:jooq:3.18.6")
+    implementation("org.jooq:jooq-codegen:3.18.6")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    implementation("org.liquibase.ext:liquibase-hibernate6:4.22.0")
-    liquibaseRuntime("org.liquibase:liquibase-core:4.22.0")
-    liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:3.0.3")
-    liquibaseRuntime("org.postgresql:postgresql")
-    liquibaseRuntime("org.liquibase.ext:liquibase-hibernate6:4.22.0")
-    liquibaseRuntime("info.picocli:picocli:4.7.4")
-    liquibaseRuntime(sourceSets.getByName("main").compileClasspath)
-    liquibaseRuntime(sourceSets.getByName("main").runtimeClasspath)
-    liquibaseRuntime(sourceSets.getByName("main").output)
+    jooqGenerator("org.postgresql:postgresql")
 }
+
+
+jooq{
+    configurations {
+        create("main") {
+            generateSchemaSourceOnCompilation.set(true)
+
+            jooqConfiguration.apply {
+                jdbc.apply {
+                    driver = "org.postgresql.Driver"
+                    url = "jdbc:postgresql://localhost:5432/sdia"
+                    user = "postgres"
+                    password = "postgres"
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                        forcedTypes.addAll(listOf(
+                            ForcedType().apply {
+                                name = "varchar"
+                                includeExpression = ".*"
+                                includeTypes = "JSONB?"
+                            },
+                            ForcedType().apply {
+                                name = "varchar"
+                                includeExpression = ".*"
+                                includeTypes = "INET"
+                            }
+                        ))
+                    }
+                    generate.apply {
+                        isDeprecated = false
+                        isRecords = true
+                        isImmutablePojos = true
+                        isFluentSetters = true
+                    }
+                    target.apply {
+                        packageName = "nu.studer.sample"
+                        directory = "build/generated-src/jooq/main"
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
+
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

@@ -6,5 +6,6 @@ class ErrorCodes {
         const val EmailOrPasswordAreWrong: Int = 2
         const val NotAuthorized: Int = 3
         const val InvalidPassword: Int = 4
+        const val DocumentDoesNotExists: Int = 5
     }
 }
