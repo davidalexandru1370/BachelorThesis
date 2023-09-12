@@ -7,6 +7,6 @@ import java.util.*
 interface IDocumentService {
     fun addDocument(documentDto: DocumentDto): DocumentDto
     fun getDocument(id: UUID): DocumentDto
-    fun deleteDocument(id: UUID): DocumentDto
+    fun deleteDocument(id: UUID)
     fun computeTypeOfDocument(documentUrl: String): DocumentType
 }

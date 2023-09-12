@@ -32,6 +32,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.modelmapper:modelmapper:3.1.1")
     implementation("com.h2database:h2:2.1.214")
+    compileOnly("org.projectlombok:lombok:1.18.24")
     implementation("org.jooq:jooq:3.18.6")
     implementation("org.jooq:jooq-codegen:3.18.6")
     runtimeOnly("org.postgresql:postgresql")
@@ -43,8 +44,7 @@ dependencies {
     jooqGenerator("org.postgresql:postgresql")
 }
 
-
-jooq{
+jooq {
     configurations {
         create("main") {
             generateSchemaSourceOnCompilation.set(true)
@@ -61,18 +61,20 @@ jooq{
                     database.apply {
                         name = "org.jooq.meta.postgres.PostgresDatabase"
                         inputSchema = "public"
-                        forcedTypes.addAll(listOf(
-                            ForcedType().apply {
-                                name = "varchar"
-                                includeExpression = ".*"
-                                includeTypes = "JSONB?"
-                            },
-                            ForcedType().apply {
-                                name = "varchar"
-                                includeExpression = ".*"
-                                includeTypes = "INET"
-                            }
-                        ))
+                        forcedTypes.addAll(
+                            listOf(
+                                ForcedType().apply {
+                                    name = "varchar"
+                                    includeExpression = ".*"
+                                    includeTypes = "JSONB?"
+                                },
+                                ForcedType().apply {
+                                    name = "varchar"
+                                    includeExpression = ".*"
+                                    includeTypes = "INET"
+                                },
+                            ),
+                        )
                     }
                     generate.apply {
                         isDeprecated = false
@@ -90,7 +92,6 @@ jooq{
         }
     }
 }
-
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

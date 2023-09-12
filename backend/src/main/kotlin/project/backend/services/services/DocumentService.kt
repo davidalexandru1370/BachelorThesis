@@ -1,8 +1,5 @@
 package project.backend.services.services
 
-import nu.studer.sample.Tables.DOCUMENT
-import org.hibernate.annotations.Tables
-import org.jooq.DSLContext
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -21,9 +18,6 @@ class DocumentService : IDocumentService {
     private lateinit var modelMapper: ModelMapper
 
     @Autowired
-    private lateinit var jooq: DSLContext
-
-    @Autowired
     private lateinit var documentRepository: IDocumentRepository
 
     override fun addDocument(documentDto: DocumentDto): DocumentDto {
@@ -37,12 +31,15 @@ class DocumentService : IDocumentService {
     override fun getDocument(id: UUID): DocumentDto {
         val document = documentRepository.findById(id)
             .orElseThrow { NotFoundException(ErrorCodes.DocumentDoesNotExists.toString()) }
-        
+
         return modelMapper.map(document, DocumentDto::class.java)
     }
 
-    override fun deleteDocument(id: UUID): DocumentDto {
-        TODO("Not yet implemented")
+    override fun deleteDocument(id: UUID) {
+        val document = documentRepository.findById(id)
+            .orElseThrow { NotFoundException(ErrorCodes.DocumentDoesNotExists.toString()) }
+        
+        documentRepository.delete(document);
     }
 
     override fun computeTypeOfDocument(documentUrl: String): DocumentType =
