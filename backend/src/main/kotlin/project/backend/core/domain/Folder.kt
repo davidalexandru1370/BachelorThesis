@@ -15,9 +15,9 @@ class Folder(
     @Column
     private var createdAt: Date,
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
-    private var userId: User,
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    private var documents: List<Document>,
+    private var user: User,
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "folder")
+    private var documents: Set<Document>,
 ) : ISoftDelete() {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
