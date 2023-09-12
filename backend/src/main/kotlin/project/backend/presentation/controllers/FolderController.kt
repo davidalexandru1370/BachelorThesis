@@ -9,11 +9,10 @@ import project.backend.services.interfaces.IFolderService
 @RestController
 @RequestMapping(path = ["/api/folder"])
 class FolderController(
-    @Autowired private val folderService: IFolderService
+    @Autowired private val folderService: IFolderService,
 ) {
 
     @PostMapping()
     fun createFolder() {
-
     }
 }

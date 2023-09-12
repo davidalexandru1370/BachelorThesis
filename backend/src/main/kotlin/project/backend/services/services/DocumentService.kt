@@ -38,8 +38,8 @@ class DocumentService : IDocumentService {
     override fun deleteDocument(id: UUID) {
         val document = documentRepository.findById(id)
             .orElseThrow { NotFoundException(ErrorCodes.DocumentDoesNotExists.toString()) }
-        
-        documentRepository.delete(document);
+
+        documentRepository.delete(document)
     }
 
     override fun computeTypeOfDocument(documentUrl: String): DocumentType =
