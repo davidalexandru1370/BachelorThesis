@@ -1,3 +1,7 @@
 package project.backend.services.interfaces
 
-interface IFolderService
+import project.backend.services.entities.commands.folder.CreateFolderCommand
+
+interface IFolderService {
+    fun createFolder(createFolderCommand: CreateFolderCommand)
+}

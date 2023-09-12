@@ -11,15 +11,17 @@ import java.util.*
 @Getter
 @Setter
 @NoArgsConstructor
-class Folder(
-    @Column
-    private var createdAt: Date,
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
-    private var user: User,
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "folder")
-    private var documents: Set<Document>,
-) : ISoftDelete() {
+class Folder : ISoftDelete() {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private lateinit var id: UUID
+
+    @Column
+    private lateinit var createdAt: Date
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
+    private lateinit var user: User
+
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "folder")
+    private lateinit var documents: Set<Document>
 }
