@@ -1,7 +1,6 @@
 package project.backend.core.domain
 
 import jakarta.persistence.*
-import lombok.EqualsAndHashCode
 import lombok.Getter
 import lombok.NoArgsConstructor
 import lombok.Setter
@@ -12,14 +11,13 @@ import java.util.*
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
-data class Folder(
+class Folder(
     @Column
     private var createdAt: Date,
-    @Column
-    private var createdBy: String,
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
+    private var userId: User,
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    private var documents: List<Document>
+    private var documents: List<Document>,
 ) : ISoftDelete() {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
