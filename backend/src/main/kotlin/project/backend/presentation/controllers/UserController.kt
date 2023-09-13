@@ -1,5 +1,6 @@
 package project.backend.presentation.controllers
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,6 +14,7 @@ import project.backend.core.common.UserCredentials
 import project.backend.services.interfaces.IUserService
 
 @RestController
+@OpenAPIDefinition
 @RequestMapping(path = ["/api/user"])
 class UserController(
     @Autowired private val userService: IUserService,

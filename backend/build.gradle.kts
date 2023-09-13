@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jooq.meta.jaxb.ForcedType
 
 plugins {
-    id("org.springframework.boot") version "3.1.2"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.2"
     id("nu.studer.jooq") version "8.2.1"
     kotlin("jvm") version "1.8.22"
@@ -41,56 +40,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    jooqGenerator("org.postgresql:postgresql")
 }
 
-jooq {
-    configurations {
-        create("main") {
-            generateSchemaSourceOnCompilation.set(true)
-
-            jooqConfiguration.apply {
-                jdbc.apply {
-                    driver = "org.postgresql.Driver"
-                    url = "jdbc:postgresql://localhost:5432/sdia"
-                    user = "postgres"
-                    password = "postgres"
-                }
-                generator.apply {
-                    name = "org.jooq.codegen.DefaultGenerator"
-                    database.apply {
-                        name = "org.jooq.meta.postgres.PostgresDatabase"
-                        inputSchema = "public"
-                        forcedTypes.addAll(
-                            listOf(
-                                ForcedType().apply {
-                                    name = "varchar"
-                                    includeExpression = ".*"
-                                    includeTypes = "JSONB?"
-                                },
-                                ForcedType().apply {
-                                    name = "varchar"
-                                    includeExpression = ".*"
-                                    includeTypes = "INET"
-                                },
-                            ),
-                        )
-                    }
-                    generate.apply {
-                        isDeprecated = false
-                        isRecords = true
-                        isImmutablePojos = true
-                        isFluentSetters = true
-                    }
-                    target.apply {
-                        packageName = "nu.studer.sample"
-                        directory = "build/generated-src/jooq/main"
-                    }
-                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
-                }
-            }
-        }
-    }
+dependencies {
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 }
 
 tasks.withType<KotlinCompile> {

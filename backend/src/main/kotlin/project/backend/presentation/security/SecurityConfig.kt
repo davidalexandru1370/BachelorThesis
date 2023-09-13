@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import project.backend.core.interfaces.repositories.IUserRepository
 import project.backend.services.utilities.JwtUtilities
 
@@ -21,7 +21,11 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() }.authorizeHttpRequests {
             it.requestMatchers("/api/user/**").permitAll()
-        }.addFilterBefore(AuthorizationFilter(jwtUtilities, userRepository), UsernamePasswordAuthenticationFilter().javaClass)
+            if (System.getenv("ENVIRONMENT") == "dev") {
+                it.requestMatchers(AntPathRequestMatcher("/v3/**")).permitAll()
+                it.requestMatchers(AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+            }
+        }
             .cors {
                 it.disable()
             }

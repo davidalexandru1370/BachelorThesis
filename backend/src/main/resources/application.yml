@@ -3,3 +3,6 @@ jwt:
   audience: da
   issuer: http://localhost:8080
   "expireTimeInMinutes": 30
+
+openapi:
+  dev-baseUrl: "http://localhost:8080"
