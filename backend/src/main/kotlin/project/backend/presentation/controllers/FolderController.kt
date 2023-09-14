@@ -19,7 +19,9 @@ class FolderController(
 ) {
 
     @PostMapping(path = [""])
-    fun createFolder(@Valid @RequestBody createFolderRequest: CreateFolderRequest) {
+    fun createFolder(
+        @Valid @RequestBody createFolderRequest: CreateFolderRequest,
+    ) {
         val createFolderCommand = modelMapper.map(createFolderRequest, CreateFolderCommand::class.java)
         folderService.createFolder(createFolderCommand)
     }
