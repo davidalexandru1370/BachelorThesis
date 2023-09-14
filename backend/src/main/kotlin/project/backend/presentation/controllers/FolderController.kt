@@ -18,7 +18,7 @@ class FolderController(
     @Autowired private val modelMapper: ModelMapper,
 ) {
 
-    @PostMapping(path = [""])
+    @PostMapping
     fun createFolder(
         @Valid @RequestBody createFolderRequest: CreateFolderRequest,
     ) {
