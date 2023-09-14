@@ -31,7 +31,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.modelmapper:modelmapper:3.1.1")
     implementation("com.h2database:h2:2.1.214")
-    compileOnly("org.projectlombok:lombok:1.18.24")
     implementation("org.jooq:jooq:3.18.6")
     implementation("org.jooq:jooq-codegen:3.18.6")
     runtimeOnly("org.postgresql:postgresql")
@@ -45,6 +44,7 @@ dependencies {
 dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 }
+
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {

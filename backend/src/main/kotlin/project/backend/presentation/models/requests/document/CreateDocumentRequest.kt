@@ -1,10 +1,9 @@
 package project.backend.presentation.models.requests.document
 
-import lombok.Getter
-import lombok.Setter
+import jakarta.validation.constraints.NotEmpty
 
-@Getter
-@Setter
-class CreateDocumentRequest {
+
+data class CreateDocumentRequest(
+    @NotEmpty
     private var storageUrl: String = ""
-}
+)

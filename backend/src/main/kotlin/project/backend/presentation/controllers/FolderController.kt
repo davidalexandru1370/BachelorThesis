@@ -22,7 +22,6 @@ class FolderController(
     fun createFolder(
         @Valid @RequestBody createFolderRequest: CreateFolderRequest,
     ) {
-        // Todo: validation of createFolderRequest
         val createFolderCommand = modelMapper.map(createFolderRequest, CreateFolderCommand::class.java)
         folderService.createFolder(createFolderCommand)
     }

@@ -1,11 +1,9 @@
 package project.backend.presentation.models.requests.folder
 
-import lombok.Getter
-import lombok.Setter
+import jakarta.validation.constraints.NotEmpty
 import project.backend.presentation.models.requests.document.CreateDocumentRequest
 
-@Getter
-@Setter
-class CreateFolderRequest {
-    private lateinit var documents: Set<CreateDocumentRequest>
-}
+class CreateFolderRequest(
+    @NotEmpty
+    private var documents: Set<CreateDocumentRequest> = HashSet<CreateDocumentRequest>()
+)
