@@ -10,7 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import project.backend.core.interfaces.repositories.IUserRepository
+import project.backend.persistence.repositories.IUserRepository
 import project.backend.services.utilities.JwtUtilities
 
 @Component

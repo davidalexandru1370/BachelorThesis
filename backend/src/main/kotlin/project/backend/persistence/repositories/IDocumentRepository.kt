@@ -1,4 +1,4 @@
-package project.backend.core.interfaces.repositories
+package project.backend.persistence.repositories
 
 import org.hibernate.annotations.Filter
 import org.hibernate.annotations.FilterDef

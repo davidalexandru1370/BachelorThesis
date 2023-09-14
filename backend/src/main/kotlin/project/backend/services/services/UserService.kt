@@ -8,7 +8,7 @@ import project.backend.core.common.AuthResult
 import project.backend.core.common.UserCredentials
 import project.backend.core.domain.User
 import project.backend.core.exceptions.ValidationException
-import project.backend.core.interfaces.repositories.IUserRepository
+import project.backend.persistence.repositories.IUserRepository
 import project.backend.core.internalization.ErrorCodes
 import project.backend.services.interfaces.IUserService
 import project.backend.services.utilities.JwtUtilities

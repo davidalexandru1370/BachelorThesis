@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import project.backend.core.interfaces.repositories.IUserRepository
+import project.backend.persistence.repositories.IUserRepository
 import project.backend.services.utilities.JwtUtilities
 
 @Configuration

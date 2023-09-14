@@ -5,5 +5,5 @@ import project.backend.presentation.models.requests.document.CreateDocumentReque
 
 class CreateFolderRequest(
     @NotEmpty
-    private var documents: Set<CreateDocumentRequest> = HashSet<CreateDocumentRequest>()
+    private var documents: Set<CreateDocumentRequest> = HashSet<CreateDocumentRequest>(),
 )
