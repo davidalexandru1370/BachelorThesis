@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotEmpty
 
 data class CreateDocumentRequest(
     @NotEmpty
-    private var storageUrl: String = "",
+    var storageUrl: String = "",
 )
