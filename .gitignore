@@ -67,7 +67,7 @@ node_modules/
 /.vscode
 /.devcontainer
 *.code-workspace
-
+dist/
 # Vim
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]

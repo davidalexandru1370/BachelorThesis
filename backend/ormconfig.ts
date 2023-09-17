@@ -11,4 +11,4 @@ export const connectionSource = new DataSource({
   synchronize: false,
   entities: ["dist/**/*.entity{.ts,.js}"],
   migrations: ["src/infrastructure/migrations/**"],
-});
+}).initialize();
