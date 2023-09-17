@@ -39,7 +39,8 @@ class ConfigService {
       database: this.getValue("POSTGRES_DATABASE"),
       entities: ["dist/**/*.entity{.ts,.js}"],
       migrationsTableName: "migration",
-      migrations: ["src/infrastructure/migrations/**"],
+      migrationsRun: false,
+      migrations: ["dist/infrastructure/migrations/*.js"],
       ssl: this.isProduction(),
     };
   }

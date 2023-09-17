@@ -1,4 +1,3 @@
-import { User } from "src/core/domain/user.entity";
 import { DataSource } from "typeorm";
 
 export const connectionSource = new DataSource({
