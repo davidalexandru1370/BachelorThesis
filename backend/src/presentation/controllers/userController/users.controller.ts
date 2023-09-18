@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Inject,
 } from "@nestjs/common";
 import { CreateUserDto } from "../../../service/services/entities/user/create-user.dto";
 import { UsersService } from "src/service/services/userService/users.service";
