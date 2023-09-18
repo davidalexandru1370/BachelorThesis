@@ -1,1 +1,0 @@
-{"version":3,"file":"document.entity.js","sourceRoot":"","sources":["../../../../src/core/domain/document.entity.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qCAAyC;AACzC,yDAA+C;AAGxC,IAAM,QAAQ,GAAd,MAAM,QAAS,SAAQ,oBAAK;CAGlC,CAAA;AAHY,4BAAQ;AAEnB;IADC,IAAA,gBAAM,EAAC,EAAE,IAAI,EAAE,SAAS,EAAE,MAAM,EAAE,GAAG,EAAE,CAAC;;4CACtB;mBAFR,QAAQ;IADpB,IAAA,gBAAM,GAAE;GACI,QAAQ,CAGpB"}
