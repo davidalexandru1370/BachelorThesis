@@ -5,7 +5,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { ApiErrorCodes } from "src/core/constants/i18n";
-import { InjectMapper } from "@timonmasberg/automapper-nestjs";
 
 @Injectable()
 export class UsersService {
@@ -53,16 +52,11 @@ export class UsersService {
       );
     }
 
+    password = await bcrypt.hash(password, 10);
+
     const addedUser = await this.userRepository.save(new User(email, password));
-  }
+    const token = await this.jwtService.generateJwtToken(addedUser);
 
-  private async generateJwtToken(user: User): Promise<string> {
-    const payload = {
-      sub: user.id,
-      email: user.email,
-    };
-    const token = await this.jwtService.signAsync(payload);
-
-    return token;
+    return new AuthResult(token);
   }
 }
