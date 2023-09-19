@@ -2,8 +2,6 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { configService } from "./presentation/config/config.service";
 import { UsersModule } from "./presentation/controllers/userController/users.module";
-import { UsersService } from "./service/services/userService/users.service";
-import { UsersController } from "./presentation/controllers/userController/users.controller";
 import { DataSource } from "typeorm";
 
 @Module({

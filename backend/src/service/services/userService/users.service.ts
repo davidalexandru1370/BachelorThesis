@@ -1,35 +1,43 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { CreateUserRequest } from "../../../presentation/entities/requests/user/create-user.request";
-import { UpdateUserDto } from "../../entities/user/update-user.dto";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { User } from "src/core/domain/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import * as bcrypt from "bcrypt";
+import { JwtService } from "@nestjs/jwt";
+import { ApiErrorCodes } from "src/core/constants/i18n";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    private jwtService: JwtService
   ) {}
 
-  async create(createUserDto: CreateUserRequest): Promise<User> {
-    const addedUser = await this.userRepository.save(createUserDto);
-    return addedUser;
-  }
+  async login(email: string, password: string): Promise<AuthResult> {
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+    });
 
-  findAll() {
-    return this.userRepository.createQueryBuilder().getMany();
-  }
+    if (user === null) {
+      throw new NotFoundException(
+        ApiErrorCodes.EMAIL_OR_PASSWORD_INVALID.toString()
+      );
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+    const isMatch = await bcrypt.compare(password, user.password);
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+    if (isMatch) {
+      const payload = {
+        sub: user.id,
+        email: user.email,
+      };
+      const token = await this.jwtService.signAsync(payload);
+      return new AuthResult(token);
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    throw new NotFoundException(
+      ApiErrorCodes.EMAIL_OR_PASSWORD_INVALID.toString()
+    );
   }
 }
