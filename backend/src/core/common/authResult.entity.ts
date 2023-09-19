@@ -1,4 +1,4 @@
-class AuthResult {
+export class AuthResult {
   token: string;
 
   constructor(token: string) {

@@ -1,10 +1,15 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { Repository } from "typeorm";
 import { User } from "src/core/domain/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
-import { JwtService } from "@nestjs/jwt";
 import { ApiErrorCodes } from "src/core/constants/i18n";
+import { AuthResult } from "src/core/common/authResult.entity";
+import { JwtService } from "@nestjs/jwt/dist/jwt.service";
 
 @Injectable()
 export class UsersService {
@@ -47,7 +52,7 @@ export class UsersService {
     });
 
     if (user !== null) {
-      throw new NotFoundException(
+      throw new ConflictException(
         ApiErrorCodes.EMAIL_ALREADY_EXISTS.toString()
       );
     }
@@ -55,8 +60,18 @@ export class UsersService {
     password = await bcrypt.hash(password, 10);
 
     const addedUser = await this.userRepository.save(new User(email, password));
-    const token = await this.jwtService.generateJwtToken(addedUser);
+    const token = await this.generateJwtToken(addedUser);
 
     return new AuthResult(token);
+  }
+
+  private async generateJwtToken(user: User): Promise<string> {
+    const payload = {
+      sub: user.id,
+      email: user.email,
+    };
+    const token = await this.jwtService.signAsync(payload);
+
+    return token;
   }
 }
