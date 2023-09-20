@@ -1,0 +1,35 @@
+version: "3.8"
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 8001:5432
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dev
+
+  backend:
+    container_name: backend
+    image: docker.io/library/backend
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - dev
+
+volumes:
+  postgres-data:
