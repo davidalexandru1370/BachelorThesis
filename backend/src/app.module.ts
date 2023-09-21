@@ -5,6 +5,7 @@ import { UsersModule } from "./presentation/controllers/user/users.module";
 import { DataSource } from "typeorm";
 import { AutomapperModule } from "@timonmasberg/automapper-nestjs";
 import { classes } from "@automapper/classes";
+import { FolderModule } from "./presentation/controllers/folder/folder.module";
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { classes } from "@automapper/classes";
     }),
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     UsersModule,
+    FolderModule,
   ],
   exports: [TypeOrmModule],
 })
