@@ -13,8 +13,12 @@ export class Folder extends Audit implements ISoftDelete {
 
   @OneToMany(() => Document, (document) => document.folder)
   documents: Document[];
-  @Column()
-  deletedAt: Date;
-  @Column()
+  @Column({
+    nullable: true,
+  })
+  deletedAt?: Date | undefined;
+  @Column({
+    default: false,
+  })
   isDeleted: boolean = false;
 }
