@@ -1,11 +1,19 @@
-FROM amazoncorretto:17-alpine-jdk
+FROM node:20
 
-WORKDIR /app
+WORKDIR /app 
+
+COPY package*.json ./
+
+RUN npm install
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000
 
-RUN ./gradlew build -x test
+COPY ./entrypoint.sh /entrypoint.sh
 
-CMD ["java", "-jar", "./build/libs/backend-0.0.1-SNAPSHOT.jar"]
+RUN chmod +x /entrypoint.sh
+
+CMD [ "npm", "run", "start" ]
+
+ENTRYPOINT [ "/entrypoint.sh" ]
