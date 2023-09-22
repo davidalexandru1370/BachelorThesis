@@ -1,12 +1,10 @@
-import { Mapper } from "@automapper/core";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { InjectMapper } from "@timonmasberg/automapper-nestjs";
 import { plainToClass } from "class-transformer";
 import { Document } from "src/core/domain/document.entity";
 import { Folder } from "src/core/domain/folder.entity";
 import { CreateFolderCommand } from "src/service/entities/folder/create.folder.command";
-import { Repository, Transaction } from "typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class FolderService {
