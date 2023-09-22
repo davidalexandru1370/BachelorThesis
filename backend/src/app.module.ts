@@ -7,7 +7,6 @@ import { AutomapperModule } from "@timonmasberg/automapper-nestjs";
 import { classes } from "@automapper/classes";
 import { FolderModule } from "./presentation/controllers/folder/folder.module";
 import { AuthModule } from "./presentation/security/auth.module";
-import { JwtService } from "@nestjs/jwt";
 
 @Module({
   imports: [

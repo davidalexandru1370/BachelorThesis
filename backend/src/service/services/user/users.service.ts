@@ -4,19 +4,19 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { User } from "src/core/domain/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
-import { ApiErrorCodes } from "src/core/constants/i18n";
-import { AuthResult } from "src/core/common/authResult.entity";
 import { JwtService } from "@nestjs/jwt/dist/jwt.service";
+import { ApiErrorCodes } from "../../../core/constants/i18n";
+import { AuthResult } from "../../../core/common/authResult.entity";
+import { User } from "../../../core/domain/user.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async login(email: string, password: string): Promise<AuthResult> {
@@ -26,7 +26,7 @@ export class UsersService {
 
     if (user === null) {
       throw new NotFoundException(
-        ApiErrorCodes.EMAIL_OR_PASSWORD_INVALID.toString()
+        ApiErrorCodes.EMAIL_OR_PASSWORD_INVALID.toString(),
       );
     }
 
@@ -42,7 +42,7 @@ export class UsersService {
     }
 
     throw new NotFoundException(
-      ApiErrorCodes.EMAIL_OR_PASSWORD_INVALID.toString()
+      ApiErrorCodes.EMAIL_OR_PASSWORD_INVALID.toString(),
     );
   }
 
@@ -53,7 +53,7 @@ export class UsersService {
 
     if (user !== null) {
       throw new ConflictException(
-        ApiErrorCodes.EMAIL_ALREADY_EXISTS.toString()
+        ApiErrorCodes.EMAIL_ALREADY_EXISTS.toString(),
       );
     }
 

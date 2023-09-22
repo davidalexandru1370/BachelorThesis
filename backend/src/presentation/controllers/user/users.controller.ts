@@ -12,16 +12,16 @@ export class UsersController {
   @HttpCode(HttpStatus.NOT_FOUND)
   @Post("login")
   async login(@Body() loginUserRequest: LoginUserRequest): Promise<AuthResult> {
-    var { email, password } = loginUserRequest;
-    var authResult = await this.usersService.login(email, password);
+    const { email, password } = loginUserRequest;
+    const authResult = await this.usersService.login(email, password);
     return authResult;
   }
 
   @Post("register")
   async register(
-    @Body() registerUserRequest: RegisterUserRequest
+    @Body() registerUserRequest: RegisterUserRequest,
   ): Promise<AuthResult> {
-    var { email, password } = registerUserRequest;
+    const { email, password } = registerUserRequest;
     var authResult = await this.usersService.register(email, password);
     return authResult;
   }

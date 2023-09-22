@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToClass } from "class-transformer";
 import { Document } from "src/core/domain/document.entity";
@@ -12,7 +12,7 @@ export class FolderService {
     @InjectRepository(Folder)
     private folderRepository: Repository<Folder>,
     @InjectRepository(Document)
-    private documentRepository: Repository<Document>
+    private documentRepository: Repository<Document>,
   ) {}
 
   async createFolder(createFolderCommand: CreateFolderCommand) {
@@ -26,5 +26,17 @@ export class FolderService {
     let added = await this.folderRepository.save(folder);
 
     return added;
+  }
+
+  async deleteFolder(id: string) {
+    const folder = await this.folderRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (folder === null) {
+      throw new NotFoundException("Folder does not exists!");
+    }
   }
 }
