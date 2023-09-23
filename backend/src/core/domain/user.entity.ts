@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Folder } from "./folder.entity";
 
 @Entity()
 export class User {
@@ -10,6 +11,9 @@ export class User {
 
   @Column({ type: "varchar", length: 255 })
   password: string;
+
+  @OneToMany(() => Folder, (folder: Folder) => folder.owner)
+  folders: Folder[];
 
   constructor(email: string, password: string) {
     this.email = email;
