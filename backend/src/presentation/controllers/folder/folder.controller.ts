@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -28,11 +30,11 @@ export class FolderController {
       user: {
         email: string;
       };
-    }
+    },
   ) {
-    const createFolderCommand = plainToClass(
+    const createFolderCommand: CreateFolderCommand = plainToClass(
       CreateFolderCommand,
-      createFolderRequest
+      createFolderRequest,
     );
 
     const createdAt = new Date();
@@ -44,5 +46,10 @@ export class FolderController {
     });
 
     return await this.folderService.createFolder(createFolderCommand);
+  }
+
+  @Delete(":id")
+  async deleteFolder(@Param(":id") id: string) {
+    await this.folderService.deleteFolder(id);
   }
 }
