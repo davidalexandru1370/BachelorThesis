@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToOne } from "typeorm";
 import { Audit } from "../common/audit.entity";
 import { Folder } from "./folder.entity";
 import { ISoftDelete } from "../interfaces/softDelete.entity";
@@ -11,6 +11,7 @@ export class Document extends Audit implements ISoftDelete {
   @ManyToOne(() => Folder, (folder) => folder.documents)
   folder: Folder;
 
+  @DeleteDateColumn()
   @Column({
     nullable: true,
   })

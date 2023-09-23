@@ -44,7 +44,7 @@ export class FolderService {
   }
 
   async deleteFolder(id: string) {
-    const folder = await this.folderRepository.findOne({
+    const folder: Folder = await this.folderRepository.findOne({
       relations: ["documents"],
       where: {
         id: id,

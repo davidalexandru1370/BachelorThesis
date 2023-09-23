@@ -49,7 +49,7 @@ export class FolderController {
   }
 
   @Delete(":id")
-  async deleteFolder(@Param(":id") id: string) {
+  async deleteFolder(@Param("id") id: string) {
     await this.folderService.deleteFolder(id);
   }
 }
