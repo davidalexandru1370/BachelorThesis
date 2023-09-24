@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -15,11 +16,11 @@ import { CreateFolderRequest } from "src/presentation/entities/requests/folder/c
 import { CreateFolderCommand } from "src/service/entities/folder/create.folder.command";
 import { FolderService } from "src/service/services/folder/folder.service";
 
+@UseGuards(AuthGuard("jwt"))
 @Controller("api/folder")
 export class FolderController {
   constructor(private readonly folderService: FolderService) {}
 
-  @UseGuards(AuthGuard("jwt"))
   @Post()
   @HttpCode(HttpStatus.OK)
   @HttpCode(HttpStatus.BAD_REQUEST)
@@ -51,5 +52,10 @@ export class FolderController {
   @Delete(":id")
   async deleteFolder(@Param("id") id: string) {
     await this.folderService.deleteFolder(id);
+  }
+
+  @Get(":id")
+  async getFolderWithDocuments(@Param("id") id: string) {
+    return await this.folderService.getFolderWithDocuments(id);
   }
 }

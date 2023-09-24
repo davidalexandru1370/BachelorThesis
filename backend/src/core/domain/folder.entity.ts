@@ -1,5 +1,6 @@
 import {
   AfterSoftRemove,
+  BeforeSoftRemove,
   Column,
   DeleteDateColumn,
   Entity,
@@ -21,7 +22,8 @@ export class Folder extends Audit implements ISoftDelete {
   storageUrl: string;
 
   @OneToMany(() => Document, (document: Document) => document.folder, {
-    cascade: true,
+    cascade: ["insert", "update", "soft-remove"],
+    onUpdate: "CASCADE",
     onDelete: "CASCADE",
   })
   documents: Document[];
@@ -29,9 +31,10 @@ export class Folder extends Audit implements ISoftDelete {
     nullable: true,
   })
   @DeleteDateColumn()
-  deletedAt?: Date | undefined;
+  deletedAt?: string | undefined;
 
   @Column({
+    asExpression: "",
     default: false,
   })
   isDeleted: boolean = false;
