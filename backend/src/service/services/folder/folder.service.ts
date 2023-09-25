@@ -5,10 +5,9 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToClass } from "class-transformer";
-import { Document } from "src/core/domain/document.entity";
 import { Folder } from "src/core/domain/folder.entity";
 import { CreateFolderCommand } from "src/service/entities/folder/create.folder.command";
-import { FindOptionsWhere, Repository, SelectQueryBuilder } from "typeorm";
+import { Repository } from "typeorm";
 import { ApiErrorCodes } from "../../../core/constants/i18n";
 
 @Injectable()
@@ -19,7 +18,8 @@ export class FolderService {
   ) {}
 
   async createFolder(createFolderCommand: CreateFolderCommand) {
-    const folder = plainToClass(Folder, createFolderCommand);
+    const folder: Folder = plainToClass(Folder, createFolderCommand);
+    //folder.owner.id = createFolderCommand.ownerId;
     return await this.folderRepository.save(folder);
   }
 

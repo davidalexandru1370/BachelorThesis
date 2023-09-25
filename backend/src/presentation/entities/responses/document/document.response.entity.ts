@@ -1,4 +1,11 @@
+import { Expose } from "class-transformer";
+import { DocumentType } from "../../../../core/common/enums/documentType.entity";
+
 export class DocumentInfoResponse {
-    id: string;
-    type:
+  @Expose()
+  id: string;
+  @Expose()
+  storageUrl: string;
+  @Expose()
+  type: DocumentType;
 }

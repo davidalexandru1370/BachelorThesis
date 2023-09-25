@@ -1,9 +1,9 @@
-import { AutoMap } from "@automapper/classes";
 import { CreateDocumentCommand } from "../document/create.document.command";
+import { User } from "../../../core/domain/user.entity";
 
 export class CreateFolderCommand {
   storageUrl: string;
-  ownerId: string;
+  owner: Partial<User>;
   createdAt: Date;
   documents: CreateDocumentCommand[];
 }
