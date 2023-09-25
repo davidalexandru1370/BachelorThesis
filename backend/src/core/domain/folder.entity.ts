@@ -33,12 +33,6 @@ export class Folder extends Audit implements ISoftDelete {
   @DeleteDateColumn()
   deletedAt?: string | undefined;
 
-  @Column({
-    asExpression: "",
-    default: false,
-  })
-  isDeleted: boolean = false;
-
   @ManyToOne(() => User, (user: User) => user.folders)
   owner: User;
 }

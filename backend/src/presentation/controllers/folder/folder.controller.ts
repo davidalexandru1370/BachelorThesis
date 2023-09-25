@@ -30,6 +30,7 @@ export class FolderController {
     req: Request & {
       user: {
         email: string;
+        userId: string;
       };
     },
   ) {
@@ -40,8 +41,7 @@ export class FolderController {
 
     const createdAt = new Date();
     createFolderCommand.createdAt = createdAt;
-    createFolderCommand.createdBy = req.user.email;
-
+    createFolderCommand.ownerId = req.user.userId;
     createFolderCommand.documents.forEach((document) => {
       document.createdAt = createdAt;
     });
@@ -55,7 +55,37 @@ export class FolderController {
   }
 
   @Get(":id")
-  async getFolderWithDocuments(@Param("id") id: string) {
-    return await this.folderService.getFolderWithDocuments(id);
+  async getFolderWithDocuments(
+    @Param("id") id: string,
+    @Req()
+    req: Request & {
+      user: {
+        email: string;
+        userId: string;
+      };
+    },
+  ) {
+    return await this.folderService.getFolderWithDocuments(id, req.user.userId);
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
+  @Get("list")
+  async getFolderWithDocumentsByOwnerId(
+    @Req()
+    req: Request & {
+      user: {
+        email: string;
+        userId: string;
+      };
+    },
+  ) {
+    const folders =
+      await this.folderService.getAllFoldersWithDocumentsByOwnerId(
+        req.user.userId,
+      );
+    if (folders.length === 0) {
+      return;
+    }
   }
 }

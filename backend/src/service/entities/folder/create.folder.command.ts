@@ -3,7 +3,7 @@ import { CreateDocumentCommand } from "../document/create.document.command";
 
 export class CreateFolderCommand {
   storageUrl: string;
-  createdBy: string;
+  ownerId: string;
   createdAt: Date;
   documents: CreateDocumentCommand[];
 }

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { plainToClass } from "class-transformer";
 import { Document } from "src/core/domain/document.entity";
@@ -19,9 +23,18 @@ export class FolderService {
     return await this.folderRepository.save(folder);
   }
 
-  async getFolderWithDocuments(id: string): Promise<Folder> {
-    const folder = await this.folderRepository.findOne({
+  async getAllFoldersWithDocumentsByOwnerId(id: string): Promise<Folder[]> {
+    return this.folderRepository.findBy({
+      owner: {
+        id: id,
+      },
+    });
+  }
+
+  async getFolderWithDocuments(id: string, ownerId: string): Promise<Folder> {
+    const folder: Folder = await this.folderRepository.findOne({
       relations: {
+        owner: true,
         documents: true,
       },
       where: {
@@ -31,6 +44,10 @@ export class FolderService {
 
     if (folder === null) {
       throw new NotFoundException(ApiErrorCodes.FOLDER_DOES_NOT_EXISTS);
+    }
+
+    if (folder.owner.id === ownerId) {
+      throw new UnauthorizedException();
     }
 
     return folder;

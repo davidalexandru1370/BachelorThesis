@@ -4,6 +4,7 @@ import {
   Entity,
   ManyToOne,
   JoinColumn,
+  BeforeSoftRemove,
 } from "typeorm";
 import { Audit } from "../common/audit.entity";
 import { Folder } from "./folder.entity";
@@ -26,9 +27,4 @@ export class Document extends Audit implements ISoftDelete {
   })
   @DeleteDateColumn()
   deletedAt?: string | undefined;
-
-  @Column({
-    default: false,
-  })
-  isDeleted: boolean;
 }
