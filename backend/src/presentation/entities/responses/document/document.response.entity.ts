@@ -1,5 +1,5 @@
-import { Expose } from "class-transformer";
-import { DocumentType } from "../../../../core/common/enums/documentType.entity";
+import { Expose, Transform } from "class-transformer";
+import { DocumentType } from "../../../../core/constants/documentType.entity";
 
 export class DocumentInfoResponse {
   @Expose()
@@ -7,5 +7,8 @@ export class DocumentInfoResponse {
   @Expose()
   storageUrl: string;
   @Expose()
+  @Transform((value) => {
+    return value.value === undefined ? DocumentType.NOT_COMPUTED : value;
+  })
   type: DocumentType;
 }
