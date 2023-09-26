@@ -1,6 +1,4 @@
 import {
-  AfterSoftRemove,
-  BeforeSoftRemove,
   Column,
   DeleteDateColumn,
   Entity,
@@ -12,7 +10,7 @@ import { Audit } from "../common/audit.entity";
 import { Document } from "./document.entity";
 import { ISoftDelete } from "../interfaces/softDelete.entity";
 import { User } from "./user.entity";
-import { Exclude, Expose, Transform } from "class-transformer";
+import { Exclude, Expose, Transform, Type } from "class-transformer";
 
 @Entity()
 export class Folder extends Audit implements ISoftDelete {
@@ -25,6 +23,7 @@ export class Folder extends Audit implements ISoftDelete {
   storageUrl: string;
 
   @Expose()
+  @Type(() => Document)
   @OneToMany(() => Document, (document: Document) => document.folder, {
     cascade: ["insert", "update", "soft-remove"],
     onUpdate: "CASCADE",

@@ -1,5 +1,5 @@
 import { DocumentInfoResponse } from "../document/document.response.entity";
-import { Expose, Type } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
 
 export class FolderInfoResponse {
   @Expose()
@@ -9,4 +9,8 @@ export class FolderInfoResponse {
   @Expose()
   @Type(() => DocumentInfoResponse)
   documents: DocumentInfoResponse[];
+
+  constructor(folderInfoResponse: Partial<FolderInfoResponse>) {
+    Object.assign(this, folderInfoResponse);
+  }
 }

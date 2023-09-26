@@ -19,14 +19,18 @@ export class FolderService {
 
   async createFolder(createFolderCommand: CreateFolderCommand) {
     const folder: Folder = plainToClass(Folder, createFolderCommand);
-    //folder.owner.id = createFolderCommand.ownerId;
     return await this.folderRepository.save(folder);
   }
 
   async getAllFoldersWithDocumentsByOwnerId(id: string): Promise<Folder[]> {
-    return this.folderRepository.findBy({
-      owner: {
-        id: id,
+    return this.folderRepository.find({
+      where: {
+        owner: {
+          id: id,
+        },
+      },
+      relations: {
+        documents: true,
       },
     });
   }

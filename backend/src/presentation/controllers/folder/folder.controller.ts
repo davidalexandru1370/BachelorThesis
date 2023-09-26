@@ -12,7 +12,11 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { plainToClass, plainToInstance } from "class-transformer";
+import {
+  plainToClass,
+  plainToClassFromExist,
+  plainToInstance,
+} from "class-transformer";
 import { CreateFolderRequest } from "src/presentation/entities/requests/folder/create.folder.request";
 import { CreateFolderCommand } from "src/service/entities/folder/create.folder.command";
 import { FolderService } from "src/service/services/folder/folder.service";
@@ -90,7 +94,6 @@ export class FolderController {
       await this.folderService.getAllFoldersWithDocumentsByOwnerId(
         req.user.userId,
       );
-
     const response = plainToInstance(FolderInfoResponse, folders, {
       excludeExtraneousValues: true,
     });
