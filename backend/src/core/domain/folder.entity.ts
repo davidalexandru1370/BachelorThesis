@@ -10,7 +10,7 @@ import { Audit } from "../common/audit.entity";
 import { Document } from "./document.entity";
 import { ISoftDelete } from "../interfaces/softDelete.entity";
 import { User } from "./user.entity";
-import { Exclude, Expose, Transform, Type } from "class-transformer";
+import { Exclude, Expose, Type } from "class-transformer";
 
 @Entity()
 export class Folder extends Audit implements ISoftDelete {

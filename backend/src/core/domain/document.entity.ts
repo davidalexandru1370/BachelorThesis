@@ -4,11 +4,11 @@ import {
   Entity,
   ManyToOne,
   JoinColumn,
-  BeforeSoftRemove,
 } from "typeorm";
 import { Audit } from "../common/audit.entity";
 import { Folder } from "./folder.entity";
 import { ISoftDelete } from "../interfaces/softDelete.entity";
+import { DocumentType } from "../constants/documentType.entity";
 
 @Entity()
 export class Document extends Audit implements ISoftDelete {
@@ -21,6 +21,11 @@ export class Document extends Audit implements ISoftDelete {
   })
   @JoinColumn()
   folder: Folder;
+
+  @Column({
+    default: DocumentType.NOT_COMPUTED,
+  })
+  documentType: DocumentType;
 
   @Column({
     nullable: true,
