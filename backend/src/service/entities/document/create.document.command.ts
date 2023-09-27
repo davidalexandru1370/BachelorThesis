@@ -1,8 +1,12 @@
-import { AutoMap } from "@automapper/classes";
+import {Expose, Transform, Type} from "class-transformer";
+import {Folder} from "../../../core/domain/folder.entity";
 
 export class CreateDocumentCommand {
-  @AutoMap()
+  @Expose()
   storageUrl: string;
-  @AutoMap()
+  @Expose()
   createdAt: Date;
+  @Expose()
+  @Type(() => Folder)
+  folder: Partial<Folder>
 }
