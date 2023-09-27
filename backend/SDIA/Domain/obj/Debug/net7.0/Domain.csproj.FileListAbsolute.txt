@@ -1,0 +1,15 @@
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/bin/Debug/net7.0/Domain.deps.json
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/bin/Debug/net7.0/Domain.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/bin/Debug/net7.0/Domain.pdb
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.csproj.AssemblyReference.cache
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.AssemblyInfoInputs.cache
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.AssemblyInfo.cs
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.csproj.CoreCompileInputs.cache
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/refint/Domain.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.pdb
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/ref/Domain.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.xml
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Domain/obj/Debug/net7.0/Domain.csproj.CopyComplete
