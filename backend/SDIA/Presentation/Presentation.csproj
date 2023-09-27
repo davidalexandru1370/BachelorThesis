@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configurations\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
 
