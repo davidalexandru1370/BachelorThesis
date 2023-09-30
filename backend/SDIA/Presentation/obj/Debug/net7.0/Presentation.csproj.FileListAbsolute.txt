@@ -50,3 +50,6 @@
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/MediatR.dll
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/MediatR.Contracts.dll
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/MediatR.Extensions.Microsoft.DependencyInjection.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/BCrypt.Net-Next.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/Mapster.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/Mapster.Core.dll

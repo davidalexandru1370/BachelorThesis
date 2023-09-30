@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "aacHudVxz7NsDIUet5+qXOliStz9NXC+ljMWIacfN3y84h3AQqs0oaN5rILGnTBlRVLGCtwNLB5T4bHdcD7jsQ==",
+  "dgSpecHash": "cmIFcfD0zi92VxPLJnfVCy0Yd4j6FY6wzlxJdm2hvxClKgFPaeCo2oyjdBJfwZx651OYGLdxDOMe8slw7H9LIg==",
   "success": true,
   "projectFilePath": "/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/Presentation.csproj",
   "expectedPackageFiles": [
+    "/home/david/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/david/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/home/david/.nuget/packages/mapster/7.4.0/mapster.7.4.0.nupkg.sha512",
+    "/home/david/.nuget/packages/mapster.core/1.2.1/mapster.core.1.2.1.nupkg.sha512",
     "/home/david/.nuget/packages/mediatr/12.1.1/mediatr.12.1.1.nupkg.sha512",
     "/home/david/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/home/david/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.1.0/mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",

@@ -1,4 +1,4 @@
-using Applicantion.Interfaces;
+using Application.Interfaces;
 using Infrastructure.DbContext;
 
 namespace SDIA.Configurations;

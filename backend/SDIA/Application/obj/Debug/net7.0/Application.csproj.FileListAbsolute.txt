@@ -15,3 +15,5 @@
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Application/obj/Debug/net7.0/Application.csproj.CopyComplete
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Application/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Application/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.xml
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Application/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Application/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.xml
