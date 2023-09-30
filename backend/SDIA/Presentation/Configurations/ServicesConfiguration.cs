@@ -9,6 +9,7 @@ public static class ConfigureService
         services.AddSwaggerGen();
 
         services
+            .ConfigureSerilog(configuration)
             .ConfigureDatabase(configuration)
             .ConfigureDependencyInjection()
             .ConfigureMediatr();

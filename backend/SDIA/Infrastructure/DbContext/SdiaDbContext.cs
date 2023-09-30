@@ -10,10 +10,13 @@ public class SdiaDbContext : Microsoft.EntityFrameworkCore.DbContext, ISdiaDbCon
     {
         
     }
-
-    public DbSet<User> Users { get; set; }
+    public virtual DbSet<User> Users { get; init; }
     
-    public DbSet<Document> Documents { get; set; }
+    public virtual DbSet<Document> Documents { get; init; }
     
-    public DbSet<Folder> Folders { get; set; }
+    public virtual DbSet<Folder> Folders { get; init; }
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 }
