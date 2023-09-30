@@ -23,9 +23,6 @@ public class MappingConfig : IRegister
     private void ConfigureFromStringToAuthResponse(TypeAdapterConfig config)
     {
         config.NewConfig<string, AuthResponse>()
-            .Map(dest => dest, src => new AuthResponse
-            {
-                AccessToken = src
-            });
+            .MapWith(s => new AuthResponse() { AccessToken = s });
     }
 }
