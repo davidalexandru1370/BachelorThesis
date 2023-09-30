@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "FYSr4TY9WKFQl25wHAA/SFqPKGheC0cB8ZbWkLpms5nQabUioHb9Fkdu9fmKdgUw3guVqh3VmtTvLOB1wSZL5w==",
+  "dgSpecHash": "aacHudVxz7NsDIUet5+qXOliStz9NXC+ljMWIacfN3y84h3AQqs0oaN5rILGnTBlRVLGCtwNLB5T4bHdcD7jsQ==",
   "success": true,
   "projectFilePath": "/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/Presentation.csproj",
   "expectedPackageFiles": [
     "/home/david/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/home/david/.nuget/packages/mediatr/12.1.1/mediatr.12.1.1.nupkg.sha512",
+    "/home/david/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/home/david/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.1.0/mediatr.extensions.microsoft.dependencyinjection.11.1.0.nupkg.sha512",
     "/home/david/.nuget/packages/microsoft.aspnetcore.openapi/7.0.7/microsoft.aspnetcore.openapi.7.0.7.nupkg.sha512",
     "/home/david/.nuget/packages/microsoft.entityframeworkcore/7.0.11/microsoft.entityframeworkcore.7.0.11.nupkg.sha512",
     "/home/david/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.11/microsoft.entityframeworkcore.abstractions.7.0.11.nupkg.sha512",
@@ -34,5 +37,16 @@
     "/home/david/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
     "/home/david/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.1.1 was resolved.",
+      "libraryId": "MediatR",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }
