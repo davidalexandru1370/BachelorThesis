@@ -1,5 +1,4 @@
 using Application.Commands.UserCommands;
-using Application.DTOs;
 using Application.Interfaces;
 using Domain.Constants;
 using Domain.Exceptions;
@@ -9,16 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Handlers.User;
 
-public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserDto>
+public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, string>
 {
     private readonly ISdiaDbContext _dbContext;
-
-    public RegisterUserHandler(ISdiaDbContext dbContext)
+    private readonly IJwtUtilities _jwtUtilities;
+    
+    public RegisterUserHandler(ISdiaDbContext dbContext, IJwtUtilities jwtUtilities)
     {
         _dbContext = dbContext;
+        _jwtUtilities = jwtUtilities;
     }
 
-    public async Task<UserDto> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
@@ -31,6 +32,9 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, UserDto>
 
         var addedUser = await _dbContext.Users.AddAsync(request.Adapt<Domain.Entities.User>(), cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        return addedUser.Entity.Adapt<UserDto>();
+
+        var token = _jwtUtilities.GenerateJwtTokenForUser(addedUser.Entity);
+
+        return token;
     }
 }

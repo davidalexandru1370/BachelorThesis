@@ -12,6 +12,7 @@ public static class ConfigureService
             .ConfigureSerilog(configuration)
             .ConfigureDatabase(configuration)
             .ConfigureDependencyInjection()
-            .ConfigureMediatr();
+            .ConfigureMediatr()
+            .ConfigureMapster();
     }
 }

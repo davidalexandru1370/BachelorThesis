@@ -9,16 +9,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Handlers.User;
 
-public class LoginUserHandler : IRequestHandler<LoginUserCommand, UserDto>
+public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
 {
     private readonly ISdiaDbContext _dbContext;
+    private readonly IJwtUtilities _jwtUtilities;
 
-    public LoginUserHandler(ISdiaDbContext dbContext)
+    public LoginUserHandler(ISdiaDbContext dbContext, IJwtUtilities jwtUtilities)
     {
         _dbContext = dbContext;
+        _jwtUtilities = jwtUtilities;
     }
 
-    public async Task<UserDto> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
@@ -32,6 +34,8 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, UserDto>
             throw new BadRequestException(I18N.InvalidEmailOrPassword);
         }
 
-        return user.Adapt<UserDto>();
+        var token = _jwtUtilities.GenerateJwtTokenForUser(user);
+
+        return token;
     }
 }
