@@ -8,15 +8,24 @@ public static class MapsterConfiguration
 {
     public static IServiceCollection ConfigureMapster(this IServiceCollection services)
     {
-        var config = TypeAdapterConfig.GlobalSettings;
-        config.Scan(Assembly.GetExecutingAssembly());
-        ConfigureFromStringToAuthResponse(config);
+        TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         return services;
     }
+}
 
-    private static void ConfigureFromStringToAuthResponse(TypeAdapterConfig config)
+public class MappingConfig : IRegister
+{
+    public void Register(TypeAdapterConfig config)
+    {
+        ConfigureFromStringToAuthResponse(config);
+    }
+
+    private void ConfigureFromStringToAuthResponse(TypeAdapterConfig config)
     {
         config.NewConfig<string, AuthResponse>()
-            .Map(dest => dest.AccessToken, src => src);
+            .Map(dest => dest, src => new AuthResponse
+            {
+                AccessToken = src
+            });
     }
 }

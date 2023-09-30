@@ -1,5 +1,6 @@
 using Application.Interfaces;
 using Domain.Entities;
+using Infrastructure.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DbContext;
@@ -10,6 +11,12 @@ public class SdiaDbContext : Microsoft.EntityFrameworkCore.DbContext, ISdiaDbCon
     {
         
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(new AuditInterceptor());
+    }
+
     public virtual DbSet<User> Users { get; init; }
     
     public virtual DbSet<Document> Documents { get; init; }
