@@ -47,3 +47,6 @@
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/obj/Debug/net7.0/ref/Presentation.dll
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/Domain.dll
 /home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/Domain.pdb
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/MediatR.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/MediatR.Contracts.dll
+/home/david/Desktop/folders/BachelorThesis/backend/SDIA/Presentation/bin/Debug/net7.0/MediatR.Extensions.Microsoft.DependencyInjection.dll
