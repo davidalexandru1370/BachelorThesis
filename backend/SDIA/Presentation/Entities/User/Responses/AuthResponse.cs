@@ -2,5 +2,5 @@ namespace SDIA.Entities.User.Responses;
 
 public class AuthResponse
 {
-    public Guid Id { get; set; }
+    public string AccessToken { get; set; } = null!;
 }
