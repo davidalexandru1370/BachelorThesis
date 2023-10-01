@@ -20,7 +20,7 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
     {
         var folder = request.Adapt<Domain.Entities.Folder>();
 
-        folder.Documents.ForEach(d => d.DocumentType = DocumentType.NOT_COMPUTED);
+        folder.Documents.ForEach(d => d.DocumentType = DocumentType.NotComputed);
 
         await _dbContext.Folders.AddAsync(folder);
 
