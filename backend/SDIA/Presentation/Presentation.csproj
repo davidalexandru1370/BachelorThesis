@@ -27,4 +27,9 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Document\Requests\" />
+    <Folder Include="Entities\Folder\Requests\" />
+  </ItemGroup>
+
 </Project>

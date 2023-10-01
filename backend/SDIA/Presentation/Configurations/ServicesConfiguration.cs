@@ -13,6 +13,7 @@ public static class ConfigureService
             .ConfigureDatabase(configuration)
             .ConfigureDependencyInjection()
             .ConfigureMediatr()
-            .ConfigureMapster();
+            .ConfigureMapster()
+            .ConfigureAuthorization(configuration);
     }
 }
