@@ -16,7 +16,8 @@ public static class SwaggerConfiguration
                In = ParameterLocation.Header, 
                Description = "Please insert JWT with Bearer into field",
                Name = "Authorization",
-               Type = SecuritySchemeType.ApiKey 
+               Scheme = "Bearer",
+               Type = SecuritySchemeType.Http 
            });
            c.AddSecurityRequirement(new OpenApiSecurityRequirement {
                { 

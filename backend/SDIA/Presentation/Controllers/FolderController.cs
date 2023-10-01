@@ -3,7 +3,9 @@ using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SDIA.Entities.Folder.Requests;
 using SDIA.Entities.Folder.Responses;
+using SDIA.Security;
 
 namespace SDIA.Controllers;
 
@@ -20,9 +22,11 @@ public class FolderController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromBody] FolderInfoResponse folderInfoResponse)
+    public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromBody] CreateFolderRequest createFolderRequest)
     {
-        var createFolderCommand = folderInfoResponse.Adapt<CreateFolderCommand>();
+        var createFolderCommand = createFolderRequest.Adapt<CreateFolderCommand>();
+        
+        createFolderCommand.UserId = User.GetId();
         
         var addedFolder = (await _mediator.Send(createFolderCommand)).Adapt<FolderInfoResponse>();
         

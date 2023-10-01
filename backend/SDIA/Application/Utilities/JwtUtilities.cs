@@ -26,7 +26,7 @@ public class JwtUtilities : IJwtUtilities
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim("Id", user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
             }),
             Expires = DateTime.UtcNow.Add(tokenLifetime),
