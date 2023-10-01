@@ -6,6 +6,7 @@ public class FolderDto : IAudit
 {
     public Guid Id { get; set; }
     public string StorageUrl { get; set; } = null!;
+    public string Name { get; set; } = null!;
     public UserDto User { get; set; } = null!;
     public List<DocumentDto> Documents { get; set; } = null!;
     public DateTime CreatedAt { get; set; }

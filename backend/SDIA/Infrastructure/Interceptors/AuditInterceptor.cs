@@ -21,7 +21,7 @@ public class AuditInterceptor : SaveChangesInterceptor
                 continue;
             }
             
-            audit.CreatedAt = DateTime.Now;
+            audit.CreatedAt = DateTime.UtcNow;
         }
 
         return ValueTask.FromResult(result);
