@@ -1,4 +1,6 @@
 using Application.Commands.Folder;
+using Application.Handlers.Folder;
+using Application.Query.Folder;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -31,5 +33,16 @@ public class FolderController : ControllerBase
         var addedFolder = (await _mediator.Send(createFolderCommand)).Adapt<FolderInfoResponse>();
         
         return Ok(addedFolder);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<FolderInfoResponse>>> GetFolders()
+    {
+        var userId = User.GetId();
+        var getFoldersQuery = new GetFoldersByUserIdQuery(userId);
+        
+        var folders = (await _mediator.Send(getFoldersQuery)).Adapt<List<FolderInfoResponse>>();
+        
+        return Ok(folders);
     }
 }
