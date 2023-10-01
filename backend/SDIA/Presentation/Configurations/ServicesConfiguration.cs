@@ -8,12 +8,12 @@ public static class ConfigureService
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services
-            .ConfigureSerilog(configuration)
+        services.ConfigureSerilog(configuration)
             .ConfigureDatabase(configuration)
             .ConfigureDependencyInjection()
             .ConfigureMediatr()
             .ConfigureMapster()
-            .ConfigureAuthorization(configuration);
+            .ConfigureAuthorization(configuration)
+            .ConfigureSwagger();
     }
 }
