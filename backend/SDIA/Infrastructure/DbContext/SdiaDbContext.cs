@@ -9,7 +9,12 @@ public class SdiaDbContext : Microsoft.EntityFrameworkCore.DbContext, ISdiaDbCon
 {
     public SdiaDbContext(DbContextOptions<SdiaDbContext> options) : base(options)
     {
-        
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Document>().HasQueryFilter(x => x.IsDeleted == false);
+        modelBuilder.Entity<Folder>().HasQueryFilter(x => x.IsDeleted == false);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -18,10 +23,11 @@ public class SdiaDbContext : Microsoft.EntityFrameworkCore.DbContext, ISdiaDbCon
     }
 
     public virtual DbSet<User> Users { get; init; }
-    
+
     public virtual DbSet<Document> Documents { get; init; }
-    
+
     public virtual DbSet<Folder> Folders { get; init; }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await base.SaveChangesAsync(cancellationToken);
