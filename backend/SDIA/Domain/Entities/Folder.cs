@@ -4,7 +4,7 @@ using Domain.Interfaces;
 
 namespace Domain.Entities;
 
-public class Folder : IAudit
+public class Folder : IAudit, ISoftDelete
 {
     [Key]
     public Guid Id { get; set; }
@@ -17,9 +17,16 @@ public class Folder : IAudit
 
     public virtual User User { get; set; } = null!;
 
+    [Required]
     public string StorageUrl = null!;
     
+    [Required]
     public DateTime CreatedAt { get; set; }
 
     public virtual List<Document> Documents { get; set; } = null!;
+    
+    [Required]
+    public bool IsDeleted { get; set; } = false;
+    
+    public DateTime? DeletedAt { get; set; }
 }
