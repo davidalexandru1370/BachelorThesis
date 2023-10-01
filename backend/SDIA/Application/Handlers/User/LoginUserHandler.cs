@@ -1,4 +1,4 @@
-using Application.Commands.UserCommands;
+using Application.Commands.User;
 using Application.DTOs;
 using Application.Interfaces;
 using Domain.Constants;

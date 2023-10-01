@@ -1,4 +1,4 @@
-using Application.Commands.UserCommands;
+using Application.Commands.User;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

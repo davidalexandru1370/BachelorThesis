@@ -1,4 +1,4 @@
-using Application.Commands.UserCommands;
+using Application.Commands.User;
 using Application.Interfaces;
 using Domain.Constants;
 using Domain.Exceptions;
