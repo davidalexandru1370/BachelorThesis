@@ -45,4 +45,14 @@ public class FolderController : ControllerBase
         
         return Ok(folders);
     }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteFolder(Guid id)
+    {
+        var deleteFolderCommand = new DeleteFolderByIdCommand(id);
+
+        await _mediator.Send(deleteFolderCommand);
+
+        return Ok();
+    }
 }
