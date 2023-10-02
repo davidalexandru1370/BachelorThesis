@@ -20,6 +20,7 @@ public class SdiaDbContext : Microsoft.EntityFrameworkCore.DbContext, ISdiaDbCon
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(new AuditInterceptor());
+        optionsBuilder.AddInterceptors(new SoftDeleteInterceptor());
     }
 
     public virtual DbSet<User> Users { get; init; }
