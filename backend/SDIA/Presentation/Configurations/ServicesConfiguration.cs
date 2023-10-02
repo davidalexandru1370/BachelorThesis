@@ -7,6 +7,7 @@ public static class ConfigureService
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        services.AddRouting(options => options.LowercaseUrls = true);
 
         services.ConfigureSerilog(configuration)
             .ConfigureDatabase(configuration)
