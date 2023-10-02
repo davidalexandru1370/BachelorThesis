@@ -19,6 +19,8 @@ public class Document : IAudit, ISoftDelete
     [ForeignKey("Folder")]
     public Guid FolderId { get; set; }
     
+    public Folder Folder { get; set; } = null!;
+    
     [Required]
     public DateTime CreatedAt { get; set; }
 

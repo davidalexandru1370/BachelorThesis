@@ -74,6 +74,11 @@ public class ExceptionMiddleware
                 problemDetails.Status = StatusCodes.Status409Conflict;
                 problemDetails.Detail = duplicateEntryException.Message;
                 break;
+            case ForbiddenException forbiddenException:
+                problemDetails.Title = "Forbidden";
+                problemDetails.Status = StatusCodes.Status403Forbidden;
+                problemDetails.Detail = forbiddenException.Message;
+                break;
         }
 
         return problemDetails;
