@@ -15,6 +15,7 @@ public static class ConfigureService
             .ConfigureMediatr()
             .ConfigureMapster()
             .ConfigureAuthorization(configuration)
-            .ConfigureSwagger();
+            .ConfigureSwagger()
+            .ConfigureValidations();
     }
 }
