@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Constants;
 using Domain.Interfaces;
 
 namespace Domain.Entities;
@@ -19,6 +20,9 @@ public class Folder : IAudit, ISoftDelete
 
     [Required]
     public string StorageUrl = null!;
+    
+    [Required]
+    public FolderType Type { get; set; }
     
     [Required]
     public DateTime CreatedAt { get; set; }
