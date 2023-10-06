@@ -3,9 +3,9 @@ using MediatR;
 
 namespace SDIA.Configurations;
 
-public static class ValidationConfiguration
+public static class BehaviourConfiguration
 {
-    public static IServiceCollection ConfigureValidations(this IServiceCollection services)
+    public static IServiceCollection RegisterBehaviours(this IServiceCollection services)
     {
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         return services;
