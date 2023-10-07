@@ -36,9 +36,6 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version  }}
 
-      - name: Set cached dotnet path [${{env.DOTNET_INSTALL_DIR}}]
-        run: echo "${{env.DOTNET_INSTALL_DIR}}" >> $ENV:GITHUB_PATH
-
       - name: Check installed/cached dotnet version
         run: dotnet --version
 
