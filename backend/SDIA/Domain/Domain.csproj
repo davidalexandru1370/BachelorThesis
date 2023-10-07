@@ -8,8 +8,11 @@
 
     <ItemGroup>
       <Reference Include="Microsoft.EntityFrameworkCore.Abstractions">
-        <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.entityframeworkcore.abstractions\7.0.11\lib\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.11" />
     </ItemGroup>
 
 </Project>
