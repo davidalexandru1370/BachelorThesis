@@ -12,22 +12,23 @@ public class ImageService : IImageService
 
     public ImageService(IOptions<AzureBlobConfiguration> blobConfiguration)
     {
-        var (connectionString, containerName) = (blobConfiguration.Value.ConnectionString, blobConfiguration.Value.ContainerName);
+        var (connectionString, containerName) =
+            (blobConfiguration.Value.ConnectionString, blobConfiguration.Value.ContainerName);
         _blobContainerClient = new BlobContainerClient(connectionString, containerName);
     }
-    
-    public async Task<string> UploadImageAsync(Guid folderId, IFormFile image)
+
+    public async Task<string> UploadImageAsync(Guid folderId, IFormFile image, CancellationToken cancellationToken)
     {
         var blobClient = _blobContainerClient.GetBlobClient("");
-        
-        var response = await blobClient.UploadAsync(image.OpenReadStream(), true);
+
+        var response = await blobClient.UploadAsync(image.OpenReadStream(), true, cancellationToken);
 
         var url = blobClient.Uri.AbsoluteUri;
-    
+
         return url;
     }
 
-    public Task<List<string>> UploadImagesAsync(List<IFormFile> images)
+    public Task<List<string>> UploadImagesAsync(Guid folderId, List<IFormFile> images, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

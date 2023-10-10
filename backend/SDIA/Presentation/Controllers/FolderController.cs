@@ -23,10 +23,9 @@ public class FolderController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromBody] CreateFolderRequest createFolderRequest)
+    public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromForm] CreateFolderRequest createFolderRequest)
     {
         var createFolderCommand = createFolderRequest.Adapt<CreateFolderCommand>();
-        
         createFolderCommand.UserId = User.GetId();
         
         var addedFolder = (await _mediator.Send(createFolderCommand)).Adapt<FolderInfoResponse>();
