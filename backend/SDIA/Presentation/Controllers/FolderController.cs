@@ -47,8 +47,8 @@ public class FolderController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteFolder(Guid id)
     {
-        var deleteFolderCommand = new DeleteFolderByIdCommand(id);
-
+        var deleteFolderCommand = new DeleteFolderByIdCommand(id, User.GetId());
+        
         await _mediator.Send(deleteFolderCommand);
 
         return Ok();

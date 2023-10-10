@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Handlers.Folder;
 
-public class DeleteFolderByIdHandler : IRequestHandler<DeleteFolderByIdCommand>
+public class DeleteFolderByIdHandler : IRequestHandler<DeleteFolderByIdCommand, Unit>
 {
     private readonly ISdiaDbContext _dbContext;
 
@@ -15,18 +15,24 @@ public class DeleteFolderByIdHandler : IRequestHandler<DeleteFolderByIdCommand>
         _dbContext = dbContext;
     }
 
-    public async Task Handle(DeleteFolderByIdCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteFolderByIdCommand request, CancellationToken cancellationToken)
     {
         var folder = await _dbContext.Folders
             .Include(f => f.Documents)
             .FirstOrDefaultAsync(f => f.Id == request.Id, cancellationToken);
-
+        
         if (folder is null)
         {
             throw new NotFoundException("Folder not found");
         }
+        
+        if(folder.UserId != request.UserId)
+        {
+            throw new ForbiddenException("You are not allowed to delete this folder");
+        }
 
         _dbContext.Folders.Remove(folder);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        return Unit.Task.Result;
     }
 }

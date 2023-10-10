@@ -1,10 +1,11 @@
 using Application.DTOs;
+using Application.Interfaces;
 using Domain.Constants;
 using MediatR;
 
 namespace Application.Commands.Folder;
 
-public class CreateFolderCommand : IRequest<FolderDto>
+public record CreateFolderCommand : ITransanctionalCommand<FolderDto>
 {
     public string Name { get; set; } = null!;
     public FolderType FolderType { get; set; }
