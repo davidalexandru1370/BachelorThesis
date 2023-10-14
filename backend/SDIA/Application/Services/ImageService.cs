@@ -1,6 +1,7 @@
 using Application.Configurations;
 using Application.Interfaces.Services;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -17,11 +18,11 @@ public class ImageService : IImageService
         _blobContainerClient = new BlobContainerClient(connectionString, containerName);
     }
 
-    public async Task<string> UploadImageAsync(Guid folderId, IFormFile image, CancellationToken cancellationToken)
+    public async Task<string> UploadImageAsync(Guid folderId, Guid documentId, IFormFile image, CancellationToken cancellationToken)
     {
-        var blobClient = _blobContainerClient.GetBlobClient(folderId.ToString());
-
-        var response = await blobClient.UploadAsync(image.OpenReadStream(), true, cancellationToken);
+        var blobClient = _blobContainerClient.GetBlobClient($"{folderId}/{documentId}");
+        
+        var response = await blobClient.UploadAsync(image.OpenReadStream(), false, cancellationToken);
 
         var url = blobClient.Uri.AbsoluteUri;
 

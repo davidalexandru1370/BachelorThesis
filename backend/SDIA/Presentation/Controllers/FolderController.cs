@@ -27,9 +27,8 @@ public class FolderController : ControllerBase
     {
         var createFolderCommand = createFolderRequest.Adapt<CreateFolderCommand>();
         createFolderCommand.UserId = User.GetId();
-        
-        var addedFolder = (await _mediator.Send(createFolderCommand, cancellationToken)).Adapt<FolderInfoResponse>();
-        
+
+        var addedFolder = await _mediator.Send(createFolderCommand, cancellationToken);
         return Ok(addedFolder);
     }
     

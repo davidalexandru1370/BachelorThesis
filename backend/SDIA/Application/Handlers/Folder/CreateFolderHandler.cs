@@ -12,7 +12,7 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
 {
     private readonly ISdiaDbContext _dbContext;
     private readonly IImageService _imageService;
-    
+
     public CreateFolderHandler(ISdiaDbContext dbContext, IImageService imageService)
     {
         _dbContext = dbContext;
@@ -23,17 +23,27 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
     {
         var folder = request.Adapt<Domain.Entities.Folder>();
 
-        await _dbContext.Folders.AddAsync(folder);
+        await _dbContext.Folders.AddAsync(folder, cancellationToken);
 
-        var documents = new List<Domain.Entities.Document>();
-        
-        await Parallel.ForEachAsync(request.Documents,async (d, _) =>
+        for (int index = 0; index < folder.Documents.Count; index++)
         {
-            var uri = await _imageService.UploadImageAsync(folder.Id, d.File, cancellationToken);
+            request.Documents[index].Id = folder.Documents[index].Id;
+        }
+
+        var uris = new Dictionary<Guid, string>();
+        
+        await Parallel.ForEachAsync(request.Documents, cancellationToken, async (d, forEachCancellationToken) =>
+        {
+            var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
+                forEachCancellationToken);
+            uris[d.Id!.Value] = uri;
             d.DocumentType = DocumentType.NotComputed;
         });
         
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        foreach (var document in folder.Documents)
+        {
+            document.StorageUrl = uris[document.Id];
+        }
 
         return folder.Adapt<FolderDto>();
     }
