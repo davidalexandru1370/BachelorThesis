@@ -20,13 +20,18 @@ public class DeleteFolderByIdHandler : IRequestHandler<DeleteFolderByIdCommand>
         var folder = await _dbContext.Folders
             .Include(f => f.Documents)
             .FirstOrDefaultAsync(f => f.Id == request.Id, cancellationToken);
-
+        
         if (folder is null)
         {
             throw new NotFoundException("Folder not found");
         }
+        
+        if(folder.UserId != request.UserId)
+        {
+            throw new ForbiddenException("You are not allowed to delete this folder");
+        }
 
         _dbContext.Folders.Remove(folder);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        
     }
 }
