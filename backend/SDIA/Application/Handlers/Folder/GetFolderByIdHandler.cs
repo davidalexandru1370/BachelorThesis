@@ -22,7 +22,7 @@ public class GetFolderByIdHandler : IRequestHandler<GetFolderByIdQuery, FolderDt
     {
         var folder = await _dbContext.Folders
             .Include(f => f.Documents)
-            .FirstOrDefaultAsync(f => f.Id == request.FolderId);
+            .FirstOrDefaultAsync(f => f.Id == request.FolderId, cancellationToken);
 
         if (folder is null)
         {

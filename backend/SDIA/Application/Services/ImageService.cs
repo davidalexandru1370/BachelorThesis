@@ -1,7 +1,6 @@
 using Application.Configurations;
 using Application.Interfaces.Services;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -27,6 +26,11 @@ public class ImageService : IImageService
         var url = blobClient.Uri.AbsoluteUri;
 
         return url;
+    }
+
+    public string GetFolderStorageUrl(Guid folderId)
+    {
+        return $"{_blobContainerClient.Uri.AbsoluteUri}/{folderId}";
     }
 
     public Task<List<string>> UploadImagesAsync(Guid folderId, List<IFormFile> images, CancellationToken cancellationToken)
