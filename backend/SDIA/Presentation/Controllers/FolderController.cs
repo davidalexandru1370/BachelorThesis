@@ -29,6 +29,7 @@ public class FolderController : ControllerBase
         createFolderCommand.UserId = User.GetId();
 
         var addedFolder = await _mediator.Send(createFolderCommand, cancellationToken);
+        
         return Ok(addedFolder);
     }
     
