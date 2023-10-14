@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Application.Interfaces;
 
@@ -11,4 +12,6 @@ public interface ISdiaDbContext
     public DbSet<Folder> Folders { get; init; }
     
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+    public Task CommitTransactionAsync(CancellationToken cancellationToken = default);
 }
