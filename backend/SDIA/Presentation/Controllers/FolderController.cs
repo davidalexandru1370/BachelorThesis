@@ -23,12 +23,12 @@ public class FolderController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromForm] CreateFolderRequest createFolderRequest)
+    public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromForm] CreateFolderRequest createFolderRequest, CancellationToken cancellationToken)
     {
         var createFolderCommand = createFolderRequest.Adapt<CreateFolderCommand>();
         createFolderCommand.UserId = User.GetId();
         
-        var addedFolder = (await _mediator.Send(createFolderCommand)).Adapt<FolderInfoResponse>();
+        var addedFolder = (await _mediator.Send(createFolderCommand, cancellationToken)).Adapt<FolderInfoResponse>();
         
         return Ok(addedFolder);
     }

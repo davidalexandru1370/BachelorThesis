@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Application.Commands.Folder;
 
-public record DeleteFolderByIdCommand(Guid Id, Guid UserId) : ITransanctionalCommand<Unit>
+public record DeleteFolderByIdCommand(Guid Id, Guid UserId) : IRequest
 {
 }

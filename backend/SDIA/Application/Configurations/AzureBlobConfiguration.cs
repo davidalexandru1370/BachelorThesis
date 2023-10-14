@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Configuration;
-
 namespace Application.Configurations;
 
 public sealed class AzureBlobConfiguration 

@@ -3,8 +3,6 @@ using Application.Interfaces.Services;
 using Application.Services;
 using Application.Utilities;
 using Infrastructure.DbContext;
-using Serilog;
-using Serilog.Extensions.Logging;
 
 namespace SDIA.Configurations;
 
@@ -18,8 +16,6 @@ public static class DependencyInjectionConfiguration
         
         services.AddTransient<IJwtUtilities, JwtUtilities>();
         services.AddTransient<IImageService, ImageService>();
-
-        services.AddSingleton(Log.Logger);
         
         return services;
     }

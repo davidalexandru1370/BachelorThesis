@@ -9,7 +9,7 @@ namespace Application.Services;
 public class ImageService : IImageService
 {
     private readonly BlobContainerClient _blobContainerClient;
-
+    
     public ImageService(IOptions<AzureBlobConfiguration> blobConfiguration)
     {
         var (connectionString, containerName) =
@@ -19,7 +19,7 @@ public class ImageService : IImageService
 
     public async Task<string> UploadImageAsync(Guid folderId, IFormFile image, CancellationToken cancellationToken)
     {
-        var blobClient = _blobContainerClient.GetBlobClient("");
+        var blobClient = _blobContainerClient.GetBlobClient(folderId.ToString());
 
         var response = await blobClient.UploadAsync(image.OpenReadStream(), true, cancellationToken);
 

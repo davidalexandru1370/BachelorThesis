@@ -16,6 +16,7 @@ public static class ConfigureService
             .ConfigureMapster()
             .ConfigureAuthorization(configuration)
             .ConfigureSwagger()
-            .RegisterBehaviours();
+            .RegisterBehaviours()
+            .ConfigureOptionsCollection(configuration);
     }
 }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Commands.Folder;
 
-public record CreateFolderCommand : ITransanctionalCommand<FolderDto>
+public record CreateFolderCommand : ITransanctionalCommand, IRequest<FolderDto>
 {
     public string Name { get; set; } = null!;
     public FolderType FolderType { get; set; }

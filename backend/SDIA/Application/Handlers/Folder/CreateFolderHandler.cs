@@ -24,10 +24,12 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
         var folder = request.Adapt<Domain.Entities.Folder>();
 
         await _dbContext.Folders.AddAsync(folder);
+
+        var documents = new List<Domain.Entities.Document>();
         
         await Parallel.ForEachAsync(request.Documents,async (d, _) =>
         {
-            await _imageService.UploadImageAsync(folder.Id, d.File, cancellationToken);
+            var uri = await _imageService.UploadImageAsync(folder.Id, d.File, cancellationToken);
             d.DocumentType = DocumentType.NotComputed;
         });
         
