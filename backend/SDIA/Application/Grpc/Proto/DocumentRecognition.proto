@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService.Server";
+
+package DocumentRecognition;
+
+service DocumentRecognitionService{
+    rpc DocumentClassification(DocumentRequest) returns (DocumentReply);
+}
+
+message DocumentRequest {
+    bytes data = 1;
+}
+
+message DocumentReply{
+    enum DocumentType{
+        NOT_COMPUTED = 0;
+    }
+}
