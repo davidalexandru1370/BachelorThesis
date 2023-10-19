@@ -1,5 +1,3 @@
 pytesseract
 opencv-python~=4.8.1.78
 flask
-grpcio-tools
-grpc

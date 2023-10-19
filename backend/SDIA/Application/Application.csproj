@@ -22,9 +22,5 @@
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Protobuf Include="Grpc\Proto\DocumentRecognition.proto" GrpcServices="Server"  />
-    </ItemGroup>
     
 </Project>
