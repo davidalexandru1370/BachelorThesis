@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Grpc.Core;
 
 namespace Application.Grpc.Services
@@ -6,7 +7,6 @@ namespace Application.Grpc.Services
     public class DocumentRecognitionService : Application.Grpc.DocumentRecognitionService.DocumentRecognitionServiceBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
 
         public DocumentRecognitionService(IHttpClientFactory httpClientFactory)
         {
@@ -17,7 +17,11 @@ namespace Application.Grpc.Services
             ServerCallContext context)
         {
             var httpClient = _httpClientFactory.CreateClient();
-            var responseDocumentReply = JsonSerializer.Deserialize<DocumentReply>(await httpClient.GetStringAsync(""));
+            var responseDocumentReply = JsonSerializer.Deserialize<DocumentReply>(await (await httpClient.SendAsync(
+                new HttpRequestMessage(HttpMethod.Post, "")
+                {
+                    Content = JsonContent.Create(request)
+                })).Content.ReadAsStreamAsync());
 
             return responseDocumentReply!;
         }

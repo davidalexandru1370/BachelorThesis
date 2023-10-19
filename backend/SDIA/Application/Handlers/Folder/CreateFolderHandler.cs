@@ -1,8 +1,11 @@
+using System.Text;
 using Application.Commands.Folder;
 using Application.DTOs;
+using Application.Grpc;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Domain.Constants;
+using Google.Protobuf;
 using Mapster;
 using MediatR;
 
@@ -13,7 +16,9 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
     private readonly ISdiaDbContext _dbContext;
     private readonly IImageService _imageService;
 
-    public CreateFolderHandler(ISdiaDbContext dbContext, IImageService imageService)
+    
+    public CreateFolderHandler(ISdiaDbContext dbContext, IImageService imageService, 
+        DocumentRecognitionService.DocumentRecognitionServiceBase documentRecognitionService)
     {
         _dbContext = dbContext;
         _imageService = imageService;
@@ -37,6 +42,7 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
                 forEachCancellationToken);
             uris[d.Id!.Value] = uri;
+            
             d.DocumentType = DocumentType.NotComputed;
         });
         

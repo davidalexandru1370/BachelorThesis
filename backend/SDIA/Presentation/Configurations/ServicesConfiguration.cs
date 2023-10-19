@@ -9,6 +9,7 @@ public static class ConfigureService
         services.AddSwaggerGen();
         services.AddRouting(options => options.LowercaseUrls = true);
         services.AddGrpc();
+        services.AddHttpClient();
 
         services.ConfigureSerilog(configuration)
             .ConfigureDatabase(configuration)
