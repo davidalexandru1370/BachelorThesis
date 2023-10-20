@@ -1,4 +1,3 @@
-using Application.Grpc;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Application.Services;

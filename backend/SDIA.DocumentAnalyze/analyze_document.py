@@ -1,4 +1,6 @@
 import cv2
+from flask import Flask, request
+
 # Load the image
 img = cv2.imread("document.jpg")
 
@@ -15,3 +17,7 @@ contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPR
 cv2.drawContours(img, contours, -1, (0, 0, 255), 2)
 
 # Display the image
+
+
+
+

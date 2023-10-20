@@ -36,9 +36,9 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
 
         await Parallel.ForEachAsync(request.Documents, cancellationToken, async (d, forEachCancellationToken) =>
         {
-            var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
-                forEachCancellationToken);
-            uris[d.Id!.Value] = uri;
+            // var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
+            //     forEachCancellationToken);
+            // uris[d.Id!.Value] = uri;
             d.DocumentType = await _documentService.AnalyzeDocumentAsync(d.File);
         });
 

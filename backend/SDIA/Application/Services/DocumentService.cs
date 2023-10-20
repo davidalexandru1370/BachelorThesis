@@ -1,5 +1,6 @@
+using System.Net.Http.Json;
 using System.Text.Json;
-using Application.Grpc;
+using Application.Configurations;
 using Application.Interfaces.Services;
 using Domain.Constants;
 using Microsoft.AspNetCore.Http;
@@ -22,16 +23,16 @@ public class DocumentService : IDocumentService
     {
         var client = _httpClient.CreateClient();
 
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:5001/api/document/analyze")
+        var formData = new MultipartFormDataContent();
+        formData.Add(new StreamContent(image.OpenReadStream()), "image", image.FileName);
+        
+        var request = new HttpRequestMessage(HttpMethod.Post, _documentServiceConfiguration.Value.GetAnalyseDocumentEndpoint)
         {
-            Content = new MultipartFormDataContent
-            {
-                { new StreamContent(image.OpenReadStream()), "image", image.FileName }
-            } 
+            Content = formData
         };
         
         var response = await client.SendAsync(request);
-        var body = await response.Content.ReadAsStreamAsync();
-        return JsonSerializer.Deserialize<DocumentType>(body);
+        var body = await response.Content.ReadFromJsonAsync<DocumentType>();
+        return body;
     }
 }
