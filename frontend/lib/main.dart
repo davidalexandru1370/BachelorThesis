@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login_screen.dart';
+import 'package:frontend/screens/main_page.dart';
+import 'package:frontend/widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -15,7 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -31,7 +32,7 @@ class _MyApp extends State<MyApp> {
                 supportedLocales: AppLocalizations.supportedLocales,
                 locale: localeModel.locale,
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
-                home: const LoginScreen())));
+                home: ApplicationNavigationBar())));
   }
 }
 
