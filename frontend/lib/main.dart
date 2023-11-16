@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login_screen.dart';
 import 'package:frontend/screens/main_page.dart';
@@ -5,12 +6,16 @@ import 'package:frontend/widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
-  runApp(const MyApp());
+
+Future<void> main() async {
+  var firstCamera = await ensureCameraWorks();
+
+  runApp(const MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final CameraDescription camera;
+  const MyApp({super.key, required this.camera})
 
   @override
   State<StatefulWidget> createState() => _MyApp();
@@ -45,4 +50,14 @@ class LocaleModel extends ChangeNotifier {
     _locale = value;
     notifyListeners();
   }
+}
+
+Future<CameraDescription> ensureCameraWorks() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final cameras = await availableCameras();
+
+  final firstCamera = cameras.first;
+
+  return firstCamera;
 }

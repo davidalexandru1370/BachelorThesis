@@ -1,15 +1,20 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/camera_screen.dart';
 import 'package:frontend/screens/main_page.dart';
 
 class ApplicationNavigationBar extends StatefulWidget {
-  const ApplicationNavigationBar({Key? key}) : super(key: key);
+  final CameraDescription camera;
+
+  const ApplicationNavigationBar({Key? key, required this.camera})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ApplicationNavigationBarState();
 }
 
 class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
-  int currentPageIndex = 0;
+  int _currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +22,11 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
-            currentPageIndex = index;
+            _currentPageIndex = index;
           });
         },
         indicatorColor: Colors.amber[800],
-        selectedIndex: currentPageIndex,
+        selectedIndex: _currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.home),
@@ -29,9 +34,9 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.search),
-            selectedIcon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.camera),
+            selectedIcon: Icon(Icons.camera),
+            label: 'Camera',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),
@@ -40,7 +45,12 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
           ),
         ],
       ),
-      body: <Widget>[Container(child: MainPage())][currentPageIndex],
+      body: <Widget>[
+        Container(child: MainPage()),
+        Container(
+          child: CameraScreen(camera: widget.camera,),
+        )
+      ][_currentPageIndex],
     );
   }
 }
