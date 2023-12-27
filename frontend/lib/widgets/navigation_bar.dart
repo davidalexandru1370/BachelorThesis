@@ -4,9 +4,8 @@ import 'package:frontend/screens/camera_screen.dart';
 import 'package:frontend/screens/main_page.dart';
 
 class ApplicationNavigationBar extends StatefulWidget {
-  final CameraDescription camera;
 
-  const ApplicationNavigationBar({Key? key, required this.camera})
+  const ApplicationNavigationBar({Key? key})
       : super(key: key);
 
   @override

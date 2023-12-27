@@ -15,11 +15,11 @@ class AnalyzeDocument:
 
     def execute_document_scanning(self):
         # Load the image
-        img = cv2.imread(r"resources\documents\buletin.PNG")
+        img = cv2.imread(r"resources\documents\drivingLicense.jpg")
 
         # Convert the image to gray scale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        #cv2.imshow("da", gray)
+        # cv2.imshow("da", gray)
         cv2.waitKey(0)
 
         # Performing OTSU threshold

@@ -6,16 +6,15 @@ import 'package:frontend/widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 Future<void> main() async {
   var firstCamera = await ensureCameraWorks();
 
-  runApp(const MyApp(camera: firstCamera));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final CameraDescription camera;
-  const MyApp({super.key, required this.camera})
+
+  const MyApp({super.key});
 
   @override
   State<StatefulWidget> createState() => _MyApp();
@@ -27,17 +26,19 @@ class _MyApp extends State<MyApp> {
     return ChangeNotifierProvider(
         create: (context) => LocaleModel(),
         child: Consumer<LocaleModel>(
-            builder: (context, localeModel, child) => MaterialApp(
-                title: 'Flutter Demo',
-                theme: ThemeData(
-                  colorScheme: ColorScheme.fromSeed(
-                      seedColor: const Color.fromARGB(255, 119, 119, 119)),
-                  useMaterial3: true,
-                ),
-                supportedLocales: AppLocalizations.supportedLocales,
-                locale: localeModel.locale,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                home: ApplicationNavigationBar())));
+            builder: (context, localeModel, child) =>
+                MaterialApp(
+                    title: 'Flutter Demo',
+                    theme: ThemeData(
+                      colorScheme: ColorScheme.fromSeed(
+                          seedColor: const Color.fromARGB(255, 119, 119, 119)),
+                      useMaterial3: true,
+                    ),
+                    supportedLocales: AppLocalizations.supportedLocales,
+                    locale: localeModel.locale,
+                    localizationsDelegates: AppLocalizations
+                        .localizationsDelegates,
+                    home: ApplicationNavigationBar())));
   }
 }
 
