@@ -41,7 +41,7 @@ class IdentityCardPattern(DocumentPatternAbstract):
     def compute_confidence_level(self, words: List[str]) -> float:
         """Create a document from the pattern."""
         confidence_level: float = 0.0
-        for word in words:
+        for word,_ in words:
             word = word.lower()
             match: float = self.check_for_match(word)
             if match > 0.0:
