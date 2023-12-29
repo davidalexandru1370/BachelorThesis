@@ -14,6 +14,8 @@ import os
 import numpy as np
 import sewar
 
+from DocumentPatterns.identity_card_pattern import IdentityCardPattern
+
 if os.name == "nt":
     pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
@@ -144,7 +146,6 @@ for threshold in range(0, epochs, threshold_step):
                 # config: str = '-l eng —oem 3 -psm 3'
                 # text: str = pytesseract.image_to_string(img_warped, config=config)
 
-
                 std_dev = cv2.meanStdDev(img_warped)[1]
                 rase = sewar.rase(image1_gray, img_warped, ws=8)
                 if rase < max_rase_score and std_dev > same_color_threshold:
@@ -152,12 +153,17 @@ for threshold in range(0, epochs, threshold_step):
                     max_dev = std_dev
                     best_match_image = img_warped
 
-
 stop = time.time() - start
 print(f"Time: {stop}")
+lines: List[str] = []
 result = ocr.ocr(best_match_image, cls=True)
 for idx in range(len(result)):
     res = result[idx]
     if res is not None:
         for line in res:
-            print(line[-1])
+            #print(line)
+            lines.append(line[-1])
+
+
+pattern = IdentityCardPattern()
+print(pattern.compute_confidence_level(lines))
