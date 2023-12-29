@@ -20,7 +20,7 @@ if os.name == "nt":
 image1 = cv2.imread('data/buletin2.jpg', cv2.IMREAD_COLOR)
 image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
 
-image2 = cv2.imread("data/buletin.jpg", cv2.IMREAD_COLOR)
+image2 = cv2.imread("data/buletin3.jpg", cv2.IMREAD_COLOR)
 image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
 
 image2 = cv2.resize(image2, (image1.shape[1], image1.shape[0]), interpolation=cv2.INTER_AREA)
@@ -139,18 +139,25 @@ for threshold in range(0, epochs, threshold_step):
                 # cv2.waitKey(0)
                 img_warped = img_warped[pixels_remove:img_warped.shape[0] - pixels_remove,
                              pixels_remove:img_warped.shape[1] - pixels_remove]
+                img_warped = cv2.resize(img_warped, (width, height), interpolation=cv2.INTER_AREA)
                 img_warped = cv2.cvtColor(img_warped, cv2.COLOR_BGR2GRAY)
-                # img_warped = cv2.GaussianBlur(image2_gray, (k_row, k_col), 0)
-                # img_warped = cv2.threshold(img_warped, 0, 256, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
                 # config: str = '-l eng —oem 3 -psm 3'
                 # text: str = pytesseract.image_to_string(img_warped, config=config)
 
-                result = ocr.ocr(img_warped, cls=True)
-                for idx in range(len(result)):
-                    res = result[idx]
-                    if res is not None:
-                        for line in res:
-                            print(line[-1])
+
+                std_dev = cv2.meanStdDev(img_warped)[1]
+                rase = sewar.rase(image1_gray, img_warped, ws=8)
+                if rase < max_rase_score and std_dev > same_color_threshold:
+                    max_rase_score = rase
+                    max_dev = std_dev
+                    best_match_image = img_warped
+
 
 stop = time.time() - start
 print(f"Time: {stop}")
+result = ocr.ocr(best_match_image, cls=True)
+for idx in range(len(result)):
+    res = result[idx]
+    if res is not None:
+        for line in res:
+            print(line[-1])
