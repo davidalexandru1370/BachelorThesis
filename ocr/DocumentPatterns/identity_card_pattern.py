@@ -1,6 +1,7 @@
 import re
 from typing import List, Dict
 
+from DocumentPatterns.DocumentType import DocumentType
 from DocumentPatterns.document_pattern_abstract import DocumentPatternAbstract
 
 
@@ -41,7 +42,7 @@ class IdentityCardPattern(DocumentPatternAbstract):
     def compute_confidence_level(self, words: List[str]) -> float:
         """Create a document from the pattern."""
         confidence_level: float = 0.0
-        for word,_ in words:
+        for word, _ in words:
             word = word.lower()
             match: float = self.check_for_match(word)
             if match > 0.0:
@@ -50,3 +51,7 @@ class IdentityCardPattern(DocumentPatternAbstract):
                 confidence_level += self.__confidence_levels[word]
 
         return confidence_level
+
+    def get_document_type(self) -> DocumentType:
+        """Get the document type."""
+        return DocumentType.IdentityCard

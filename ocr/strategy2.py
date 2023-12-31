@@ -6,7 +6,7 @@ from cv2 import Mat
 from numpy import ndarray
 from numpy import dtype
 from numpy import generic
-from typing import List, Sequence, Union, Any
+from typing import List, Sequence, Union, Any, Type
 from pytesseract import pytesseract
 
 import cv2
@@ -14,6 +14,8 @@ import os
 import numpy as np
 import sewar
 
+from DocumentPatterns import DocumentType
+from DocumentPatterns.document_pattern_abstract import DocumentPatternAbstract
 from DocumentPatterns.identity_card_pattern import IdentityCardPattern
 
 if os.name == "nt":
@@ -161,9 +163,17 @@ for idx in range(len(result)):
     res = result[idx]
     if res is not None:
         for line in res:
-            #print(line)
+            # print(line)
             lines.append(line[-1])
 
+patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern]
+confidence_level: float = 0.0
+document_type: DocumentType = None
 
-pattern = IdentityCardPattern()
-print(pattern.compute_confidence_level(lines))
+for pattern in patterns:
+    conf_level = pattern.compute_confidence_level(words=lines)
+    if conf_level > confidence_level:
+        confidence_level = conf_level
+        document_type = pattern.get_document_type()
+
+print(document_type)
