@@ -2,7 +2,7 @@ import re
 from typing import List, Dict
 
 from DocumentPatterns.DocumentType import DocumentType
-from DocumentPatterns.document_pattern_abstract import DocumentPatternAbstract
+from DocumentPatterns.DocumentPatternAbstract import DocumentPatternAbstract
 
 
 class IdentityCardPattern(DocumentPatternAbstract):
