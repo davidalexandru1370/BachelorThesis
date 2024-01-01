@@ -17,7 +17,8 @@ import sewar
 from DocumentPatterns.DocumentType import DocumentType
 from DocumentPatterns.DocumentPatternAbstract import DocumentPatternAbstract
 from DocumentPatterns.IdentityCardPattern import IdentityCardPattern
-from DocumentPatterns.OwnershipContractPattern import OwnershipCertificatePattern, OwnershipContractPattern
+from DocumentPatterns.OwnershipContractPattern import OwnershipContractPattern
+from DocumentPatterns.UnregisterVehiclePattern import UnregisterVehiclePattern
 
 
 # if os.name == "nt":
@@ -55,7 +56,17 @@ def biggest_contour(contours: Sequence[Union[Mat, ndarray[Any, dtype[generic]], 
     return biggest, max_area
 
 
-image2 = cv2.imread("data/input/buletin3.jpg", cv2.IMREAD_COLOR)
+def resize(image1, image2):
+    height1, width1 = image1.shape[:2]
+    height2, width2 = image2.shape[:2]
+
+    if height1 != height2 or width1 != width2:
+        image2 = cv2.resize(image2, (width1, height1))
+
+    return image2
+
+
+image2 = cv2.imread("data/input/radiere - completat.png", cv2.IMREAD_COLOR)
 image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
 max_rase_score: float = float("inf")
 best_match_image = dict()
@@ -63,11 +74,11 @@ best_match_template: str = ""
 ocr = PaddleOCR(use_angle_cls=True, lang="ro")
 
 for template in os.listdir("data/templates"):
-
     image1 = cv2.imread(f'data/templates/{template}', cv2.IMREAD_COLOR)
     image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
     print(f"Working with template {template}")
     image2 = cv2.resize(image2, (image1.shape[1], image1.shape[0]), interpolation=cv2.INTER_AREA)
+    # image2 = resize(image1, image2)
     max_rase_score: float = float("inf")
 
     image1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
@@ -77,7 +88,7 @@ for template in os.listdir("data/templates"):
     # cv2.waitKey(0)
     # cv2.imshow("image2", image2_gray)
     # cv2.waitKey(0)
-
+    print(image1.shape, image2.shape)
     print(image1_gray.shape, image2_gray.shape)
 
     # ssim_score = metrics.structural_similarity(image1_gray, image2_gray, full=True)
@@ -100,7 +111,18 @@ for template in os.listdir("data/templates"):
     epochs: int = 120
     cache = dict()
     max_dev: float = 0
-    same_color_threshold: int = 30
+    same_color_threshold: int = 10
+
+    rase = sewar.rase(image1_gray, image2_gray, ws=8)
+    std_dev = cv2.meanStdDev(image2_gray)[1]
+    if rase < max_rase_score and std_dev > same_color_threshold:
+        max_rase_score = rase
+        best_match_image[template] = image2
+        max_dev = std_dev
+        # cv2.imshow("image2", image2_gray)
+        # cv2.imshow("image2", image2)
+        # cv2.waitKey(0)
+
     for threshold in range(0, epochs, threshold_step):
         print(f"epoch: {threshold}/{epochs}")
         # cv2.imwrite(f"temp/gray.jpg", img_gray)
@@ -136,15 +158,16 @@ for template in os.listdir("data/templates"):
                     pixels_remove: int = 0
                     roi = cv2.resize(roi, (width, height), interpolation=cv2.INTER_AREA)
 
-                    # cv2.imshow("roi", roi)
-                    # cv2.waitKey(0)
-
                     pts1 = np.float32(biggest)
                     pts2 = np.float32([[x, y], [w, y], [x, h], [w, h]])
-                    # pts2_arrangements = [np.float32([[0, 0], [width, 0], [0, height], [width, height]])]
+                    # pts2 = np.float32([[0, 0], [width, 0], [0, height], [width, height]])
                     matrix = cv2.getPerspectiveTransform(pts1, pts2)
 
                     img_warped = cv2.warpPerspective(roi, matrix, (w, y + h))
+                    # if template == "Contract_de_vanzare_cumparare_-_Auto-Vehicule.png":
+                    #     cv2.imshow("roi", img_warped)
+                    #     cv2.waitKey(0)
+                    # img_warped = cv2.warpPerspective(roi, matrix, (width, height))
                     # cv2.imshow("perspective", img_warped)
                     # cv2.waitKey(0)
                     img_warped = img_warped[pixels_remove:img_warped.shape[0] - pixels_remove,
@@ -161,18 +184,22 @@ for template in os.listdir("data/templates"):
                         best_match_image[template] = img_warped
                         max_dev = std_dev
 
-patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(), OwnershipContractPattern()]
+patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(), OwnershipContractPattern(),
+                                                 UnregisterVehiclePattern()]
 confidence_level: float = 0.0
 document_type: DocumentType = None
-
-for _, value in best_match_image.items():
+output_key = "radiere.png"
+for key, value in best_match_image.items():
     lines: List[str] = []
-    result = ocr.ocr(best_match_image, cls=True)
+    result = ocr.ocr(value, cls=True)
+    if key == output_key:
+        cv2.imwrite(f"data/output/{key}", value)
     for idx in range(len(result)):
         res = result[idx]
         if res is not None:
             for line in res:
-                # print(line)
+                if key == output_key:
+                    print(line[-1])
                 lines.append(line[-1])
 
     for pattern in patterns:
@@ -183,3 +210,4 @@ for _, value in best_match_image.items():
             document_type = pattern.get_document_type()
 
 print(document_type)
+print(confidence_level)

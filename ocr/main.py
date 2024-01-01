@@ -30,11 +30,7 @@ print(image1_gray.shape, image2_gray.shape)
 
 # ssim_score = metrics.structural_similarity(image1_gray, image2_gray, full=True)
 # print(f"SSIM: {round(ssim_score[0], 2)}")
-rase = sewar.rase(image1_gray, image2_gray)
-ssim_score = sewar.ssim(image1_gray, image2_gray)
 
-print(f"SSIM: {ssim_score}")
-print(f"RASE: {-rase}")
 
 face_cascade = cv2.CascadeClassifier("haarcascade/haarcascade-frontalface-default.xml")
 faces = face_cascade.detectMultiScale(image1_gray, 1.3, 5)
