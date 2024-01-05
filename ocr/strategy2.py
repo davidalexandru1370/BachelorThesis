@@ -7,7 +7,6 @@ from numpy import ndarray
 from numpy import dtype
 from numpy import generic
 from typing import List, Sequence, Union, Any, Type
-from pytesseract import pytesseract
 
 import cv2
 import os
@@ -19,11 +18,6 @@ from DocumentPatterns.DocumentPatternAbstract import DocumentPatternAbstract
 from DocumentPatterns.IdentityCardPattern import IdentityCardPattern
 from DocumentPatterns.OwnershipContractPattern import OwnershipContractPattern
 from DocumentPatterns.UnregisterVehiclePattern import UnregisterVehiclePattern
-
-
-# if os.name == "nt":
-#     pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
 
 def reorder(points: Union[Mat, ndarray[Any, dtype[generic]], ndarray]):
     # print(points.shape)
@@ -64,7 +58,6 @@ def resize(image1, image2):
         image2 = cv2.resize(image2, (width1, height1))
 
     return image2
-
 
 image2 = cv2.imread("data/input/radiere - completat.png", cv2.IMREAD_COLOR)
 image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2RGB)
@@ -188,18 +181,18 @@ patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(), Ownershi
                                                  UnregisterVehiclePattern()]
 confidence_level: float = 0.0
 document_type: DocumentType = None
-output_key = "radiere.png"
+# output_key = "radiere.png"
 for key, value in best_match_image.items():
     lines: List[str] = []
     result = ocr.ocr(value, cls=True)
-    if key == output_key:
-        cv2.imwrite(f"data/output/{key}", value)
+    # if key == output_key:
+    #     cv2.imwrite(f"data/output/{key}", value)
     for idx in range(len(result)):
         res = result[idx]
         if res is not None:
             for line in res:
-                if key == output_key:
-                    print(line[-1])
+                # if key == output_key:
+                #     print(line[-1])
                 lines.append(line[-1])
 
     for pattern in patterns:
