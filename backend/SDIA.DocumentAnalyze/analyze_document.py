@@ -19,8 +19,8 @@ from Domain.identity_card_pattern import IdentityCardPattern
 from Domain.ownership_contract_pattern import OwnershipContractPattern
 from Domain.unregister_vehicle_pattern import UnregisterVehiclePattern
 
-class ImageClassifier:
 
+class ImageClassifier:
     def __init__(self):
         self.__ocr = PaddleOCR(use_angle_cls=True, lang="ro")
 
@@ -61,11 +61,17 @@ class ImageClassifier:
 
         return image2
 
-
     def classify_image(self, image: Mat) -> DocumentType:
         image2 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         best_match_image = dict()
         best_match_template: str = ""
+        confidence_level: float = 0.0
+        document_type: DocumentType = None
+
+        d_type, conf_level = self.compute_document_type(image2)
+        if conf_level > confidence_level:
+            confidence_level = conf_level
+            document_type = d_type
 
         for template in os.listdir("data/templates"):
             image1 = cv2.imread(f'data/templates/{template}', cv2.IMREAD_COLOR)
@@ -81,7 +87,8 @@ class ImageClassifier:
             faces = face_cascade.detectMultiScale(image1_gray, 1.3, 5)
 
             for face in faces:
-                cv2.rectangle(image1_gray, (face[0], face[1]), (face[0] + face[2], face[1] + face[3]), (255, 255, 255), -1)
+                cv2.rectangle(image1_gray, (face[0], face[1]), (face[0] + face[2], face[1] + face[3]), (255, 255, 255),
+                              -1)
 
             height, width = image1.shape[:2]
             threshold_step: int = 5
@@ -146,15 +153,11 @@ class ImageClassifier:
                                 best_match_image[template] = img_warped
                                 max_dev = std_dev
 
-        patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(), OwnershipContractPattern(),
-                                                         UnregisterVehiclePattern()]
-        confidence_level: float = 0.0
-        document_type: DocumentType = None
         for key, value in best_match_image.items():
-            document_type, conf_level = self.compute_document_type(value)
+            d_type, conf_level = self.compute_document_type(value)
             if conf_level > confidence_level:
                 confidence_level = conf_level
-                document_type = document_type
+                document_type = d_type
                 best_match_template = key
         return document_type
 
@@ -184,4 +187,3 @@ class ImageClassifier:
                 document_type = pattern.get_document_type()
 
         return document_type, confidence_level
-
