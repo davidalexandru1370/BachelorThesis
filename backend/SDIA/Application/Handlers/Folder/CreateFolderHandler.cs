@@ -47,6 +47,8 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             document.StorageUrl = uris[document.Id];
         }
 
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
         return folder.Adapt<FolderDto>();
     }
 }

@@ -1,17 +1,17 @@
 # strategy using text ocr and warp perspective
 
+import os
 import time
-from paddleocr import PaddleOCR
-from cv2 import Mat
-from numpy import ndarray
-from numpy import dtype
-from numpy import generic
 from typing import List, Sequence, Union, Any, Type, Tuple
 
 import cv2
-import os
 import numpy as np
 import sewar
+from cv2 import Mat
+from numpy import dtype
+from numpy import generic
+from numpy import ndarray
+from paddleocr import PaddleOCR
 
 from Domain.document_pattern_abstract import DocumentPatternAbstract
 from Domain.document_type import DocumentType
@@ -106,7 +106,7 @@ class ImageClassifier:
                 max_dev = std_dev
 
             for threshold in range(0, epochs, threshold_step):
-                print(f"epoch: {threshold}/{epochs}")
+                #print(f"epoch: {threshold}/{epochs}")
                 for k_row in range(1, 16, 2):
                     for k_col in range(1, 16, 2):
                         img_blur = cv2.GaussianBlur(image2_gray, (k_row, k_col), 0)

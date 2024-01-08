@@ -1,4 +1,6 @@
-pytesseract
-opencv-python~=4.8.1.78
+opencv-python~=4.6.0.66
 flask
-tesseract
+paddleocr~=2.7.0.3
+numpy~=1.26.3
+sewar~=0.4.6
+paddlepaddle~=2.6.0
