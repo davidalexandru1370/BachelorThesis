@@ -16,6 +16,7 @@ public static class DependencyInjectionConfiguration
         
         services.AddTransient<IJwtUtilities, JwtUtilities>();
         services.AddTransient<IImageService, ImageService>();
+        services.AddTransient<IDocumentService, DocumentService>();
         
         return services;
     }

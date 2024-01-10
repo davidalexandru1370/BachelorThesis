@@ -13,5 +13,6 @@ public static class OptionsConfiguration
     private static void ConfigureAzureBlob(IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<AzureBlobConfiguration>(configuration.GetSection(nameof(AzureBlobConfiguration)));
+        services.Configure<DocumentServiceConfiguration>(configuration.GetSection(nameof(DocumentServiceConfiguration)));
     }
 }

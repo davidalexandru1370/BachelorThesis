@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/screens/login_screen.dart';
 
-import '../models/auth_result.dart';
-import '../models/user_credentials.dart';
+import '../domain/models/auth_result.dart';
+import '../domain/models/user_credentials.dart';
 import '../services/user_service.dart';
 import '../widgets/login_with_facebook_button.dart';
 import '../widgets/login_with_google_button.dart';

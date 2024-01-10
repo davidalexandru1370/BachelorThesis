@@ -12,11 +12,13 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
 {
     private readonly ISdiaDbContext _dbContext;
     private readonly IImageService _imageService;
+    private readonly IDocumentService _documentService;
 
-    public CreateFolderHandler(ISdiaDbContext dbContext, IImageService imageService)
+    public CreateFolderHandler(ISdiaDbContext dbContext, IImageService imageService, IDocumentService documentService)
     {
         _dbContext = dbContext;
         _imageService = imageService;
+        _documentService = documentService;
     }
 
     public async Task<FolderDto> Handle(CreateFolderCommand request, CancellationToken cancellationToken)
@@ -31,19 +33,27 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
         }
 
         var uris = new Dictionary<Guid, string>();
-        
+
         await Parallel.ForEachAsync(request.Documents, cancellationToken, async (d, forEachCancellationToken) =>
         {
             var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
                 forEachCancellationToken);
             uris[d.Id!.Value] = uri;
-            d.DocumentType = DocumentType.NotComputed;
+            d.DocumentType = await _documentService.AnalyzeDocumentAsync(d.File);
         });
-        
+
+        // foreach(var document in request.Documents)
+        // {
+        //     document.DocumentType = await _documentService.AnalyzeDocumentAsync(document.File);
+        // }
+
         foreach (var document in folder.Documents)
         {
+
             document.StorageUrl = uris[document.Id];
         }
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return folder.Adapt<FolderDto>();
     }

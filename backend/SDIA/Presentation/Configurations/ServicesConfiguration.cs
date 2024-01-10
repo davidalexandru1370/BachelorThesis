@@ -8,6 +8,8 @@ public static class ConfigureService
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddRouting(options => options.LowercaseUrls = true);
+        services.AddGrpc();
+        services.AddHttpClient();
 
         services.ConfigureSerilog(configuration)
             .ConfigureDatabase(configuration)

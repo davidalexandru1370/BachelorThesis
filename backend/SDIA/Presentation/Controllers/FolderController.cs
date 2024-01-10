@@ -23,6 +23,7 @@ public class FolderController : ControllerBase
     }
 
     [HttpPost]
+    //Can be tested only from Postman
     public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromForm] CreateFolderRequest createFolderRequest,
         CancellationToken cancellationToken)
     {

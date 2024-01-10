@@ -1,0 +1,6 @@
+opencv-python~=4.6.0.66
+flask
+paddleocr~=2.7.0.3
+numpy~=1.26.3
+sewar~=0.4.6
+paddlepaddle~=2.6.0
