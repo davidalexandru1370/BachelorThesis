@@ -66,15 +66,15 @@ class ImageClassifier:
         best_match_image = dict()
         best_match_template: str = ""
         confidence_level: float = 0.0
-        document_type: DocumentType = None
+        document_type: DocumentType = DocumentType.NotFound
 
-        d_type, conf_level = self.compute_document_type(image2)
-        if conf_level > confidence_level:
-            confidence_level = conf_level
-            document_type = d_type
-
-        for template in os.listdir("data/templates"):
-            image1 = cv2.imread(f'data/templates/{template}', cv2.IMREAD_COLOR)
+        # d_type, conf_level = self.compute_document_type(image2)
+        # if conf_level > confidence_level:
+        #     confidence_level = conf_level
+        #     document_type = d_type
+        file_path: str = "resources/templates"
+        for template in os.listdir(file_path):
+            image1 = cv2.imread(f'{file_path}/{template}', cv2.IMREAD_COLOR)
             image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2RGB)
             print(f"Working with template {template}")
             image2 = cv2.resize(image2, (image1.shape[1], image1.shape[0]), interpolation=cv2.INTER_AREA)
@@ -93,7 +93,7 @@ class ImageClassifier:
             height, width = image1.shape[:2]
             threshold_step: int = 5
             start = time.time()
-            epochs: int = 120
+            epochs: int = 60
             cache = dict()
             max_dev: float = 0
             same_color_threshold: int = 10
@@ -106,7 +106,7 @@ class ImageClassifier:
                 max_dev = std_dev
 
             for threshold in range(0, epochs, threshold_step):
-                #print(f"epoch: {threshold}/{epochs}")
+                # print(f"epoch: {threshold}/{epochs}")
                 for k_row in range(1, 16, 2):
                     for k_col in range(1, 16, 2):
                         img_blur = cv2.GaussianBlur(image2_gray, (k_row, k_col), 0)
@@ -185,5 +185,8 @@ class ImageClassifier:
             if conf_level > confidence_level:
                 confidence_level = conf_level
                 document_type = pattern.get_document_type()
+
+        if confidence_level < 10:
+            return DocumentType.NotFound, confidence_level
 
         return document_type, confidence_level

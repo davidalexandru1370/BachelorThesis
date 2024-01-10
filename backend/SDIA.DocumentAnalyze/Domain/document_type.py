@@ -6,3 +6,6 @@ class DocumentType(Enum):
     OwnershipContract = 1,
     UnregisterVehicle = 2,
     NotFound = 999
+
+    def serialize(self):
+        return self.value

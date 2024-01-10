@@ -1,3 +1,6 @@
+import io
+import json
+
 import cv2
 import numpy as np
 from flask import Flask, request, jsonify, Response
@@ -7,8 +10,13 @@ from analyze_document import ImageClassifier
 
 app = Flask(__name__)
 
-host: str = "0.0.0.0"
+host: str = "127.0.0.1"
 port: int = 5001
+
+
+def custom_serializer(obj):
+    if isinstance(obj, DocumentType):
+        return obj.serialize()
 
 
 @app.route("/api/document/analyze", methods=['POST'])
@@ -18,17 +26,20 @@ def analyze_document():
     # image.show()
     # response = jsonify(str(dt.DocumentType.NOT_FOUND))
     try:
+        in_memory_file = io.BytesIO()
+        file = request.files["file"]
+        file.save(in_memory_file)
+        data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
+        image = cv2.imdecode(data, 1)
         image_classifier: ImageClassifier = ImageClassifier()
-        # np_arr = np.fromstring(request.files["image"].read(), np.uint8)
-        image = cv2.imdecode(np.frombuffer(request.files["file"].read()), cv2.IMREAD_COLOR)
-        type = {'DocumentType': image_classifier.classify_image(image)}
-        return Response(response=jsonify(str(type)), status=200, mimetype="application/json")
+        type = {"DocumentType": image_classifier.classify_image(image).name}
+        return Response(response=json.dumps(type), status=200, mimetype="application/json")
     except Exception as e:
         print(e)
-        type = {'DocumentType': DocumentType.NotFound}
-        return Response(response=jsonify(str(type)), status=400, mimetype="application/json")
+        type = {"DocumentType": DocumentType.NotFound.name}
+        return Response(response=json.dumps(type), status=400, mimetype="application/json")
 
     return response
 
 
-app.run(host, port)
+app.run(host, port, debug=True)
