@@ -1,10 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CameraScreen extends StatefulWidget {
-  final CameraDescription camera;
-
-  const CameraScreen({Key? key, required this.camera}) : super(key: key);
+  const CameraScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -14,13 +13,20 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController _cameraController;
-  late Future<void> _initializeControllerFuture;
+  bool isCameraReady = false;
 
   @override
   void initState() {
     super.initState();
-    _cameraController = CameraController(widget.camera, ResolutionPreset.high);
-    _initializeControllerFuture = _cameraController.initialize();
+    _initializeCamera();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isCameraReady == true &&
+            _cameraController.value.isInitialized == true
+        ?  CameraPreview(_cameraController)
+        : const Center(child: CircularProgressIndicator());
   }
 
   @override
@@ -29,9 +35,23 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+  Future<void> _initializeCamera() async {
+    final cameras = await availableCameras();
+    final rearCamera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.back);
+
+    _cameraController = CameraController(rearCamera, ResolutionPreset.max);
+    try {
+      _cameraController.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          isCameraReady = true;
+        });
+      });
+    } on CameraException catch (e) {
+      debugPrint("Camera Error: $e");
+    }
   }
 }

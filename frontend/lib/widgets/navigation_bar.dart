@@ -4,9 +4,7 @@ import 'package:frontend/screens/camera_screen.dart';
 import 'package:frontend/screens/main_page.dart';
 
 class ApplicationNavigationBar extends StatefulWidget {
-
-  const ApplicationNavigationBar({Key? key})
-      : super(key: key);
+  const ApplicationNavigationBar({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ApplicationNavigationBarState();
@@ -18,6 +16,7 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
@@ -44,11 +43,10 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
           ),
         ],
       ),
-      body: <Widget>[
-        Container(child: MainPage()),
-        Container(
-          child: CameraScreen(camera: widget.camera,),
-        )
+      body:
+      <Widget>[
+        MainPage(),
+        const CameraScreen()
       ][_currentPageIndex],
     );
   }
