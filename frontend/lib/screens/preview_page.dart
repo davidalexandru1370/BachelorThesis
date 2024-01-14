@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/common/common.dart';
 
 class PreviewPage extends StatelessWidget {
   final XFile picture;
@@ -24,6 +25,20 @@ class PreviewPage extends StatelessWidget {
                       fit: BoxFit.contain,
                       width: 0.9 * size.width,
                       height: 0.8 * size.height),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                            child: Text(
+                                getAppLocalizations(context)!.retakePhoto)),
+                        ElevatedButton(
+                            onPressed: () {},
+                            child: Text(
+                                getAppLocalizations(context)!.uploadPhoto)),
+                      ])
                 ],
               ))),
     );
