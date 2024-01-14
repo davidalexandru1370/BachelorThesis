@@ -101,14 +101,11 @@ class _CameraScreenState extends State<CameraScreen> {
       return;
     }
 
-    try {
-      XFile picture = await _cameraController.takePicture();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => PreviewPage(picture: picture)));
-    } on CameraException catch (e) {
-      debugPrint("Camera Error: $e");
-    }
+    XFile picture = await _cameraController.takePicture();
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(child: PreviewPage(picture: picture));
+        });
   }
 }
