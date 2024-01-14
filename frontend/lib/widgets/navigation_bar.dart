@@ -16,12 +16,18 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CameraScreen()),
+            );
+          } else {
+            setState(() {
+              _currentPageIndex = index;
+            });
+          }
         },
         indicatorColor: Colors.amber[800],
         selectedIndex: _currentPageIndex,
@@ -43,10 +49,8 @@ class _ApplicationNavigationBarState extends State<ApplicationNavigationBar> {
           ),
         ],
       ),
-      body:
-      <Widget>[
+      body: <Widget>[
         MainPage(),
-        const CameraScreen()
       ][_currentPageIndex],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/preview_page.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({Key? key}) : super(key: key);
@@ -23,10 +24,49 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isCameraReady == true &&
-            _cameraController.value.isInitialized == true
-        ?  CameraPreview(_cameraController)
-        : const Center(child: CircularProgressIndicator());
+    final size = MediaQuery.of(context).size;
+
+    return Scaffold(
+        body: isCameraReady == true &&
+                _cameraController.value.isInitialized == true
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                    SizedBox(
+                        width: size.width,
+                        height: size.height * 0.86,
+                        child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Container(
+                                width: 100,
+                                child: CameraPreview(_cameraController)))),
+                    Container(
+                        color: Colors.black,
+                        width: size.width,
+                        height: size.height * 0.14,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.flash_off)),
+                            GestureDetector(
+                                onTap: () {
+                                  _takePicture();
+                                },
+                                child: Container(
+                                    width: 60,
+                                    height: 60,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white))),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.flip_camera_ios))
+                          ],
+                        ))
+                  ])
+            : const Center(child: CircularProgressIndicator()));
   }
 
   @override
@@ -50,6 +90,23 @@ class _CameraScreenState extends State<CameraScreen> {
           isCameraReady = true;
         });
       });
+    } on CameraException catch (e) {
+      debugPrint("Camera Error: $e");
+    }
+  }
+
+  Future _takePicture() async {
+    if (_cameraController.value.isInitialized == false ||
+        _cameraController.value.isTakingPicture) {
+      return;
+    }
+
+    try {
+      XFile picture = await _cameraController.takePicture();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PreviewPage(picture: picture)));
     } on CameraException catch (e) {
       debugPrint("Camera Error: $e");
     }
