@@ -1,9 +1,7 @@
 using Application.Commands.User;
-using Application.DTOs;
 using Application.Interfaces;
 using Domain.Constants;
 using Domain.Exceptions;
-using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +27,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
             throw new NotFoundException(I18N.EmailDoesNotExist);
         }
 
-        if (BCrypt.Net.BCrypt.Verify(request.Password, user.Password) is false)
+        if (user.AuthorizationType == AuthorizationType.Google || BCrypt.Net.BCrypt.Verify(request.Password, user.Password) is false)
         {
             throw new BadRequestException(I18N.InvalidEmailOrPassword);
         }

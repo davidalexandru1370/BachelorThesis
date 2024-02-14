@@ -3,6 +3,7 @@ using Application.Query.Folder;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SDIA.Entities.Folder.Requests;
 using SDIA.Entities.Folder.Responses;
@@ -27,6 +28,10 @@ public class FolderController : ControllerBase
     public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromForm] CreateFolderRequest createFolderRequest,
         CancellationToken cancellationToken)
     {
+        if (createFolderRequest.Documents.Count == 0)
+        {
+            return BadRequest();
+        }
         var createFolderCommand = createFolderRequest.Adapt<CreateFolderCommand>();
         createFolderCommand.UserId = User.GetId();
 

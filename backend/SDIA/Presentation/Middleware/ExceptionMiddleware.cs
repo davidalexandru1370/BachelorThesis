@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -24,13 +23,13 @@ public class ExceptionMiddleware
         }
         catch (ApplicationException applicationException)
         {
-            Log.Error("The following exception was thrown: {Exception}", applicationException);
+            Log.Error("The following known exception was thrown: {Exception}", applicationException);
             var problemDetails = GetProblemDetailsFromException(applicationException, context);
             await WriteProblemDetailsToResponse(problemDetails, context);
         }
         catch (Exception exception)
         {
-            Log.Error("The following exception was thrown: {Exception}", exception);
+            Log.Error("The following unknown exception was thrown: {Exception}", exception);
             var problemDetails = new ProblemDetails()
             {
                 Status = StatusCodes.Status500InternalServerError,

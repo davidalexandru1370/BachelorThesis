@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace Application.Services;
-
 public class DocumentService : IDocumentService
 {
     private readonly IHttpClientFactory _httpClient;

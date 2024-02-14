@@ -1,9 +1,11 @@
 using Application.Commands.User;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SDIA.Entities.User.Requests;
 using SDIA.Entities.User.Responses;
+using SDIA.Security;
 
 namespace SDIA.Controllers;
 
@@ -34,9 +36,27 @@ public class UserController : ControllerBase
         CancellationToken cancellationToken)
     {
         var loginCommand = loginRequest.Adapt<LoginUserCommand>();
-        
+
         var response = (await _mediator.Send(loginCommand, cancellationToken)).Adapt<AuthResponse>();
-        
+
         return Ok(response);
+    }
+
+    [HttpPost("register/google")]
+    [Authorize(AuthenticationSchemes = "Google")]
+    public async Task<IActionResult> RegisterWithGoogle(CancellationToken cancellationToken)
+    {
+        var email = User.GetEmail();
+        var sid = User.GetSid();
+
+        var registerWithGoogleCommand = new RegisterUserWithGoogleCommand()
+        {
+            Email = email,
+            Sid = sid
+        };
+
+        await _mediator.Send(registerWithGoogleCommand, cancellationToken);
+
+        return Ok();
     }
 }

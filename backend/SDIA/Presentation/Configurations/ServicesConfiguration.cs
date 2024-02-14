@@ -16,6 +16,7 @@ public static class ConfigureService
             .ConfigureDependencyInjection()
             .ConfigureMediatr()
             .ConfigureMapster()
+            .ConfigureCors()
             .ConfigureAuthorization(configuration)
             .ConfigureSwagger()
             .RegisterBehaviours()

@@ -29,7 +29,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, string>
         }
 
         request.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
+        
         var addedUser = await _dbContext.Users.AddAsync(request.Adapt<Domain.Entities.User>(), cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
