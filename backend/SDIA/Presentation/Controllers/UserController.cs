@@ -63,8 +63,8 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("authorize")]
-    public async Task<ActionResult<UserProfileResponse>> Authorize(CancellationToken cancellationToken)
+    [HttpGet("profile")]
+    public async Task<ActionResult<UserProfileResponse>> GetUserProfile(CancellationToken cancellationToken)
     {
         var sid = User.GetSid();
         var id = User.GetId();
