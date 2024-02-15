@@ -22,9 +22,9 @@ public class RegisterUserWithGoogleHandler : IRequestHandler<RegisterUserWithGoo
         if (foundUser is not null)
         {
             if (foundUser.Email != request.Email ||
-                foundUser.AuthorizationType != AuthorizationType.Google)
+                foundUser.AuthenticationType != AuthenticationType.Google)
             {
-                throw new BadRequestException(I18N.DuplicateEntry);
+                throw new BadRequestException(I18N.AccountAlreadyExists);
             }
 
             return;
@@ -36,7 +36,7 @@ public class RegisterUserWithGoogleHandler : IRequestHandler<RegisterUserWithGoo
         {
             Email = request.Email,
             Password = password,
-            AuthorizationType = AuthorizationType.Google,
+            AuthenticationType = AuthenticationType.Google,
             Sid = request.Sid,
         };
 

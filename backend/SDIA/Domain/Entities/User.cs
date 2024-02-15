@@ -15,7 +15,9 @@ public class User : IAudit
 
     [Required] public string Password { get; set; } = null!;
 
-    [Required] public AuthorizationType AuthorizationType { get; set; } = AuthorizationType.EmailAndPassword;
+    [Required] public AuthenticationType AuthenticationType { get; set; } = AuthenticationType.EmailAndPassword;
+
+    [Required] public Role Role { get; set; } = Role.User;
 
     public string? Sid { get; set; } = null!;
 

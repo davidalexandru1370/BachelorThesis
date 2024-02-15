@@ -25,7 +25,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, string>
 
         if (user is not null)
         {
-            throw new DuplicateEntryException(I18N.EmailDoesNotExist);
+            throw new DuplicateEntryException(I18N.AccountAlreadyExists);
         }
 
         request.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);

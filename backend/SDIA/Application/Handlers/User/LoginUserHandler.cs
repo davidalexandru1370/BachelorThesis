@@ -27,7 +27,7 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
             throw new NotFoundException(I18N.EmailDoesNotExist);
         }
 
-        if (user.AuthorizationType == AuthorizationType.Google || BCrypt.Net.BCrypt.Verify(request.Password, user.Password) is false)
+        if (user.AuthenticationType == AuthenticationType.Google || BCrypt.Net.BCrypt.Verify(request.Password, user.Password) is false)
         {
             throw new BadRequestException(I18N.InvalidEmailOrPassword);
         }

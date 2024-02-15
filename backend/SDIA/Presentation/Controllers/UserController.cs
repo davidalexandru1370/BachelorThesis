@@ -1,4 +1,6 @@
 using Application.Commands.User;
+using Application.Query.User;
+using Domain.Exceptions;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -58,5 +60,24 @@ public class UserController : ControllerBase
         await _mediator.Send(registerWithGoogleCommand, cancellationToken);
 
         return Ok();
+    }
+
+    [Authorize]
+    [HttpGet("authorize")]
+    public async Task<ActionResult<UserProfileResponse>> Authorize(CancellationToken cancellationToken)
+    {
+        var sid = User.GetSid();
+        var id = User.GetId();
+
+        var getUserProfileQuery = new GetUserProfileById()
+        {
+            UserId = id,
+            UserSid = sid
+        };
+
+        var response = await _mediator.Send(getUserProfileQuery, cancellationToken);
+        var userProfileResponse = response.Adapt<UserProfileResponse>();
+        
+        return Ok(userProfileResponse);
     }
 }
