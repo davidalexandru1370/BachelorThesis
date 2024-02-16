@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Query.Folder;
 
-public record GetFoldersByUserIdQuery(Guid UserId) : IRequest<List<FolderDto>>
+public record GetFoldersByUserIdQuery(Guid UserId, String Sid) : IRequest<List<FolderDto>>
 {
     
 }

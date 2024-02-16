@@ -3,7 +3,6 @@ using Application.Query.Folder;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SDIA.Entities.Folder.Requests;
 using SDIA.Entities.Folder.Responses;
@@ -46,7 +45,8 @@ public class FolderController : ControllerBase
     public async Task<ActionResult<List<FolderInfoResponse>>> GetFolders()
     {
         var userId = User.GetId();
-        var getFoldersQuery = new GetFoldersByUserIdQuery(userId);
+        var sid = User.GetSid();
+        var getFoldersQuery = new GetFoldersByUserIdQuery(userId, sid);
 
         var folders = (await _mediator.Send(getFoldersQuery)).Adapt<List<FolderInfoResponse>>();
 

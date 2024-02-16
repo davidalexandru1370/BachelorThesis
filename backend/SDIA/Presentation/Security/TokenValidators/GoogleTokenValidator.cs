@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Domain.Constants;
+using Domain.Exceptions;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -18,26 +20,26 @@ public class GoogleTokenValidator : ISecurityTokenValidator
         [UnscopedRef] out SecurityToken validatedToken)
     {
         validatedToken = null;
-
-        var payload = GoogleJsonWebSignature
-            .ValidateAsync(securityToken, new GoogleJsonWebSignature.ValidationSettings()
-            {
-                Audience = new[] { ClientId }
-            }).Result;
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, payload.Name),
-            new Claim(ClaimTypes.Name, payload.Name),
-            new Claim(ClaimTypes.Email, payload.Email),
-            new Claim(ClaimTypes.Sid, payload.Subject),
-        };
-
         try
         {
+            var payload = GoogleJsonWebSignature
+                .ValidateAsync(securityToken, new GoogleJsonWebSignature.ValidationSettings()
+                {
+                    Audience = new[] { ClientId }
+                }).Result;
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, payload.Name),
+                new Claim(ClaimTypes.Name, payload.Name),
+                new Claim(ClaimTypes.Email, payload.Email),
+                new Claim(ClaimTypes.Sid, payload.Subject),
+            };
+
+
             validatedToken = new JwtSecurityToken()
             {
-                Payload = 
+                Payload =
                 {
                     { "sub", payload.Subject },
                     { "email", payload.Email },
@@ -49,6 +51,10 @@ public class GoogleTokenValidator : ISecurityTokenValidator
             var principle = new ClaimsPrincipal();
             principle.AddIdentity(new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme));
             return principle;
+        }
+        catch (InvalidJwtException e)
+        {
+            throw new NotAuthenticatedException(I18N.NotAuthenticated);
         }
         catch (Exception e)
         {

@@ -7,4 +7,5 @@ public static class I18N
     public static readonly int DoesNotExist = 3;
     public static readonly int DuplicateEntry = 4;
     public static readonly int AccountAlreadyExists = 5;
+    public static readonly int NotAuthenticated = 6;
 }

@@ -78,6 +78,11 @@ public class ExceptionMiddleware
                 problemDetails.Status = StatusCodes.Status403Forbidden;
                 problemDetails.Detail = forbiddenException.Message;
                 break;
+            case NotAuthenticatedException notAuthenticatedException:
+                problemDetails.Title = "Forbidden";
+                problemDetails.Status = StatusCodes.Status401Unauthorized;
+                problemDetails.Detail = notAuthenticatedException.Message;
+                break;
         }
 
         return problemDetails;
