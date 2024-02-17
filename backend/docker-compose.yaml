@@ -1,0 +1,48 @@
+version: "3.8"
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  api:
+    image: docker.io/library/backend
+    container_name: SDIA_backend
+    depends_on:
+      - "db"
+
+    ports:
+      - "5176:80"
+
+    build:
+      context: ./SDIA/
+      dockerfile: Dockerfile
+
+    environment:
+      - ConnectionStrings__SDIA=User ID =postgres;Password=postgres;Server=backend-db;Port=5432;Database=SDIA; Integrated Security=true;Pooling=true;
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - dev
+
+  db:
+    image: postgres:latest
+    container_name: backend-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=SDIA
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - app_data:/var/lib/postgresql/data
+    networks:
+      - dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  app_data:
