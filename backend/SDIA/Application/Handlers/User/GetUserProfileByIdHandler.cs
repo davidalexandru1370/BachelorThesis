@@ -20,8 +20,8 @@ public class GetUserProfileByIdHandler : IRequestHandler<GetUserProfileById, Use
 
     public async Task<UserDto> Handle(GetUserProfileById request, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(
-            u => u.Id == request.UserId || (u.Sid != null && u.Sid == request.UserSid), cancellationToken);
+        var user = await _dbContext.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
         if (user is null)
         {

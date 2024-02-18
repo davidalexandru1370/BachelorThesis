@@ -2,7 +2,6 @@ version: "3.8"
 
 networks:
   dev:
-    driver: bridge
 
 services:
   api:
@@ -10,10 +9,8 @@ services:
     container_name: SDIA_backend
     depends_on:
       - "db"
-
     ports:
       - "5176:80"
-
     build:
       context: ./SDIA/
       dockerfile: Dockerfile
@@ -21,16 +18,19 @@ services:
     environment:
       - ConnectionStrings__SDIA=User ID =postgres;Password=postgres;Server=backend-db;Port=5432;Database=SDIA; Integrated Security=true;Pooling=true;
       - ASPNETCORE_URLS=http://+:80
+      - DocumentServiceConfiguration__baseUrl=http://document_analyze
     networks:
       - dev
 
   document_analyze:
     image: docker.io/library/documentanalyze
     container_name: SDIA_document_analyze
+    ports:
+      - "5001:5001"
     depends_on:
       - "api"
     build:
-      context: ./DocumentAnalyze/
+      context: ./SDIA.DocumentAnalyze/
       dockerfile: Dockerfile
     networks:
       - dev

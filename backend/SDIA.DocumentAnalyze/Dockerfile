@@ -9,4 +9,4 @@ COPY . .
 
 RUN apt-get update && apt-get install -y python3-opencv
 
-CMD [ "python3", "-m", "flask", "run", "--host=127.0.0.1"]
+CMD [ "python3", "-m", "flask", "run", "--port=5001", "--host=0.0.0.0"]

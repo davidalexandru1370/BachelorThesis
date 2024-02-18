@@ -20,7 +20,7 @@ public class GetFoldersByUserIdHandler : IRequestHandler<GetFoldersByUserIdQuery
     {
         var folders = await _dbContext.Folders
             .AsNoTracking()
-            .Where(f => f.UserId == request.UserId || f.User.Sid == request.Sid)
+            .Where(f => f.UserId == request.UserId)
             .Include(f => f.Documents)
             .ToListAsync(cancellationToken);
         var foldersDto = folders.Adapt<List<FolderDto>>();

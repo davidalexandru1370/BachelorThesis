@@ -36,7 +36,6 @@ public class GoogleTokenValidator : ISecurityTokenValidator
                 new Claim(ClaimTypes.Sid, payload.Subject),
             };
 
-
             validatedToken = new JwtSecurityToken()
             {
                 Payload =
@@ -52,7 +51,7 @@ public class GoogleTokenValidator : ISecurityTokenValidator
             principle.AddIdentity(new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme));
             return principle;
         }
-        catch (InvalidJwtException e)
+        catch (InvalidJwtException)
         {
             throw new NotAuthenticatedException(I18N.NotAuthenticated);
         }

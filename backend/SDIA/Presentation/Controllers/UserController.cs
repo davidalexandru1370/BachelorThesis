@@ -46,7 +46,7 @@ public class UserController : ControllerBase
 
     [HttpPost("register/google")]
     [Authorize(AuthenticationSchemes = "Google")]
-    public async Task<IActionResult> RegisterWithGoogle(CancellationToken cancellationToken)
+    public async Task<ActionResult<AuthResponse>> RegisterWithGoogle(CancellationToken cancellationToken)
     {
         var email = User.GetEmail();
         var sid = User.GetSid();
@@ -57,22 +57,20 @@ public class UserController : ControllerBase
             Sid = sid
         };
 
-        await _mediator.Send(registerWithGoogleCommand, cancellationToken);
+        var response = (await _mediator.Send(registerWithGoogleCommand, cancellationToken)).Adapt<AuthResponse>();
 
-        return Ok();
+        return Ok(response);
     }
 
     [Authorize]
     [HttpGet("profile")]
     public async Task<ActionResult<UserProfileResponse>> GetUserProfile(CancellationToken cancellationToken)
     {
-        var sid = User.GetSid();
         var id = User.GetId();
 
         var getUserProfileQuery = new GetUserProfileById()
         {
             UserId = id,
-            UserSid = sid
         };
 
         var response = await _mediator.Send(getUserProfileQuery, cancellationToken);

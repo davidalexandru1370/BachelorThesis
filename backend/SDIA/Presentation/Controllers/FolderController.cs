@@ -45,8 +45,7 @@ public class FolderController : ControllerBase
     public async Task<ActionResult<List<FolderInfoResponse>>> GetFolders()
     {
         var userId = User.GetId();
-        var sid = User.GetSid();
-        var getFoldersQuery = new GetFoldersByUserIdQuery(userId, sid);
+        var getFoldersQuery = new GetFoldersByUserIdQuery(userId);
 
         var folders = (await _mediator.Send(getFoldersQuery)).Adapt<List<FolderInfoResponse>>();
 
