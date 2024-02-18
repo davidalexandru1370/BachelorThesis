@@ -24,6 +24,17 @@ services:
     networks:
       - dev
 
+  document_analyze:
+    image: docker.io/library/documentanalyze
+    container_name: SDIA_document_analyze
+    depends_on:
+      - "api"
+    build:
+      context: ./DocumentAnalyze/
+      dockerfile: Dockerfile
+    networks:
+      - dev
+
   db:
     image: postgres:latest
     container_name: backend-db
