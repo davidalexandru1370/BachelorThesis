@@ -32,7 +32,8 @@ def analyze_document():
         data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
         image = cv2.imdecode(data, 1)
         image_classifier: ImageClassifier = ImageClassifier()
-        type = {"DocumentType": image_classifier.classify_image(image).name}
+        type = {"DocumentType": image_classifier.classify_image(image).value}
+        print(f"Returning type = {str(type)}\n")
         return Response(response=json.dumps(type), status=200, mimetype="application/json")
     except Exception as e:
         print(e)

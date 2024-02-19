@@ -2,7 +2,6 @@ using Application.Commands.Folder;
 using Application.DTOs;
 using Application.Interfaces;
 using Application.Interfaces.Services;
-using Domain.Constants;
 using Mapster;
 using MediatR;
 
@@ -42,15 +41,10 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             d.DocumentType = await _documentService.AnalyzeDocumentAsync(d.File);
         });
 
-        // foreach(var document in request.Documents)
-        // {
-        //     document.DocumentType = await _documentService.AnalyzeDocumentAsync(document.File);
-        // }
-
-        foreach (var document in folder.Documents)
+        for (int index = 0; index < folder.Documents.Count; index++)
         {
-
-            document.StorageUrl = uris[document.Id];
+            folder.Documents[index].DocumentType = request.Documents[index].DocumentType;
+            folder.Documents[index].StorageUrl = uris[folder.Documents[index].Id];
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);

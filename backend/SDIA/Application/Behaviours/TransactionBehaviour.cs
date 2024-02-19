@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 namespace Application.Behaviours;
 
 public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-where TRequest: ITransanctionalCommand
+where TRequest: ITransanctionableCommand
 {
     private readonly ISdiaDbContext _dbContext;
     private readonly IHttpContextAccessor _httpContext;

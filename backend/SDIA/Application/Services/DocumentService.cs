@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace Application.Services;
+
 public class DocumentService : IDocumentService
 {
     private readonly IHttpClientFactory _httpClient;
@@ -39,11 +40,12 @@ public class DocumentService : IDocumentService
             };
         request.Headers.ExpectContinue = false;
         client.Timeout = new TimeSpan(0, 10, 0);
-        var response = await client.PostAsync(_documentServiceConfiguration.Value.GetAnalyseDocumentEndpoint, new MultipartFormDataContent
-        {
-            {new ByteArrayContent(imageByteArray, 0, imageByteArray.Length), "file", image.FileName}
-        });
+        var response = await client.PostAsync(_documentServiceConfiguration.Value.GetAnalyseDocumentEndpoint,
+            new MultipartFormDataContent
+            {
+                { new ByteArrayContent(imageByteArray, 0, imageByteArray.Length), "file", image.FileName }
+            });
         var body = await response.Content.ReadFromJsonAsync<DocumentClassificationResponse>();
-        return body!.DocumentType ;
+        return body!.DocumentType;
     }
 }

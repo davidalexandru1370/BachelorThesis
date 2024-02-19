@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Application.Interfaces;
 
-public interface ITransanctionalCommand
+public interface ITransanctionableCommand
 {
     
 }
