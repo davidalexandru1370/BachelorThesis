@@ -1,9 +1,11 @@
 using Application.Commands.Folder;
 using Application.DTOs;
+using Application.Entities.Response;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Application.Handlers.Folder;
 
@@ -12,12 +14,17 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
     private readonly ISdiaDbContext _dbContext;
     private readonly IImageService _imageService;
     private readonly IDocumentService _documentService;
-
-    public CreateFolderHandler(ISdiaDbContext dbContext, IImageService imageService, IDocumentService documentService)
+    private readonly ICreateFolderNotification _createFolderNotification;
+    
+    public CreateFolderHandler(ISdiaDbContext dbContext,
+        IImageService imageService,
+        IDocumentService documentService,
+        ICreateFolderNotification createFolderNotification)
     {
         _dbContext = dbContext;
         _imageService = imageService;
         _documentService = documentService;
+        _createFolderNotification = createFolderNotification;
     }
 
     public async Task<FolderDto> Handle(CreateFolderCommand request, CancellationToken cancellationToken)
@@ -32,13 +39,28 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
         }
 
         var uris = new Dictionary<Guid, string>();
-
+        int uploadedDocuments = 0;
+        int analyzedDocuments = 0;
+        var creatingFolderNotification = new CreateFolderNotificationResponse();
         await Parallel.ForEachAsync(request.Documents, cancellationToken, async (d, forEachCancellationToken) =>
         {
             var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
                 forEachCancellationToken);
+            Interlocked.Increment(ref uploadedDocuments);
+            if (uploadedDocuments == request.Documents.Count)
+            {
+                creatingFolderNotification.ImagesUploaded = true;
+                await _createFolderNotification.SendNewStatus(creatingFolderNotification, request.UserId);
+            }
+
             uris[d.Id!.Value] = uri;
             d.DocumentType = await _documentService.AnalyzeDocumentAsync(d.File);
+            Interlocked.Increment(ref analyzedDocuments);
+            if (analyzedDocuments == request.Documents.Count)
+            {
+                creatingFolderNotification.DocumentsAnalyzed = true;
+                await _createFolderNotification.SendNewStatus(creatingFolderNotification, request.UserId);
+            }
         });
 
         for (int index = 0; index < folder.Documents.Count; index++)

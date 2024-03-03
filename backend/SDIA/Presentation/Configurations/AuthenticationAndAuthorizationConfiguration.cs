@@ -6,9 +6,9 @@ using SDIA.Security.TokenValidators;
 
 namespace SDIA.Configurations;
 
-public static class AuthorizationConfiguration
+public static class AuthenticationAndAuthorizationConfiguration
 {
-    public static IServiceCollection ConfigureAuthorization(this IServiceCollection services,
+    public static IServiceCollection ConfigureAuthenticationAndAuthorization(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddAuthentication(options =>
@@ -34,6 +34,21 @@ public static class AuthorizationConfiguration
                     IssuerSigningKey =
                         new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"])),
                     ValidateIssuerSigningKey = true,
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/api/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             }).AddJwtBearer("Google", options =>
             {

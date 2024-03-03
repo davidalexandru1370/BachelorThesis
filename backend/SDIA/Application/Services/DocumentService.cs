@@ -12,7 +12,7 @@ public class DocumentService : IDocumentService
 {
     private readonly IHttpClientFactory _httpClient;
     private readonly IOptions<DocumentServiceConfiguration> _documentServiceConfiguration;
-
+    
     public DocumentService(IHttpClientFactory httpClient,
         IOptions<DocumentServiceConfiguration> documentServiceConfiguration)
     {
