@@ -17,11 +17,11 @@ public static class ConfigureService
             .ConfigureMediatr()
             .ConfigureMapster()
             .ConfigureCors()
+            .ConfigureSignalR()
             .ConfigureAuthenticationAndAuthorization(configuration)
             .ConfigureSwagger()
             .RegisterBehaviours()
-            .ConfigureOptionsCollection(configuration)
-            .ConfigureSignalR();
+            .ConfigureOptionsCollection(configuration);
 
     }
 }

@@ -1,36 +1,32 @@
 using System.Collections.Concurrent;
 using Application.Entities.Response;
-using Application.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using SDIA.Security;
 using Serilog;
-using Serilog.Core;
 
-namespace SDIA.SignalR.Hubs;
+namespace Application.SignalR.Hubs;
 
 [Authorize]
-public class CreateFolderHub : Hub, ICreateFolderNotification
+public class CreateFolderHub : Hub
 {
-    private static ConcurrentDictionary<Guid, string?> _connections = new ConcurrentDictionary<Guid, string?>();
+    public static readonly ConcurrentDictionary<Guid, string> Connections = new();
 
     public override Task OnConnectedAsync()
     {
         var context = Context;
-        var userId = Context.User.GetId();
-        _connections.TryAdd(userId, context.ConnectionId);
+        var userId = Guid.Parse(Context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value.ToString());
+        Connections.TryAdd(userId, context.ConnectionId);
         Log.Information($"User with connection id ${context.ConnectionId} connected.");
         return base.OnConnectedAsync();
     }
 
     public override Task OnDisconnectedAsync(Exception? exception)
     {
-        var userId = Context.User.GetId();
-        if (_connections.ContainsKey(userId))
+        var userId = Guid.Parse(Context.User.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value.ToString());
+        if (Connections.ContainsKey(userId))
         {
             var connectionId = "";
-            _connections.Remove(userId, out connectionId);
+            Connections.Remove(userId, out connectionId);
             Log.Information($"User with connection id ${connectionId} disconnected.");
         }
 
@@ -39,7 +35,7 @@ public class CreateFolderHub : Hub, ICreateFolderNotification
 
     public async Task SendNewStatus(CreateFolderNotificationResponse response, Guid userId)
     {
-        _connections.TryGetValue(userId, out string? connectionId);
+        Connections.TryGetValue(userId, out string? connectionId);
         if (!string.IsNullOrWhiteSpace(connectionId))
         {
             await Clients.Client(connectionId).SendAsync("SendNewStatus", response);
