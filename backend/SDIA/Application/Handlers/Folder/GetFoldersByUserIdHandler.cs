@@ -18,11 +18,13 @@ public class GetFoldersByUserIdHandler : IRequestHandler<GetFoldersByUserIdQuery
 
     public async Task<List<FolderDto>> Handle(GetFoldersByUserIdQuery request, CancellationToken cancellationToken)
     {
-        var folders = await _dbContext.Folders.Where(f => f.UserId == request.UserId)
+        var folders = await _dbContext.Folders
+            .AsNoTracking()
+            .Where(f => f.UserId == request.UserId)
             .Include(f => f.Documents)
             .ToListAsync(cancellationToken);
         var foldersDto = folders.Adapt<List<FolderDto>>();
-        
+
         return foldersDto;
     }
 }

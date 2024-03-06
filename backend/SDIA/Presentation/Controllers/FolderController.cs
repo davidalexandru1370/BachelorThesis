@@ -27,6 +27,7 @@ public class FolderController : ControllerBase
     public async Task<ActionResult<FolderInfoResponse>> CreateFolder([FromForm] CreateFolderRequest createFolderRequest,
         CancellationToken cancellationToken)
     {
+
         var createFolderCommand = createFolderRequest.Adapt<CreateFolderCommand>();
         createFolderCommand.UserId = User.GetId();
 

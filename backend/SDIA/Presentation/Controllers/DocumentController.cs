@@ -15,7 +15,7 @@ public class DocumentController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+        
     [HttpPut]
     public async Task<IActionResult> UpdateDocument([FromBody] UpdateDocumentRequest updateDocumentRequest)
     {

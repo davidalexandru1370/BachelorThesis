@@ -7,11 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var services = builder.Services;
 var host = builder.Host;
-services.ConfigureServices(builder.Configuration);
-host.ConfigureHost(builder.Configuration);
+var configuration = builder.Configuration;
+services.ConfigureServices(configuration);
+host.ConfigureHost(configuration);
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -24,12 +24,14 @@ app.UseSerilogRequestLogging();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSignalR(configuration);
 
 app.Run();
