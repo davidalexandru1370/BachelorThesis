@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Domain.Constants;
+using Domain.Constants.Enums;
 using Domain.Exceptions;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

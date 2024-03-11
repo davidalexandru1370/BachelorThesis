@@ -1,4 +1,4 @@
-using Domain.Constants;
+using Domain.Constants.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Interfaces.Services;

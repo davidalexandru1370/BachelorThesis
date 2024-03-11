@@ -1,6 +1,6 @@
 using Application.Commands.User;
 using Application.Interfaces;
-using Domain.Constants;
+using Domain.Constants.Enums;
 using Domain.Exceptions;
 using Mapster;
 using MediatR;

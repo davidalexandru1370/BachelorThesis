@@ -1,6 +1,6 @@
 using Application.DTOs;
 using Application.Interfaces;
-using Domain.Constants;
+using Domain.Constants.Enums;
 using MediatR;
 
 namespace Application.Commands.Folder;

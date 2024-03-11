@@ -1,4 +1,4 @@
-namespace Domain.Constants;
+namespace Domain.Constants.Enums;
 
 public static class I18N
 {

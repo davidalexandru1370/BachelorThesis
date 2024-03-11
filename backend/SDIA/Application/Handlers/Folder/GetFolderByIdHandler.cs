@@ -1,7 +1,7 @@
 using Application.DTOs;
 using Application.Interfaces;
 using Application.Query.Folder;
-using Domain.Constants;
+using Domain.Constants.Enums;
 using Domain.Exceptions;
 using Mapster;
 using MediatR;

@@ -1,4 +1,4 @@
-using Domain.Constants;
+using Domain.Constants.Enums;
 using Domain.Interfaces;
 
 namespace Application.DTOs;

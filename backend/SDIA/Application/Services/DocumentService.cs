@@ -2,7 +2,7 @@ using System.Net.Http.Json;
 using Application.Configurations;
 using Application.Entities.Response;
 using Application.Interfaces.Services;
-using Domain.Constants;
+using Domain.Constants.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 

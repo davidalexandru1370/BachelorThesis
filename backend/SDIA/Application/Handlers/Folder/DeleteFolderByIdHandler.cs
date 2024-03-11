@@ -32,6 +32,7 @@ public class DeleteFolderByIdHandler : IRequestHandler<DeleteFolderByIdCommand>
         }
 
         _dbContext.Folders.Remove(folder);
+        await _dbContext.SaveChangesAsync();
         
     }
 }
