@@ -7,6 +7,32 @@ namespace Application.Handlers.Folder;
 
 public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocumentsCommand, AnalyzeFolderDto>
 {
+    private static readonly Dictionary<FolderType, HashSet<DocumentType>> DocumentsForFolder = new()
+    {
+        {
+            FolderType.CarNeverRegistered, new HashSet<DocumentType>
+            {
+                DocumentType.OwnershipContract,
+                DocumentType.IdentityCard
+            }
+        },
+        {
+            FolderType.CarFromAnotherCountry, new HashSet<DocumentType>
+            {
+                DocumentType.OwnershipContract,
+                DocumentType.IdentityCard,
+            }
+        },
+        {
+            FolderType.AlreadyRegisteredVehicleInCountry, new HashSet<DocumentType>
+            {
+                DocumentType.OwnershipContract,
+                DocumentType.IdentityCard,
+                DocumentType.UnregisterVehicle
+            }
+        }
+    };
+
     public Task<AnalyzeFolderDto> Handle(AnalyzeFolderDocumentsCommand request, CancellationToken cancellationToken)
     {
         var response = new AnalyzeFolderDto
@@ -16,17 +42,46 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
             Errors = new List<string>()
         };
 
-        switch (request.FolderType)
+        var errors = ValidateDocuments(request.FolderType, new HashSet<DocumentType>(request.Documents));
+        if (errors.Count == 0)
         {
-            case FolderType.CarNeverRegistered:
-                
-                break;
-            case FolderType.CarFromAnotherCountry:
-                break;
-            case FolderType.AlreadyRegisteredVehicleInCountry:
-                break;
+            response.IsCorrect = true;
+        }
+        else
+        {
+            response.Errors = errors;
         }
 
         return Task.FromResult(response);
+    }
+
+    private List<String> ValidateDocuments(FolderType folderType, HashSet<DocumentType> documents)
+    {
+        List<String> errors = new();
+
+        foreach (var document in DocumentsForFolder[folderType])
+        {
+            if (!documents.Contains(document))
+            {
+                switch (document)
+                {
+                    case DocumentType.IdentityCard:
+                        errors.Add(I18N.IdentityCardDoesNotExist.ToString());
+                        break;
+                    case DocumentType.OwnershipContract:
+                        errors.Add(I18N.OwnershipContractDoesNotExist.ToString());
+                        break;
+                    case DocumentType.UnregisterVehicle:
+                        errors.Add(I18N.UnregisterVehicleDoesNotExist.ToString());
+                        break;
+                    case DocumentType.NotFound:
+                        errors.Add(I18N.TooManyDocuments.ToString());
+                        break;
+                }
+            }
+        }
+
+
+        return errors;
     }
 }

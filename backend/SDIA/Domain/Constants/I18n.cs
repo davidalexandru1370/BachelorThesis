@@ -8,4 +8,8 @@ public static class I18N
     public static readonly int DuplicateEntry = 4;
     public static readonly int AccountAlreadyExists = 5;
     public static readonly int NotAuthenticated = 6;
+    public static readonly int TooManyDocuments = 7;
+    public static readonly int IdentityCardDoesNotExist = 8;
+    public static readonly int OwnershipContractDoesNotExist = 9;
+    public static readonly int UnregisterVehicleDoesNotExist = 10;
 }
