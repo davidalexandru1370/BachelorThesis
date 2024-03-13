@@ -10,6 +10,7 @@ public interface ISdiaDbContext
     public DbSet<Document> Documents { get; init; }
     
     public DbSet<Folder> Folders { get; init; }
+    public DbSet<FolderErrors> FolderErrors { get; init; }
     
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);

@@ -1,12 +1,16 @@
 using Application.Commands.Folder;
 using Application.DTOs;
+using Application.Interfaces;
 using Domain.Constants.Enums;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Handlers.Folder;
 
 public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocumentsCommand, AnalyzeFolderDto>
 {
+    private readonly ISdiaDbContext _dbContext;
+
     private static readonly Dictionary<FolderType, HashSet<DocumentType>> DocumentsForFolder = new()
     {
         {
@@ -33,7 +37,13 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
         }
     };
 
-    public Task<AnalyzeFolderDto> Handle(AnalyzeFolderDocumentsCommand request, CancellationToken cancellationToken)
+    public AnalyzeFolderDocumentsHandler(ISdiaDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<AnalyzeFolderDto> Handle(AnalyzeFolderDocumentsCommand request,
+        CancellationToken cancellationToken)
     {
         var response = new AnalyzeFolderDto
         {
@@ -52,7 +62,16 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
             response.Errors = errors;
         }
 
-        return Task.FromResult(response);
+        await Parallel.ForEachAsync(errors, cancellationToken, async (error, forEachCancellationToken) =>
+        {
+            await _dbContext.FolderErrors.AddAsync(new FolderErrors
+            {
+                FolderId = request.FolderId,
+                Error = error
+            }, forEachCancellationToken);
+        });
+
+        return response;
     }
 
     private List<String> ValidateDocuments(FolderType folderType, HashSet<DocumentType> documents)

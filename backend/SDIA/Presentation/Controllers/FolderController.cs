@@ -31,9 +31,14 @@ public class FolderController : ControllerBase
         createFolderCommand.UserId = User.GetId();
 
         var addedFolder = await _mediator.Send(createFolderCommand, cancellationToken);
+
+        var analyzeFolderCommand = addedFolder.Adapt<AnalyzeFolderDocumentsCommand>();
+
+        await _mediator.Send(analyzeFolderCommand, cancellationToken);
+
         var folderResponse = (await _mediator.Send(new GetFolderByIdQuery(addedFolder.Id), cancellationToken))
             .Adapt<FolderInfoResponse>();
-        
+
         return Ok(folderResponse);
     }
 
