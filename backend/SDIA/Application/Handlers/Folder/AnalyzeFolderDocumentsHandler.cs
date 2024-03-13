@@ -81,7 +81,6 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
             }
         }
 
-
         return errors;
     }
 }
