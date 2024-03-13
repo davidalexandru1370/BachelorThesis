@@ -70,6 +70,8 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
                 Error = error
             }, forEachCancellationToken);
         });
+        
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return response;
     }

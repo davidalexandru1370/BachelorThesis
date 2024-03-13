@@ -22,6 +22,7 @@ public class GetFoldersByUserIdHandler : IRequestHandler<GetFoldersByUserIdQuery
             .AsNoTracking()
             .Where(f => f.UserId == request.UserId)
             .Include(f => f.Documents)
+            .Include(f => f.Errors)
             .ToListAsync(cancellationToken);
         var foldersDto = folders.Adapt<List<FolderDto>>();
 
