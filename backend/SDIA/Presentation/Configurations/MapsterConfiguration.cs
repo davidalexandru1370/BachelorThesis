@@ -28,6 +28,7 @@ public class MappingConfig : IRegister
         ConfigureFromCreateDocumentRequestToCreateDocumentDto(config);
         ConfigureFromFolderToFolderDto(config);
         ConfigureFromFolderDtoToAnalyzeFolderDocumentsCommand(config);
+        ConfigureFromCreateFolderCommandToFolder(config);
     }
 
     private void ConfigureFromStringToAuthResponse(TypeAdapterConfig config)
@@ -61,5 +62,11 @@ public class MappingConfig : IRegister
     {
         config.NewConfig<FolderDto, FolderInfoResponse>()
             .Map(dest => dest.Errors, src => src.Errors);
+    }
+    
+    private void ConfigureFromCreateFolderCommandToFolder(TypeAdapterConfig config)
+    {
+        config.NewConfig<CreateFolderCommand, Folder>()
+            .Map(dest => dest.Type, src => src.FolderType);
     }
 }

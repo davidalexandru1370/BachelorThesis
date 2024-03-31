@@ -3,6 +3,7 @@ using Application.DTOs;
 using Application.Interfaces;
 using Domain.Constants.Enums;
 using Domain.Entities;
+using Domain.Exceptions;
 using MediatR;
 
 namespace Application.Handlers.Folder;
@@ -45,6 +46,13 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
     public async Task<AnalyzeFolderDto> Handle(AnalyzeFolderDocumentsCommand request,
         CancellationToken cancellationToken)
     {
+        var folder = await _dbContext.Folders.FindAsync(request.FolderId);
+        
+        if (folder is null)
+        {
+            throw new NotFoundException(I18N.DoesNotExist);
+        }
+
         var response = new AnalyzeFolderDto
         {
             FolderId = request.FolderId,
@@ -55,6 +63,7 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
         var errors = ValidateDocuments(request.FolderType, new HashSet<DocumentType>(request.Documents));
         if (errors.Count == 0)
         {
+            folder.IsCorrect = true;
             response.IsCorrect = true;
         }
         else
@@ -70,7 +79,7 @@ public class AnalyzeFolderDocumentsHandler : IRequestHandler<AnalyzeFolderDocume
                 Error = error
             }, forEachCancellationToken);
         });
-        
+
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return response;

@@ -55,7 +55,7 @@ public class GoogleTokenValidator : ISecurityTokenValidator
         {
             throw new NotAuthenticatedException(I18N.NotAuthenticated);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             throw;
         }
