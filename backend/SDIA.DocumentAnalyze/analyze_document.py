@@ -165,7 +165,7 @@ class ImageClassifier:
         """Compute the document type of the given image.
 
         :param image: The image to compute the document type for.
-        :return: The document type of the given image.
+        :return: The document type of the given image and the confidence level.
         """
         patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(), OwnershipContractPattern(),
                                                          UnregisterVehiclePattern()]

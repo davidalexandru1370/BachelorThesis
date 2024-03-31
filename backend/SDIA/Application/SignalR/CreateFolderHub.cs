@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Serilog;
 
-namespace Application.SignalR.Hubs;
+namespace Application.SignalR;
 
 [Authorize]
 public class CreateFolderHub : Hub

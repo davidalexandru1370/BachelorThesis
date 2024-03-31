@@ -3,7 +3,7 @@ using Application.DTOs;
 using Application.Entities.Response;
 using Application.Interfaces;
 using Application.Interfaces.Services;
-using Application.SignalR.Hubs;
+using Application.SignalR;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
