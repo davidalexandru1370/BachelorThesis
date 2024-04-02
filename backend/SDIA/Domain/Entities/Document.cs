@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Constants.Enums;
+using Domain.Constants;
 using Domain.Interfaces;
 
 namespace Domain.Entities;

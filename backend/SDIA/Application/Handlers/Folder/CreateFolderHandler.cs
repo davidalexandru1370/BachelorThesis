@@ -4,6 +4,8 @@ using Application.Entities.Response;
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Application.SignalR;
+using Domain.Constants;
+using Domain.Exceptions;
 using Mapster;
 using MediatR;
 
@@ -51,7 +53,7 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             if (uploadedDocuments == request.Documents.Count)
             {
                 creatingFolderNotification.ImagesUploaded = true;
-               await _createFolderNotification.SendNewStatus(creatingFolderNotification, folder.UserId,
+                await _createFolderNotification.SendNewStatus(creatingFolderNotification, folder.UserId,
                     cancellationToken);
             }
 

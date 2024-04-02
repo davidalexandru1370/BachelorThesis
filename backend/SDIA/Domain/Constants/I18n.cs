@@ -1,4 +1,4 @@
-namespace Domain.Constants.Enums;
+namespace Domain.Constants;
 
 public static class I18N
 {
@@ -12,4 +12,6 @@ public static class I18N
     public static readonly int IdentityCardDoesNotExist = 8;
     public static readonly int OwnershipContractDoesNotExist = 9;
     public static readonly int UnregisterVehicleDoesNotExist = 10;
+    public static readonly int NotAcceptedExtension = 11;
+    public static readonly int UserNotFound = 12;
 }

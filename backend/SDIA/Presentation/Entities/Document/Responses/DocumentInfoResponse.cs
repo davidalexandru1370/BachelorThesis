@@ -1,4 +1,4 @@
-using Domain.Constants.Enums;
+using Domain.Constants;
 
 namespace SDIA.Entities.Document.Responses;
 

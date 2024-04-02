@@ -1,4 +1,4 @@
-namespace Domain.Constants.Enums;
+namespace Domain.Constants;
 
 public enum AuthenticationType
 {

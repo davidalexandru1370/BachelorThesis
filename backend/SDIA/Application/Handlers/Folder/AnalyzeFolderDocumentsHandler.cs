@@ -1,7 +1,7 @@
 using Application.Commands.Folder;
 using Application.DTOs;
 using Application.Interfaces;
-using Domain.Constants.Enums;
+using Domain.Constants;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;

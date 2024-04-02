@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Domain.Constants.Enums;
+using Domain.Constants;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

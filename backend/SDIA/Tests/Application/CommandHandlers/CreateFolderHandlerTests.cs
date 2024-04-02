@@ -4,7 +4,7 @@ using Application.Entities.Response;
 using Application.Handlers.Folder;
 using Application.Interfaces.Services;
 using Application.SignalR;
-using Domain.Constants.Enums;
+using Domain.Constants;
 using Infrastructure.DbContext;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +27,7 @@ public class CreateFolderHandlerTests
     {
         var services = new ServiceCollection();
         services.AddDbContext<SdiaDbContext>(options => { options.UseInMemoryDatabase("Sdia"); });
+
         var config = TypeAdapterConfig.GlobalSettings;
         config.Scan(typeof(MapsterConfiguration).Assembly);
 
@@ -35,7 +36,7 @@ public class CreateFolderHandlerTests
 
     [TestCase("Car never registered", FolderType.CarNeverRegistered)]
     [TestCase("Car from another country", FolderType.CarFromAnotherCountry)]
-    [TestCase("Car already registered in country", FolderType.AlreadyRegisteredVehicleInCountry)]
+    [TestCase("Already registered vehicle in country", FolderType.AlreadyRegisteredVehicleInCountry)]
     public void CreateFolderHandler_ValidEntity_ShouldCreateFolder(string folderName, FolderType folderType)
     {
         using var scope = _serviceProvider.CreateScope();
@@ -75,6 +76,7 @@ public class CreateFolderHandlerTests
         Assert.NotNull(result);
         Assert.That(result.Name, Is.EqualTo(folderName));
         Assert.That(result.Type, Is.EqualTo(folderType));
+        Assert.That(dbContext.Folders.Where(f => f.Id == result.Id).ToList().Count, Is.EqualTo(1));
 
         Assert.That(result.Documents.Count, Is.EqualTo(1));
         Assert.That(result.Documents[0].DocumentType, Is.EqualTo(DocumentType.IdentityCard));

@@ -1,4 +1,4 @@
-using Domain.Constants.Enums;
+using Domain.Constants;
 
 namespace Application.Entities.Response;
 

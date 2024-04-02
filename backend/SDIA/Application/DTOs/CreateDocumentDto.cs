@@ -1,4 +1,4 @@
-using Domain.Constants.Enums;
+using Domain.Constants;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.DTOs;

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Domain.Constants.Enums;
+namespace Domain.Constants;
 
 public enum DocumentType
 {
