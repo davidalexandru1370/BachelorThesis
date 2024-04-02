@@ -6,7 +6,6 @@ using Application.Interfaces.Services;
 using Application.SignalR;
 using Mapster;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Application.Handlers.Folder;
 
@@ -15,17 +14,17 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
     private readonly ISdiaDbContext _dbContext;
     private readonly IImageService _imageService;
     private readonly IDocumentService _documentService;
-    private readonly IHubContext<CreateFolderHub> _hubContext;
+    private readonly ICreateFolderNotification _createFolderNotification;
 
     public CreateFolderHandler(ISdiaDbContext dbContext,
         IImageService imageService,
         IDocumentService documentService,
-        IHubContext<CreateFolderHub> hubContext)
+        ICreateFolderNotification createFolderNotification)
     {
         _dbContext = dbContext;
         _imageService = imageService;
         _documentService = documentService;
-        _hubContext = hubContext;
+        _createFolderNotification = createFolderNotification;
     }
 
     public async Task<FolderDto> Handle(CreateFolderCommand request, CancellationToken cancellationToken)
@@ -45,14 +44,15 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
         var creatingFolderNotification = new CreateFolderNotificationResponse();
         await Parallel.ForEachAsync(request.Documents, cancellationToken, async (d, forEachCancellationToken) =>
         {
-            var uri = await _imageService.UploadImageAsync(folder.Id, d.Id!.Value, d.File,
+            var name = $"{folder.Id}/{d.Id!.Value}";
+            var uri = await _imageService.UploadImageAsync(name, d.File,
                 forEachCancellationToken);
             Interlocked.Increment(ref uploadedDocuments);
             if (uploadedDocuments == request.Documents.Count)
             {
                 creatingFolderNotification.ImagesUploaded = true;
-                await _hubContext.Clients.Client(CreateFolderHub.Connections[folder.UserId]).SendAsync("SendNewStatus",
-                    creatingFolderNotification, cancellationToken);
+               await _createFolderNotification.SendNewStatus(creatingFolderNotification, folder.UserId,
+                    cancellationToken);
             }
 
             uris[d.Id!.Value] = uri;
@@ -61,8 +61,8 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             if (analyzedDocuments == request.Documents.Count)
             {
                 creatingFolderNotification.DocumentsAnalyzed = true;
-                await _hubContext.Clients.Client(CreateFolderHub.Connections[folder.UserId]).SendAsync("SendNewStatus",
-                    creatingFolderNotification, cancellationToken);
+                await _createFolderNotification.SendNewStatus(creatingFolderNotification, folder.UserId,
+                    cancellationToken);
             }
         });
 

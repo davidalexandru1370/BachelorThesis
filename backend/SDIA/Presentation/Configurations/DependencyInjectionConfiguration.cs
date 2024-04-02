@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.Interfaces.Services;
 using Application.Services;
+using Application.SignalR;
 using Application.Utilities;
 using Infrastructure.DbContext;
 
@@ -16,6 +17,7 @@ public static class DependencyInjectionConfiguration
         services.AddTransient<IImageService, ImageService>();
         services.AddTransient<IDocumentService, DocumentService>();
 
+        services.AddSingleton<ICreateFolderNotification, CreateFolderNotification>();
         return services;
     }
 }
