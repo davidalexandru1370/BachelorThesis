@@ -68,7 +68,7 @@ public class UserController : ControllerBase
     {
         var id = User.GetId();
 
-        var getUserProfileQuery = new GetUserProfileById()
+        var getUserProfileQuery = new GetUserProfileByIdQuery()
         {
             UserId = id,
         };

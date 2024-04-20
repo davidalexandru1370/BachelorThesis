@@ -1,4 +1,4 @@
-using Application.SignalR.Hubs;
+using Application.SignalR;
 
 namespace SDIA.Configurations;
 

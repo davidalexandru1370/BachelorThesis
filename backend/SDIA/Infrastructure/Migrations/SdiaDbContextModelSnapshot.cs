@@ -66,6 +66,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -84,6 +87,26 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Folders");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FolderErrors", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Error")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("FolderId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FolderId");
+
+                    b.ToTable("FolderErrors");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -145,9 +168,20 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FolderErrors", b =>
+                {
+                    b.HasOne("Domain.Entities.Folder", null)
+                        .WithMany("Errors")
+                        .HasForeignKey("FolderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Folder", b =>
                 {
                     b.Navigation("Documents");
+
+                    b.Navigation("Errors");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

@@ -30,6 +30,8 @@ public class SdiaDbContext : Microsoft.EntityFrameworkCore.DbContext, ISdiaDbCon
 
     public virtual DbSet<Folder> Folders { get; init; }
 
+    public virtual DbSet<FolderErrors> FolderErrors { get; init; }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await base.SaveChangesAsync(cancellationToken);

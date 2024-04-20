@@ -9,7 +9,7 @@ namespace Application.Services;
 public class ImageService : IImageService
 {
     private readonly BlobContainerClient _blobContainerClient;
-    
+
     public ImageService(IOptions<AzureBlobConfiguration> blobConfiguration)
     {
         var (connectionString, containerName) =
@@ -17,10 +17,10 @@ public class ImageService : IImageService
         _blobContainerClient = new BlobContainerClient(connectionString, containerName);
     }
 
-    public async Task<string> UploadImageAsync(Guid folderId, Guid documentId, IFormFile image, CancellationToken cancellationToken)
+    public async Task<string> UploadImageAsync(string name, IFormFile image, CancellationToken cancellationToken)
     {
-        var blobClient = _blobContainerClient.GetBlobClient($"{folderId}/{documentId}");
-        
+        var blobClient = _blobContainerClient.GetBlobClient(name);
+    
         var response = await blobClient.UploadAsync(image.OpenReadStream(), false, cancellationToken);
 
         var url = blobClient.Uri.AbsoluteUri;
@@ -33,7 +33,8 @@ public class ImageService : IImageService
         return $"{_blobContainerClient.Uri.AbsoluteUri}/{folderId}";
     }
 
-    public Task<List<string>> UploadImagesAsync(Guid folderId, List<IFormFile> images, CancellationToken cancellationToken)
+    public Task<List<string>> UploadImagesAsync(Guid folderId, List<IFormFile> images,
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

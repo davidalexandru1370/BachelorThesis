@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Application.SignalR;
 
-public interface ICreateFolderNotification : IHubContext
+public interface ICreateFolderNotification
 {
-    public Task SendNewStatus(CreateFolderNotificationResponse response, Guid userId);
+    public Task SendNewStatus(CreateFolderNotificationResponse response, Guid userId,
+        CancellationToken cancellationToken = default);
 }

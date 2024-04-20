@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Query.User;
 
-public record GetUserProfileById : IRequest<UserDto>
+public record GetUserProfileByIdQuery : IRequest<UserDto>
 {
     public Guid UserId { get; init; }
 }
