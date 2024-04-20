@@ -11,7 +11,7 @@ public static class DatabaseConfiguration
         ApplyMigrations(services);
         return services;
     }
-
+    
     private static void ApplyMigrations(IServiceCollection services)
     {
         using var scope = services.BuildServiceProvider().CreateScope();

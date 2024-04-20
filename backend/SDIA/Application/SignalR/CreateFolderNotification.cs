@@ -12,8 +12,13 @@ public class CreateFolderNotification : ICreateFolderNotification
         _hubContext = hubContext;
     }
 
-    public Task SendNewStatus(CreateFolderNotificationResponse response, Guid userId, CancellationToken cancellationToken)
+    public async Task SendNewStatus(CreateFolderNotificationResponse response, Guid userId,
+        CancellationToken cancellationToken)
     {
-        return _hubContext.Clients.Client(CreateFolderHub.Connections[userId]).SendAsync("SendNewStatus", response, cancellationToken);
+        if (CreateFolderHub.Connections.ContainsKey(userId))
+        {
+            await _hubContext.Clients.Client(CreateFolderHub.Connections[userId])
+                .SendAsync("SendNewStatus", response, cancellationToken);
+        }
     }
 }

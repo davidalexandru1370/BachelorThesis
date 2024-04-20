@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Handlers.User;
 
-public class GetUserProfileByIdHandler : IRequestHandler<GetUserProfileById, UserDto>
+public class GetUserProfileByIdHandler : IRequestHandler<GetUserProfileByIdQuery, UserDto>
 {
     private readonly ISdiaDbContext _dbContext;
 
@@ -18,7 +18,7 @@ public class GetUserProfileByIdHandler : IRequestHandler<GetUserProfileById, Use
         _dbContext = dbContext;
     }
 
-    public async Task<UserDto> Handle(GetUserProfileById request, CancellationToken cancellationToken)
+    public async Task<UserDto> Handle(GetUserProfileByIdQuery request, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Users.AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
