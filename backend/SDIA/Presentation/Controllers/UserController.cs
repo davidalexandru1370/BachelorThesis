@@ -67,7 +67,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<UserProfileResponse>> GetUserProfile(CancellationToken cancellationToken)
     {
         var id = User.GetId();
-
+    
         var getUserProfileQuery = new GetUserProfileByIdQuery()
         {
             UserId = id,
