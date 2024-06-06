@@ -167,7 +167,8 @@ class ImageClassifier:
         :param image: The image to compute the document type for.
         :return: The document type of the given image and the confidence level.
         """
-        patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(), OwnershipContractPattern(),
+        patterns: List[Type[DocumentPatternAbstract]] = [IdentityCardPattern(),
+                                                         OwnershipContractPattern(),
                                                          UnregisterVehiclePattern()]
         confidence_level: float = 0.0
         document_type: DocumentType = None
@@ -181,7 +182,6 @@ class ImageClassifier:
 
         for pattern in patterns:
             conf_level = pattern.compute_confidence_level(words=lines)
-            print(conf_level)
             if conf_level > confidence_level:
                 confidence_level = conf_level
                 document_type = pattern.get_document_type()

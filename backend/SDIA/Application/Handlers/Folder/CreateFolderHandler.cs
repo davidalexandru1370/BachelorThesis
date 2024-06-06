@@ -17,7 +17,7 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
     private readonly IImageService _imageService;
     private readonly IDocumentService _documentService;
     private readonly ICreateFolderNotification _createFolderNotification;
-
+    private readonly Mutex _mutex = new();  
     public CreateFolderHandler(ISdiaDbContext dbContext,
         IImageService imageService,
         IDocumentService documentService,
@@ -44,7 +44,8 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
         int uploadedDocuments = 0;
         int analyzedDocuments = 0;
         var creatingFolderNotification = new CreateFolderNotificationResponse();
-        await Parallel.ForEachAsync(request.Documents, cancellationToken, async (d, forEachCancellationToken) =>
+        await Parallel.ForEachAsync(request.Documents, cancellationToken, 
+            async (d, forEachCancellationToken) =>
         {
             var name = $"{folder.Id}/{d.Id!.Value}";
             var uri = await _imageService.UploadImageAsync(name, d.File,
@@ -52,9 +53,12 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             Interlocked.Increment(ref uploadedDocuments);
             if (uploadedDocuments == request.Documents.Count)
             {
+                _mutex.WaitOne();
                 creatingFolderNotification.ImagesUploaded = true;
-                await _createFolderNotification.SendNewStatus(creatingFolderNotification, folder.UserId,
+                await _createFolderNotification.SendNewStatus(creatingFolderNotification, 
+                    folder.UserId,
                     cancellationToken);
+                _mutex.ReleaseMutex();
             }
 
             uris[d.Id!.Value] = uri;
@@ -62,8 +66,10 @@ public class CreateFolderHandler : IRequestHandler<CreateFolderCommand, FolderDt
             Interlocked.Increment(ref analyzedDocuments);
             if (analyzedDocuments == request.Documents.Count)
             {
+                
                 creatingFolderNotification.DocumentsAnalyzed = true;
-                await _createFolderNotification.SendNewStatus(creatingFolderNotification, folder.UserId,
+                await _createFolderNotification.SendNewStatus(creatingFolderNotification,
+                    folder.UserId,
                     cancellationToken);
             }
         });
