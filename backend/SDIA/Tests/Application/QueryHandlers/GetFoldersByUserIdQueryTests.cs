@@ -22,8 +22,7 @@ namespace Tests.Application.QueryHandlers
 {
     class GetFoldersByUserIdQueryTests
     {
-        private ServiceProvider _serviceProvider;
-        private Mock<IMediator> _mediator;
+        private Mock<IMediator> _mediator = new Mock<IMediator>();
 
         #region USER
 
@@ -39,11 +38,6 @@ namespace Tests.Application.QueryHandlers
 
             var config = TypeAdapterConfig.GlobalSettings;
             config.Scan(typeof(MapsterConfiguration).Assembly);
-
-            _serviceProvider = services.BuildServiceProvider();
-
-            //instantiate the mediator
-            _mediator = new Mock<IMediator>();
         }
 
         [TestCase]
